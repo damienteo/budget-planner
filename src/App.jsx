@@ -54,10 +54,12 @@ class App extends React.Component {
 
     super();
 
+    this.handleChange = this.handleChange.bind(this);
+
     this.state = {
-      years: 1,
-      monthlyIncome: 3000,
-      goal: 18000
+      years: '',
+      monthlyIncome: '',
+      goal: ''
     };
 
   }
@@ -75,6 +77,18 @@ class App extends React.Component {
     })
   }
 
+  handleChange(name, value) {
+
+    // const {name, value} = event.target
+    console.log("name", name);
+    console.log("value", value);
+    
+    this.setState({
+      [name]: value,
+    })
+
+  }
+
   render() {
 
     const { years, monthlyIncome, goal } = this.state;
@@ -87,11 +101,12 @@ class App extends React.Component {
           <Switch>
             <Route 
               path="/" 
-              component={ () => 
+              render={ () => 
                 <UserInput 
                   years={ years }
                   monthlyIncome={ monthlyIncome }
                   goal={ goal }
+                  onUserChange={this.handleChange}
                 /> 
               } 
               exact

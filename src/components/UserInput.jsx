@@ -6,37 +6,18 @@ class UserInput extends Component {
 
 		super(props);
 
-		this.handleChange = this.handleChange.bind(this);
-
-		this.state = {
-			years: 1,
-		    monthlyIncome: 3000,
-		    goal: 18000
-		};
+		this.handleUserChange = this.handleUserChange.bind(this);
 
 	}
 
-	handleChange(event) {
-
-		console.log("whoops");
-
+	handleUserChange(event) {
 		const {name, value} = event.target
-		console.log("name", name);
-		console.log("value", value);
-
-		this.setState({
-			[name]: value,
-		})
-
+		this.props.onUserChange(name, value);
 	}
 
     render() {
 
-        const {  
-        	years, 
-        	monthlyIncome, 
-        	goal,
-        } = this.state;
+        const {  years, monthlyIncome, goal } = this.props;
 
         return (
             <React.Fragment> 
@@ -66,10 +47,25 @@ class UserInput extends Component {
 					year(s).
 				</p>
 				<input
+					key="years"
 					type="number"
 					name="years"
 					value={ years }
-					onChange={this.handleChange}
+					onChange={this.handleUserChange}
+				/>
+				<input
+					key="goal"
+					type="number"
+					name="goal"
+					value={ goal }
+					onChange={this.handleUserChange}
+				/>
+				<input
+					key="monthlyIncome"
+					type="number"
+					name="monthlyIncome"
+					value={ monthlyIncome }
+					onChange={this.handleUserChange}
 				/>
 
 		    </React.Fragment>
