@@ -67,6 +67,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-npm i express pg express-react-views method-override cookie-parser js-sha256 chart.js react-chartjs-2 shortid @material-ui/core @material-ui/icons
+npm i express pg express-react-views method-override cookie-parser js-sha256 chart.js react-chartjs-2 shortid @material-ui/core @material-ui/icons webpack react-router-dom prop-types
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+
 
 <!-- multer cloudinary multer-storage-cloudinary dotenv -->
