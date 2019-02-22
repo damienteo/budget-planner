@@ -21,6 +21,8 @@ class UserInput extends Component {
 	constructor(props) {
 		super(props);
 		this.handlePlanChange = this.handlePlanChange.bind(this);
+		this.handleExpenseChange = this.handleExpenseChange.bind(this);
+		this.handleMonthChange = this.handleMonthChange.bind(this);
 	}
 
 	handlePlanChange(event) {
@@ -28,9 +30,24 @@ class UserInput extends Component {
 		this.props.onPlanChange(name, value);
 	}
 
+	handleExpenseChange(event) {
+		this.props.onExpenseChange(event);
+	}
+
+	handleMonthChange(event) {
+		this.props.onMonthChange(event);
+	}
+
     render() {
 
-        const {  years, monthlyIncome, goal, monthlyBudget } = this.props;
+        const {  
+        	years, 
+        	monthlyIncome, 
+        	goal, 
+        	monthlyBudget,
+        	newExpense,
+        	newMonth 
+        } = this.props;
         // console.log(monthlyIncome)
 
         return (
@@ -72,7 +89,30 @@ class UserInput extends Component {
 					value={ monthlyIncome }
 					onChange={this.handlePlanChange}
 				/>
-
+				<Typography> 
+					<strong>
+						Expense:
+					</strong> 
+				</Typography>
+				<input
+					key="newExpense"
+					type="number"
+					name="newExpense"
+					value={ newExpense}
+					onChange={this.handleExpenseChange}
+				/>
+				<Typography> 
+					<strong>
+						Month:
+					</strong> 
+				</Typography>
+				<input
+					key="newMonth"
+					type="number"
+					name="newMonth"
+					value={ newMonth}
+					onChange={this.handleMonthChange}
+				/>
 		    </Paper>
         )
     }

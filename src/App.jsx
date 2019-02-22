@@ -28,13 +28,17 @@ class App extends React.Component {
     super();
 
     this.handlePlanChange = this.handlePlanChange.bind(this);
+    this.handleExpensesChange = this.handleExpensesChange.bind(this);
+    this.handleMonthChange = this.handleMonthChange.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
-      years: '',
-      monthlyIncome: '',
-      goal: '',
-      monthlyBudget: '',
+      years: 0,
+      monthlyIncome: 0,
+      goal: 0,
+      monthlyBudget: 0,
+      newExpense: 0,
+      newMonth: 0,
       expenses: [
         0,
         0,
@@ -141,6 +145,18 @@ class App extends React.Component {
 
   }
 
+  handleExpensesChange(event) {
+    this.setState({
+      newExpense: event.target.value,
+    })
+  }
+
+  handleMonthChange(event) {
+    this.setState({
+      newMonth: event.target.value,
+    })
+  }
+
   handlePlanChange(name, value) {
 
     let floatValue = parseFloat(value);
@@ -164,6 +180,7 @@ class App extends React.Component {
       monthlyIncome, 
       goal, 
       monthlyBudget,
+      newExpense,
       chartData 
     } = this.state;
 
@@ -177,7 +194,10 @@ class App extends React.Component {
                 monthlyIncome={ monthlyIncome }
                 goal={ goal }
                 monthlyBudget={ monthlyBudget }
-                onPlanChange={ this.handlePlanChange } 
+                newExpense={ newExpense }
+                onPlanChange={ this.handlePlanChange }
+                onExpenseChange={ this.handleExpensesChange }
+                onMonthChange={ this.handleMonthChange }
               /> 
             </Grid>
             <Grid item sm = {8}>
