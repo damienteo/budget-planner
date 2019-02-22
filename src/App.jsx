@@ -1,8 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom'
+import {
+  BrowserRouter, 
+  Route, 
+  Switch, 
+  NavLink 
+} from 'react-router-dom';
 
 import './App.css';
-import UserInput from './components/UserInput'
+import UserInput from './components/UserInput';
+import Chart from './components/charts/Chart';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -59,13 +65,52 @@ class App extends React.Component {
     this.state = {
       years: '',
       monthlyIncome: '',
-      goal: ''
+      goal: '',
+      chartData:{
+        labels:[
+          'Jan', 
+          'Feb', 
+          'Mar', 
+          'Apr', 
+          'May', 
+          'Jun',
+          'Jul', 
+          'Aug', 
+          'Sep', 
+          'Oct', 
+          'Nov', 
+          'Dec',
+        ],
+        datasets:[{
+          label: 'Population',
+          data:[
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+          ],
+          backgroundColor:'green',
+          borderWith: 4,
+          borderColor: '#777',
+          hoverBorderWidth: 3,
+          hoverBorderColor: 'black',
+        }],
+      },
     };
 
   }
 
   componentDidMount() {
     this.getUserPlan();
+    this.getChartData();
   }
 
   getUserPlan() {
@@ -74,6 +119,51 @@ class App extends React.Component {
       years: 1,
       monthlyIncome: 3000,
       goal: 18000
+    })
+  }
+
+  getChartData() {
+    //ajaxcalls here
+    console.log("getting chart")
+    this.setState({
+      chartData:{
+        labels:[
+          'Jan', 
+          'Feb', 
+          'Mar', 
+          'Apr', 
+          'May', 
+          'Jun',
+          'Jul', 
+          'Aug', 
+          'Sep', 
+          'Oct', 
+          'Nov', 
+          'Dec',
+        ],
+        datasets:[{
+          label: 'Population',
+          data:[
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+          ],
+          backgroundColor:'green',
+          borderWith: 4,
+          borderColor: '#777',
+          hoverBorderWidth: 3,
+          hoverBorderColor: 'black',
+        }],
+      }
     })
   }
 
@@ -91,7 +181,14 @@ class App extends React.Component {
 
   render() {
 
-    const { years, monthlyIncome, goal } = this.state;
+    const { 
+      years,
+      monthlyIncome, 
+      goal, 
+      chartData 
+    } = this.state;
+
+    // console.log(this.state.chartData.datasets[0].data)
 
     return (
       <div>
@@ -115,6 +212,7 @@ class App extends React.Component {
           </Switch>
           </React.Fragment>
         </BrowserRouter>
+        <Chart chartData={chartData}/>
         </ErrorBoundary>
       </div>
     );
