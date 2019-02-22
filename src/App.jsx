@@ -43,8 +43,8 @@ class App extends React.Component {
       monthlyIncome: 0,
       goal: 0,
       monthlyBudget: 0,
-      newExpense: undefined,
-      newMonth: undefined,
+      newExpense: 0,
+      newMonth: 0,
       expenses: [
         0,
         0,
@@ -160,7 +160,7 @@ class App extends React.Component {
 
   }
 
-  handleChartChange(newMonthlyBudget) {
+  handleBudgetChartChange(newMonthlyBudget) {
 
     let newValues = [];
     for(let i = 1; i<=12; i++) {
@@ -171,6 +171,22 @@ class App extends React.Component {
     newChart.datasets[0].data = newValues;
 
     return newChart;
+
+  }
+
+  handlePlanChange(name, value) {
+
+    let floatValue = parseFloat(value);
+
+    let newMonthlyBudget = this.budgetCalculator(name, floatValue);
+
+    let newChartValues = this.handleBudgetChartChange(newMonthlyBudget);
+    
+    this.setState({
+      [name]: floatValue,
+      monthlyBudget: newMonthlyBudget,
+      chartData: newChartValues,
+    })
 
   }
 
@@ -187,24 +203,23 @@ class App extends React.Component {
   }
 
   setExpense() {
-    console.log("Setting expense")
-  }
 
-  handlePlanChange(name, value) {
+    const { newExpense, newMonth } = this.state;
 
-    let floatValue = parseFloat(value);
+    let newExpenseChart = { ...this.state.chartData}
+    newExpenseChart.datasets[1].data[newMonth] = parseFloat(newExpense);
 
-    let newMonthlyBudget = this.budgetCalculator(name, floatValue);
-
-    let newChartValues = this.handleChartChange(newMonthlyBudget);
-    
     this.setState({
-      [name]: floatValue,
-      monthlyBudget: newMonthlyBudget,
-      chartData: newChartValues,
+      chartData: newExpenseChart,
+      newExpense: 0,
+      newMonth: 0,
     })
 
+    console.log("updating expense");
+
   }
+
+
 
   render() {
 
