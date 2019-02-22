@@ -20,12 +20,12 @@ class UserInput extends Component {
 
 	constructor(props) {
 		super(props);
-		this.handleUserChange = this.handleUserChange.bind(this);
+		this.handlePlanChange = this.handlePlanChange.bind(this);
 	}
 
-	handleUserChange(event) {
+	handlePlanChange(event) {
 		const {name, value} = event.target
-		this.props.onUserChange(name, value);
+		this.props.onPlanChange(name, value);
 	}
 
     render() {
@@ -46,7 +46,7 @@ class UserInput extends Component {
 					type="number"
 					name="years"
 					value={ years }
-					onChange={this.handleUserChange}
+					onChange={this.handlePlanChange}
 				/>
 				<Typography> 
 					<strong>
@@ -58,7 +58,7 @@ class UserInput extends Component {
 					type="number"
 					name="goal"
 					value={ goal }
-					onChange={this.handleUserChange}
+					onChange={this.handlePlanChange}
 				/>
 				<Typography> 
 					<strong>
@@ -70,7 +70,7 @@ class UserInput extends Component {
 					type="number"
 					name="monthlyIncome"
 					value={ monthlyIncome }
-					onChange={this.handleUserChange}
+					onChange={this.handlePlanChange}
 				/>
 
 		    </Paper>

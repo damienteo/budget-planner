@@ -27,7 +27,7 @@ class App extends React.Component {
 
     super();
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handlePlanChange = this.handlePlanChange.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
@@ -112,21 +112,22 @@ class App extends React.Component {
     return income - roundedMonthlySavingsTarget;  
   }
 
-  handleChange(name, value) {
+  budgetCalculator(name, value) {
 
     const { monthlyIncome, goal, years } = this.state;
 
-    let newMonthlyBudget; 
-    let floatValue = parseFloat(value);
-
     if (name === "years") {
       // console.log("years", monthlyIncome, goal, floatValue)
-      newMonthlyBudget = this.budgetPerMonth(monthlyIncome, goal, floatValue)
+      return this.budgetPerMonth(monthlyIncome, goal, value)
     } else if (name === "monthlyIncome") {
-      newMonthlyBudget = this.budgetPerMonth(floatValue, goal, years)
+      return this.budgetPerMonth(value, goal, years)
     } else if (name === "goal") {
-      newMonthlyBudget = this.budgetPerMonth(monthlyIncome, floatValue, years)
+      return this.budgetPerMonth(monthlyIncome, value, years)
     }
+
+  }
+
+  handleChartChange(newMonthlyBudget) {
 
     let newValues = [];
     for(let i = 1; i<=12; i++) {
@@ -135,11 +136,23 @@ class App extends React.Component {
 
     let newChart = { ...this.state.chartData}
     newChart.datasets[0].data = newValues;
+
+    return newChart;
+
+  }
+
+  handlePlanChange(name, value) {
+
+    let floatValue = parseFloat(value);
+
+    let newMonthlyBudget = this.budgetCalculator(name, floatValue);
+
+    let newChartValues = this.handleChartChange(newMonthlyBudget);
     
     this.setState({
       [name]: floatValue,
       monthlyBudget: newMonthlyBudget,
-      chartData: newChart,
+      chartData: newChartValues,
     })
 
   }
@@ -154,8 +167,6 @@ class App extends React.Component {
       chartData 
     } = this.state;
 
-    console.log(this.state.chartData.datasets[0].data)
-
     return (
       <React.Fragment>
         <ErrorBoundary>
@@ -166,7 +177,7 @@ class App extends React.Component {
                 monthlyIncome={ monthlyIncome }
                 goal={ goal }
                 monthlyBudget={ monthlyBudget }
-                onUserChange={ this.handleChange } 
+                onPlanChange={ this.handlePlanChange } 
               /> 
             </Grid>
             <Grid item sm = {8}>
