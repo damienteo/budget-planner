@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
 	Paper,
 	Typography,
@@ -6,11 +7,19 @@ import {
 }
 from '@material-ui/core';
 
+import { 
+	roundTo2Decimals, 
+	savingsPerMonth, 
+	totalMonths, 
+	budgetPerMonth,
+} from './functions';
+
 class UserInput extends Component {
 
 	constructor(props) {
 		super(props);
 		this.handleUserChange = this.handleUserChange.bind(this);
+		this.handleChartChange = this.handleChartChange.bind(this);
 	}
 
 	handleUserChange(event) {
@@ -18,29 +27,14 @@ class UserInput extends Component {
 		this.props.onUserChange(name, value);
 	}
 
-	roundTo2Decimals(number){
-		return Math.round((number + 0.00001) * 100) / 100;
-	}
-
-	savingsPerMonth(goal, years) {
-		let savingsTarget = goal.goal/(years.years*12);
-		savingsTarget = this.roundTo2Decimals(savingsTarget);
-		return savingsTarget;
-	}
-
-	totalMonths(years) {
-		return years.years*12;
-	}
-
-	budgetPerMonth(income, goal, years) {
-		let savingsTarget = this.savingsPerMonth(goal, years);
-		savingsTarget = this.roundTo2Decimals(savingsTarget);
-		return income.monthlyIncome - savingsTarget;	
+	handleChartChange(event) {
+		this.props.onChartChange(event.target.value);
 	}
 
     render() {
 
-        const {  years, monthlyIncome, goal } = this.props;
+        const {  years, monthlyIncome, goal, monthlyBudget } = this.props;
+        // console.log(monthlyIncome)
 
         return (
             <Paper> 
@@ -72,18 +66,18 @@ class UserInput extends Component {
 				<Typography> 
 					You need to save: 
 						<strong>
-							${ this.savingsPerMonth({goal}, {years})}
+							${ savingsPerMonth({goal}, {years})}
 						</strong> 
 					per month for
 						<strong>
-							{ this.totalMonths({years})}
+							{ totalMonths({years})}
 						</strong> 
 					months.
 				</Typography>
 				<Typography> 
 					You can spend only: 
 						<strong>
-							${ this.budgetPerMonth({monthlyIncome}, {goal}, {years})}
+							${ monthlyBudget }
 						</strong> 
 					per month.
 				</Typography>

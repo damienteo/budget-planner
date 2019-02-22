@@ -3,9 +3,9 @@ import {Bar} from 'react-chartjs-2';
 
 class Chart extends Component {
 
-	constructor(props) {
-		super(props);
-	}
+	// constructor(props) {
+	// 	super(props);
+	// }
 
 	// static defaultProps = {
 	// 	displayTitle: true,
