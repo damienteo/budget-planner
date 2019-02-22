@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from '@material-ui/core/';
 
 import {
   BrowserRouter, 
@@ -27,14 +28,27 @@ class App extends React.Component {
     super();
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleChartChange = this.handleChartChange.bind(this);
+    // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
       years: '',
       monthlyIncome: '',
       goal: '',
       monthlyBudget: '',
-      expenses: [],
+      expenses: [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
       chartData:{
         labels:[
           'Jan', 
@@ -79,7 +93,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getUserPlan();
-    this.getChartData();
+    // this.getChartData();
   }
 
   getUserPlan() {
@@ -92,50 +106,50 @@ class App extends React.Component {
     })
   }
 
-  getChartData() {
-    //ajaxcalls here
-    // console.log("getting chart")
-    this.setState({
-      chartData:{
-        labels:[
-          'Jan', 
-          'Feb', 
-          'Mar', 
-          'Apr', 
-          'May', 
-          'Jun',
-          'Jul', 
-          'Aug', 
-          'Sep', 
-          'Oct', 
-          'Nov', 
-          'Dec',
-        ],
-        datasets:[{
-          label: 'Population',
-          data:[
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-          ],
-          backgroundColor:'green',
-          borderWith: 4,
-          borderColor: '#777',
-          hoverBorderWidth: 3,
-          hoverBorderColor: 'black',
-        }],
-      }
-    })
-  }
+  // getChartData() {
+  //   //ajaxcalls here
+  //   // console.log("getting chart")
+  //   this.setState({
+  //     chartData:{
+  //       labels:[
+  //         'Jan', 
+  //         'Feb', 
+  //         'Mar', 
+  //         'Apr', 
+  //         'May', 
+  //         'Jun',
+  //         'Jul', 
+  //         'Aug', 
+  //         'Sep', 
+  //         'Oct', 
+  //         'Nov', 
+  //         'Dec',
+  //       ],
+  //       datasets:[{
+  //         label: 'Population',
+  //         data:[
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //           1500,
+  //         ],
+  //         backgroundColor:'green',
+  //         borderWith: 4,
+  //         borderColor: '#777',
+  //         hoverBorderWidth: 3,
+  //         hoverBorderColor: 'black',
+  //       }],
+  //     }
+  //   })
+  // }
 
   budgetPerMonth(income, goal, years) {
     let monthlySavingsTarget = goal/(years*12);
@@ -158,29 +172,38 @@ class App extends React.Component {
     } else if (name === "goal") {
       newMonthlyBudget = this.budgetPerMonth(monthlyIncome, floatValue, years)
     }
-    
-    this.setState({
-      [name]: floatValue,
-      monthlyBudget: newMonthlyBudget,
-    })
-
-  }
-
-  handleChartChange() {
 
     let newValues = [];
     for(let i = 1; i<=12; i++) {
-      newValues.push(this.state.monthlyBudget);
+      newValues.push(newMonthlyBudget);
     }
 
     let newChart = { ...this.state.chartData}
     newChart.datasets[0].data = newValues;
-
+    
     this.setState({
+      [name]: floatValue,
+      monthlyBudget: newMonthlyBudget,
       chartData: newChart,
     })
 
   }
+
+  // handleChartChange() {
+
+  //   let newValues = [];
+  //   for(let i = 1; i<=12; i++) {
+  //     newValues.push(this.state.monthlyBudget);
+  //   }
+
+  //   let newChart = { ...this.state.chartData}
+  //   newChart.datasets[0].data = newValues;
+
+  //   this.setState({
+  //     chartData: newChart,
+  //   });
+
+  // }
 
 
   render() {
@@ -193,37 +216,51 @@ class App extends React.Component {
       chartData 
     } = this.state;
 
-    // console.log(this.state.chartData.datasets[0].data)
+    console.log(this.state.chartData.datasets[0].data)
 
     return (
-      <div>
-      <ErrorBoundary>
-        <BrowserRouter>
-          <React.Fragment>
-          <Switch>
-            <Route 
-              path="/" 
-              render={ () => 
-                <UserInput 
-                  years={ years }
-                  monthlyIncome={ monthlyIncome }
-                  goal={ goal }
-                  monthlyBudget={ monthlyBudget }
-                  onUserChange={ this.handleChange } 
-                  onChartChange={ this.handleChartChange }
-                /> 
-              } 
-              exact
-            />
-            <Route component={ Unknown } />
-          </Switch>
-          </React.Fragment>
-        </BrowserRouter>
-        <Chart chartData={ chartData }/>
+      <React.Fragment>
+        <ErrorBoundary>
+          <Grid container>
+            <Grid item sm = {4}>
+              <UserInput 
+                years={ years }
+                monthlyIncome={ monthlyIncome }
+                goal={ goal }
+                monthlyBudget={ monthlyBudget }
+                onUserChange={ this.handleChange } 
+              /> 
+            </Grid>
+            <Grid item sm = {8}>
+              <Chart chartData={ chartData }/>
+            </Grid>
+          </Grid>
         </ErrorBoundary>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 export default App;
+
+// <BrowserRouter>
+//           <React.Fragment>
+//           <Switch>
+//             <Route 
+//               path="/" 
+//               render={ () => 
+//                 <UserInput 
+//                   years={ years }
+//                   monthlyIncome={ monthlyIncome }
+//                   goal={ goal }
+//                   monthlyBudget={ monthlyBudget }
+//                   onUserChange={ this.handleChange } 
+//                   onChartChange={ this.handleChartChange }
+//                 /> 
+//               } 
+//               exact
+//             />
+//             <Route component={ Unknown } />
+//           </Switch>
+//           </React.Fragment>
+//         </BrowserRouter>

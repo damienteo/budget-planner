@@ -21,23 +21,11 @@ class UserInput extends Component {
 	constructor(props) {
 		super(props);
 		this.handleUserChange = this.handleUserChange.bind(this);
-		this.handleChartChange = this.handleChartChange.bind(this);
-		this.handleUserAndChartChange = this.handleUserAndChartChange.bind(this);
 	}
 
 	handleUserChange(event) {
 		const {name, value} = event.target
 		this.props.onUserChange(name, value);
-	}
-
-	handleChartChange() {
-		// console.log("update chart as well")
-		this.props.onChartChange();
-	}
-
-	handleUserAndChartChange(event) {
-		this.handleUserChange(event);
-		this.handleChartChange();
 	}
 
     render() {
@@ -58,7 +46,7 @@ class UserInput extends Component {
 					type="number"
 					name="years"
 					value={ years }
-					onChange={this.handleUserAndChartChange}
+					onChange={this.handleUserChange}
 				/>
 				<Typography> 
 					<strong>
@@ -70,7 +58,7 @@ class UserInput extends Component {
 					type="number"
 					name="goal"
 					value={ goal }
-					onChange={this.handleUserAndChartChange}
+					onChange={this.handleUserChange}
 				/>
 				<Typography> 
 					<strong>
@@ -82,7 +70,7 @@ class UserInput extends Component {
 					type="number"
 					name="monthlyIncome"
 					value={ monthlyIncome }
-					onChange={this.handleUserAndChartChange}
+					onChange={this.handleUserChange}
 				/>
 
 		    </Paper>
