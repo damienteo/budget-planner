@@ -35,6 +35,7 @@ class App extends React.Component {
     this.handlePlanChange = this.handlePlanChange.bind(this);
     this.handleExpensesChange = this.handleExpensesChange.bind(this);
     this.handleMonthChange = this.handleMonthChange.bind(this);
+    this.setExpense = this.setExpense.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
@@ -42,8 +43,8 @@ class App extends React.Component {
       monthlyIncome: 0,
       goal: 0,
       monthlyBudget: 0,
-      newExpense: 0,
-      newMonth: 0,
+      newExpense: undefined,
+      newMonth: undefined,
       expenses: [
         0,
         0,
@@ -73,31 +74,54 @@ class App extends React.Component {
           'Nov', 
           'Dec',
         ],
-        datasets:[{
-          label: 'Budget',
-          data:[
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-            1500,
-          ],
-            backgroundColor: "rgba(255,99,132,0.2)",
-            borderColor: "rgba(255,99,132,1)",
-            borderWidth: 2,
-            hoverBackgroundColor: "rgba(255,99,132,0.4)",
-            hoverBorderColor: "rgba(255,99,132,1)",
-        }],
+        datasets:[
+          {
+            label: 'Budget',
+            data:[
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+              1500,
+            ],
+              backgroundColor: "rgba(69, 186, 69, 0.2)",
+              borderColor: "rgba(69, 186, 69, 1)",
+              borderWidth: 2,
+              hoverBackgroundColor: "rgba(269, 186, 69, 0.4)",
+              hoverBorderColor: "rgba(69, 186, 69, 1)",
+          },
+          {
+            label: 'Expenses',
+            data:[
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+            ],
+              backgroundColor: "rgba(255,99,132,0.2)",
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 2,
+              hoverBackgroundColor: "rgba(155,99,132,0.4)",
+              hoverBorderColor: "rgba(255,99,132,1)",
+          },
+        ],
       },
     };
-
   }
 
   componentDidMount() {
@@ -162,6 +186,10 @@ class App extends React.Component {
     })
   }
 
+  setExpense() {
+    console.log("Setting expense")
+  }
+
   handlePlanChange(name, value) {
 
     let floatValue = parseFloat(value);
@@ -206,6 +234,7 @@ class App extends React.Component {
                   onPlanChange={ this.handlePlanChange }
                   onExpenseChange={ this.handleExpensesChange }
                   onMonthChange={ this.handleMonthChange }
+                  setExpense={ this.setExpense }
                 />
               </Paper> 
             </Grid>

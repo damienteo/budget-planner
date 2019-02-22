@@ -4,7 +4,8 @@ import {
 	Typography,
 	TextField,
 	MenuItem,
-	withStyles
+	withStyles,
+	Button
 }
 from '@material-ui/core';
 
@@ -84,6 +85,7 @@ class UserInput extends Component {
 		this.handlePlanChange = this.handlePlanChange.bind(this);
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
+		this.setExpense = this.setExpense.bind(this);
 	}
 
 	handlePlanChange(event) {
@@ -97,6 +99,10 @@ class UserInput extends Component {
 
 	handleMonthChange(event) {
 		this.props.onMonthChange(event);
+	}
+
+	setExpense() {
+		this.props.setExpense();
 	}
 
     render() {
@@ -162,6 +168,14 @@ class UserInput extends Component {
 						</MenuItem>
 					))}
 				</TextField>
+				<Button 
+					variant="outlined" 
+					size="medium" 
+					color="primary"
+					onClick={ this.setExpense }
+				>
+		        	Confirm Expense
+		        </Button>
 			</React.Fragment>
         )
     }
