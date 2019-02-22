@@ -69,6 +69,7 @@ class App extends React.Component {
       monthlyIncome: '',
       goal: '',
       monthlyBudget: '',
+      expenses: [],
       chartData:{
         labels:[
           'Jan', 
