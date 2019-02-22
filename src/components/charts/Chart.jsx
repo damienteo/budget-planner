@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Bar} from 'react-chartjs-2';
+import {Bar, defaults} from 'react-chartjs-2';
 
 class Chart extends Component {
 
@@ -14,6 +14,11 @@ class Chart extends Component {
 	// }
 
 	render() {
+
+		defaults.global.defaultFontFamily = 'Roboto';
+		defaults.global.animation.duration = 1000;
+		defaults.global.layout.padding = 20;
+
 		const {chartData} = this.props;
 
 		return(
@@ -24,14 +29,34 @@ class Chart extends Component {
 					height={50}
 					options={{
 						title:{
-							display:true,
+							display:false,
 							text:"2019",
 							fontSize: 25
 						},
 						legend: {
 							display: true,
-							position: 'right'
-						}
+							position: 'top',
+							labels: {
+			                     fontSize: 20
+			                }
+						},
+						scales: {
+						    yAxes: [
+						    	{ 
+						    		gridLines: {
+							        	display:true,
+							        	color:"rgba(255,99,132,0.2)"
+							        }
+						    	},
+						    ],
+						    xAxes: [
+						    	{
+					        		gridLines: {
+							        	display:false
+							        } 
+						    	},
+						    ],
+						 },
 					}}
 				/>
 			</div>

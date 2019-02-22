@@ -74,7 +74,7 @@ class App extends React.Component {
           'Dec',
         ],
         datasets:[{
-          label: 'Population',
+          label: 'Budget',
           data:[
             1500,
             1500,
@@ -89,11 +89,11 @@ class App extends React.Component {
             1500,
             1500,
           ],
-          backgroundColor:'green',
-          borderWith: 4,
-          borderColor: '#777',
-          hoverBorderWidth: 3,
-          hoverBorderColor: 'black',
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            borderWidth: 2,
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)",
         }],
       },
     };
