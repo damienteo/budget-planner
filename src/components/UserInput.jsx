@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-	Paper,
 	Typography,
-	withStyles,
 	TextField,
 }
 from '@material-ui/core';
@@ -13,12 +11,12 @@ import {
 	UserPlanInput, 
 } from './texts/'
 
-import { 
-	roundTo2Decimals, 
-	savingsPerMonth, 
-	totalMonths, 
-	budgetPerMonth,
-} from './functions';
+// import { 
+// 	roundTo2Decimals, 
+// 	savingsPerMonth, 
+// 	totalMonths, 
+// 	budgetPerMonth,
+// } from './functions';
 
 class UserInput extends Component {
 
@@ -55,20 +53,19 @@ class UserInput extends Component {
         // console.log(monthlyIncome)
 
         return (
-            <Paper> 
-            	<UserPlanSummary
-            		years={ years }
-            		monthlyIncome={ monthlyIncome }
-            		goal={ goal }
-            		monthlyBudget={ monthlyBudget }
-            	/>
-            	<UserPlanInput
-            		years={ years }
-            		monthlyIncome={ monthlyIncome }
-            		goal={ goal }
-            		monthlyBudget={ monthlyBudget }
-            		handlePlanChange={this.handlePlanChange}
-            	/>
+        	<React.Fragment>
+	        	<UserPlanSummary
+	        		years={ years }
+	        		monthlyIncome={ monthlyIncome }
+	        		goal={ goal }
+	        		monthlyBudget={ monthlyBudget }
+	        	/>
+	        	<UserPlanInput
+	        		years={ years }
+	        		monthlyIncome={ monthlyIncome }
+	        		goal={ goal }	
+	        		handlePlanChange={this.handlePlanChange}
+	        	/>
 				<TextField
 					key="newExpense"
 					type="number"
@@ -93,7 +90,7 @@ class UserInput extends Component {
 					value={ newMonth}
 					onChange={this.handleMonthChange}
 				/>
-		    </Paper>
+			</React.Fragment>
         )
     }
 }

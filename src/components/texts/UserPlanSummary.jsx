@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 
 import {
-	Paper,
 	Typography,
-	withStyles,
 }
 from '@material-ui/core';
 
 import { 
-	roundTo2Decimals, 
 	savingsPerMonth, 
 	totalMonths, 
-	budgetPerMonth,
 } from '../functions';
 
 class UserSummary extends Component {

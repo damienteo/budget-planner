@@ -1,25 +1,30 @@
 import React from 'react';
 import { Grid } from '@material-ui/core/';
 
+// import {
+//   BrowserRouter, 
+//   Route, 
+//   Switch, 
+//   NavLink 
+// } from 'react-router-dom';
+
 import {
-  BrowserRouter, 
-  Route, 
-  Switch, 
-  NavLink 
-} from 'react-router-dom';
+  Paper,
+}
+from '@material-ui/core';
 
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
 
-const Unknown = () => {
-  return(
-    <div> 
-      <p> Unknown Page </p>
-    </div>
-  )
-}
+// const Unknown = () => {
+//   return(
+//     <div> 
+//       <p> Unknown Page </p>
+//     </div>
+//   )
+// }
 
 class App extends React.Component {
 
@@ -189,19 +194,23 @@ class App extends React.Component {
         <ErrorBoundary>
           <Grid container>
             <Grid item sm = {4}>
-              <UserInput 
-                years={ years }
-                monthlyIncome={ monthlyIncome }
-                goal={ goal }
-                monthlyBudget={ monthlyBudget }
-                newExpense={ newExpense }
-                onPlanChange={ this.handlePlanChange }
-                onExpenseChange={ this.handleExpensesChange }
-                onMonthChange={ this.handleMonthChange }
-              /> 
+              <Paper>
+                <UserInput 
+                  years={ years }
+                  monthlyIncome={ monthlyIncome }
+                  goal={ goal }
+                  monthlyBudget={ monthlyBudget }
+                  newExpense={ newExpense }
+                  onPlanChange={ this.handlePlanChange }
+                  onExpenseChange={ this.handleExpensesChange }
+                  onMonthChange={ this.handleMonthChange }
+                />
+              </Paper> 
             </Grid>
             <Grid item sm = {8}>
-              <Chart chartData={ chartData }/>
+              <Paper>
+                <Chart chartData={ chartData }/>
+              </Paper>
             </Grid>
           </Grid>
         </ErrorBoundary>

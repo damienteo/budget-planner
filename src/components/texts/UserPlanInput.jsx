@@ -18,7 +18,7 @@ class UserPlan extends Component {
 
 	render() {	
 			
-		const {  years, monthlyIncome, goal, monthlyBudget } = this.props;	
+		const {  years, monthlyIncome, goal} = this.props;	
 
 		return(
 			<React.Fragment>
