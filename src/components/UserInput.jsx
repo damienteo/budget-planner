@@ -20,6 +20,7 @@ class UserInput extends Component {
 		super(props);
 		this.handleUserChange = this.handleUserChange.bind(this);
 		this.handleChartChange = this.handleChartChange.bind(this);
+		this.handleUserAndChartChange = this.handleUserAndChartChange.bind(this);
 	}
 
 	handleUserChange(event) {
@@ -27,8 +28,14 @@ class UserInput extends Component {
 		this.props.onUserChange(name, value);
 	}
 
-	handleChartChange(event) {
-		this.props.onChartChange(event.target.value);
+	handleChartChange() {
+		// console.log("update chart as well")
+		this.props.onChartChange();
+	}
+
+	handleUserAndChartChange(event) {
+		this.handleUserChange(event);
+		this.handleChartChange();
 	}
 
     render() {
@@ -81,26 +88,41 @@ class UserInput extends Component {
 						</strong> 
 					per month.
 				</Typography>
+				<Typography> 
+					<strong>
+						Planning for the following number of years:
+					</strong> 
+				</Typography>
 				<input
 					key="years"
 					type="number"
 					name="years"
 					value={ years }
-					onChange={this.handleUserChange}
+					onChange={this.handleUserAndChartChange}
 				/>
+				<Typography> 
+					<strong>
+						With the following Goal:
+					</strong> 
+				</Typography>
 				<input
 					key="goal"
 					type="number"
 					name="goal"
 					value={ goal }
-					onChange={this.handleUserChange}
+					onChange={this.handleUserAndChartChange}
 				/>
+				<Typography> 
+					<strong>
+						And the following monthly income:
+					</strong> 
+				</Typography>
 				<input
 					key="monthlyIncome"
 					type="number"
 					name="monthlyIncome"
 					value={ monthlyIncome }
-					onChange={this.handleUserChange}
+					onChange={this.handleUserAndChartChange}
 				/>
 
 		    </Paper>

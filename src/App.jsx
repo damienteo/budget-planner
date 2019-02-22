@@ -200,11 +200,11 @@ class App extends React.Component {
 
   }
 
-  handleChartChange(newMonthlyBudget) {
+  handleChartChange() {
 
     let newValues = [];
     for(let i = 1; i<=12; i++) {
-      newValues.push(this.state.monthlyIncome);
+      newValues.push(this.state.monthlyBudget);
     }
 
     let newChart = { ...this.state.chartData}
