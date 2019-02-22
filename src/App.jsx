@@ -186,6 +186,7 @@ class App extends React.Component {
       goal, 
       monthlyBudget,
       newExpense,
+      newMonth,
       chartData 
     } = this.state;
 
@@ -201,6 +202,7 @@ class App extends React.Component {
                   goal={ goal }
                   monthlyBudget={ monthlyBudget }
                   newExpense={ newExpense }
+                  newMonth = { newMonth }
                   onPlanChange={ this.handlePlanChange }
                   onExpenseChange={ this.handleExpensesChange }
                   onMonthChange={ this.handleMonthChange }

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import {
 	Typography,
 	TextField,
+	MenuItem,
+	withStyles
 }
 from '@material-ui/core';
 
@@ -17,6 +19,63 @@ import {
 // 	totalMonths, 
 // 	budgetPerMonth,
 // } from './functions';
+
+const styles = {
+  menu: {
+    width: 200,
+  },
+};
+
+const months = [
+  {
+    value: 0,
+    label: 'Jan',
+  },
+  {
+    value: 1,
+    label: 'Feb',
+  },
+  {
+    value: 2,
+    label: 'Mar',
+  },
+  {
+    value: 3,
+    label: 'Apr',
+  },
+    {
+    value: 4,
+    label: 'May',
+  },
+  {
+    value: 5,
+    label: 'Jun',
+  },
+  {
+    value: 6,
+    label: 'Jul',
+  },
+  {
+    value: 7,
+    label: 'Aug',
+  },
+    {
+    value: 8,
+    label: 'Sep',
+  },
+  {
+    value: 9,
+    label: 'Oct',
+  },
+  {
+    value: 10,
+    label: 'Nov',
+  },
+  {
+    value: 11,
+    label: 'Dec',
+  },
+];
 
 class UserInput extends Component {
 
@@ -66,7 +125,7 @@ class UserInput extends Component {
 	        		goal={ goal }	
 	        		handlePlanChange={this.handlePlanChange}
 	        	/>
-				<TextField
+	        	 <TextField
 					key="newExpense"
 					type="number"
 					name="newExpense"
@@ -77,19 +136,32 @@ class UserInput extends Component {
 						shrink: true,
 					}}
 					margin="normal"
+					variant="outlined"
 				/>
-				<Typography> 
-					<strong>
-						Month:
-					</strong> 
-				</Typography>
-				<input
-					key="newMonth"
+				<TextField
+				 	key="newMonth"
 					type="number"
 					name="newMonth"
-					value={ newMonth}
+					select
+					label="Month:"
+					value={ newMonth }
 					onChange={this.handleMonthChange}
-				/>
+					style = {styles.menu}
+					SelectProps={{
+						MenuProps: {
+							// className: classes.menu,
+						},
+					}}
+					// helperText="Month:"
+					margin="normal"
+					variant="outlined"
+				>
+					{months.map(option => (
+						<MenuItem key={option.value} value={option.value}>
+							{option.label}
+						</MenuItem>
+					))}
+				</TextField>
 			</React.Fragment>
         )
     }
