@@ -4,10 +4,14 @@ import {
 	Paper,
 	Typography,
 	withStyles,
+	TextField,
 }
 from '@material-ui/core';
 
-import UserSummary from './texts/UserSummary'
+import { 
+	UserPlanSummary,
+	UserPlanInput, 
+} from './texts/'
 
 import { 
 	roundTo2Decimals, 
@@ -52,54 +56,30 @@ class UserInput extends Component {
 
         return (
             <Paper> 
-            	<UserSummary
+            	<UserPlanSummary
             		years={ years }
             		monthlyIncome={ monthlyIncome }
             		goal={ goal }
             		monthlyBudget={ monthlyBudget }
             	/>
-				<input
-					key="years"
-					type="number"
-					name="years"
-					value={ years }
-					onChange={this.handlePlanChange}
-				/>
-				<Typography> 
-					<strong>
-						With the following Goal:
-					</strong> 
-				</Typography>
-				<input
-					key="goal"
-					type="number"
-					name="goal"
-					value={ goal }
-					onChange={this.handlePlanChange}
-				/>
-				<Typography> 
-					<strong>
-						And the following monthly income:
-					</strong> 
-				</Typography>
-				<input
-					key="monthlyIncome"
-					type="number"
-					name="monthlyIncome"
-					value={ monthlyIncome }
-					onChange={this.handlePlanChange}
-				/>
-				<Typography> 
-					<strong>
-						Expense:
-					</strong> 
-				</Typography>
-				<input
+            	<UserPlanInput
+            		years={ years }
+            		monthlyIncome={ monthlyIncome }
+            		goal={ goal }
+            		monthlyBudget={ monthlyBudget }
+            		handlePlanChange={this.handlePlanChange}
+            	/>
+				<TextField
 					key="newExpense"
 					type="number"
 					name="newExpense"
 					value={ newExpense}
 					onChange={this.handleExpenseChange}
+					label="Input new Expense:"
+					InputLabelProps={{
+						shrink: true,
+					}}
+					margin="normal"
 				/>
 				<Typography> 
 					<strong>

@@ -64,11 +64,6 @@ class UserSummary extends Component {
 						</strong> 
 					per month.
 				</Typography>
-				<Typography> 
-					<strong>
-						Planning for the following number of years:
-					</strong> 
-				</Typography>
 				</React.Fragment>
 		)
 	}
