@@ -106,51 +106,6 @@ class App extends React.Component {
     })
   }
 
-  // getChartData() {
-  //   //ajaxcalls here
-  //   // console.log("getting chart")
-  //   this.setState({
-  //     chartData:{
-  //       labels:[
-  //         'Jan', 
-  //         'Feb', 
-  //         'Mar', 
-  //         'Apr', 
-  //         'May', 
-  //         'Jun',
-  //         'Jul', 
-  //         'Aug', 
-  //         'Sep', 
-  //         'Oct', 
-  //         'Nov', 
-  //         'Dec',
-  //       ],
-  //       datasets:[{
-  //         label: 'Population',
-  //         data:[
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //           1500,
-  //         ],
-  //         backgroundColor:'green',
-  //         borderWith: 4,
-  //         borderColor: '#777',
-  //         hoverBorderWidth: 3,
-  //         hoverBorderColor: 'black',
-  //       }],
-  //     }
-  //   })
-  // }
-
   budgetPerMonth(income, goal, years) {
     let monthlySavingsTarget = goal/(years*12);
     let roundedMonthlySavingsTarget = Math.round((monthlySavingsTarget + 0.00001) * 100) / 100;
@@ -189,23 +144,6 @@ class App extends React.Component {
 
   }
 
-  // handleChartChange() {
-
-  //   let newValues = [];
-  //   for(let i = 1; i<=12; i++) {
-  //     newValues.push(this.state.monthlyBudget);
-  //   }
-
-  //   let newChart = { ...this.state.chartData}
-  //   newChart.datasets[0].data = newValues;
-
-  //   this.setState({
-  //     chartData: newChart,
-  //   });
-
-  // }
-
-
   render() {
 
     const { 
@@ -242,25 +180,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// <BrowserRouter>
-//           <React.Fragment>
-//           <Switch>
-//             <Route 
-//               path="/" 
-//               render={ () => 
-//                 <UserInput 
-//                   years={ years }
-//                   monthlyIncome={ monthlyIncome }
-//                   goal={ goal }
-//                   monthlyBudget={ monthlyBudget }
-//                   onUserChange={ this.handleChange } 
-//                   onChartChange={ this.handleChartChange }
-//                 /> 
-//               } 
-//               exact
-//             />
-//             <Route component={ Unknown } />
-//           </Switch>
-//           </React.Fragment>
-//         </BrowserRouter>
