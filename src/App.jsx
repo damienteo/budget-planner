@@ -100,7 +100,7 @@ class App extends React.Component {
               backgroundColor: "rgba(69, 186, 69, 0.1)",
               borderColor: "rgba(69, 186, 69, 1)",
               borderWidth: 0,
-              hoverBackgroundColor: "rgba(269, 186, 69, 0.4)",
+              hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
               hoverBorderColor: "rgba(69, 186, 69, 1)",
           },
           {
@@ -121,8 +121,8 @@ class App extends React.Component {
             ],
               backgroundColor: "rgba(255,99,132,0.2)",
               borderColor: "rgba(255,99,132,1)",
-              borderWidth: 2,
-              hoverBackgroundColor: "rgba(155,99,132,0.4)",
+              borderWidth: 0,
+              hoverBackgroundColor: "rgba(255,99,132,0.4)",
               hoverBorderColor: "rgba(255,99,132,1)",
           },
         ],
@@ -245,7 +245,7 @@ class App extends React.Component {
       <React.Fragment>
         <ErrorBoundary>
           <Grid container>
-            <Grid item sm = {4}>
+            <Grid item md={4} xs={12}>
               <Paper>
                 <UserInput 
                   years={ years }
@@ -261,7 +261,7 @@ class App extends React.Component {
                 />
               </Paper> 
             </Grid>
-            <Grid item sm = {8}>
+            <Grid item md={8} xs={12}>
               <Paper style = {styles.menu}>
                 <Chart chartData={ chartData }/>
               </Paper>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Bar, defaults} from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 class Chart extends Component {
 
@@ -39,6 +40,16 @@ class Chart extends Component {
 							labels: {
 			                     fontSize: 20
 			                }
+						},
+						plugins: {
+						   datalabels: {
+						     	display: true,
+						     	color: 'black',
+						      	font: {
+						          	size: 11,
+						          	weight: 200
+						        },
+						   }
 						},
 						scales: {
 						    yAxes: [
