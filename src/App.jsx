@@ -10,8 +10,12 @@ import { Grid } from '@material-ui/core/';
 
 import {
   Paper,
+  createMuiTheme,
+  MuiThemeProvider
 }
 from '@material-ui/core';
+
+import teal from '@material-ui/core/colors/teal';
 
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary'
@@ -25,6 +29,17 @@ import Chart from './components/charts/Chart';
 //     </div>
 //   )
 // }
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#607d8b',
+    },
+    secondary: {
+      main: '#004d40',
+    },
+  },
+});
 
 const styles = {
   chartPaper: {
@@ -244,29 +259,31 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <ErrorBoundary>
-          <Grid container>
-            <Grid item md={4} xs={12}>
-              <Paper>
-                <UserInput 
-                  years={ years }
-                  monthlyIncome={ monthlyIncome }
-                  goal={ goal }
-                  monthlyBudget={ monthlyBudget }
-                  newExpense={ newExpense }
-                  newMonth = { newMonth }
-                  onPlanChange={ this.handlePlanChange }
-                  onExpenseChange={ this.handleExpensesChange }
-                  onMonthChange={ this.handleMonthChange }
-                  setExpense={ this.setExpense }
-                />
-              </Paper> 
+          <MuiThemeProvider theme={theme}>
+            <Grid container>
+              <Grid item md={4} xs={12}>
+                <Paper>
+                  <UserInput 
+                    years={ years }
+                    monthlyIncome={ monthlyIncome }
+                    goal={ goal }
+                    monthlyBudget={ monthlyBudget }
+                    newExpense={ newExpense }
+                    newMonth = { newMonth }
+                    onPlanChange={ this.handlePlanChange }
+                    onExpenseChange={ this.handleExpensesChange }
+                    onMonthChange={ this.handleMonthChange }
+                    setExpense={ this.setExpense }
+                  />
+                </Paper> 
+              </Grid>
+              <Grid item md={8} xs={12}>
+                <Paper style = {styles.menu}>
+                  <Chart chartData={ chartData }/>
+                </Paper>
+              </Grid>
             </Grid>
-            <Grid item md={8} xs={12}>
-              <Paper style = {styles.menu}>
-                <Chart chartData={ chartData }/>
-              </Paper>
-            </Grid>
-          </Grid>
+          </MuiThemeProvider>
         </ErrorBoundary>
       </React.Fragment>
     );

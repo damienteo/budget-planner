@@ -142,8 +142,9 @@ class UserExpenseInput extends Component {
 					</TextField>
 					<Button 
 						variant="outlined" 
-						size="medium" 
-						color="primary"
+						size="small" 
+						color="secondary"
+						fullWidth
 						onClick={ this.setExpense }
 					>
 			        	Confirm Expense

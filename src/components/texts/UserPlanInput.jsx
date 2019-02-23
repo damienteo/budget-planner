@@ -35,6 +35,7 @@ class UserPlan extends Component {
 						InputLabelProps={{
 							shrink: true,
 						}}
+						variant="outlined"
 						margin="normal"
 						InputProps={{
 				            endAdornment: <InputAdornment position="end">Years</InputAdornment>,
@@ -50,6 +51,7 @@ class UserPlan extends Component {
 						InputLabelProps={{
 							shrink: true,
 						}}
+						variant="outlined"
 						margin="normal"
 						InputProps={{
 				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -65,6 +67,7 @@ class UserPlan extends Component {
 						InputLabelProps={{
 							shrink: true,
 						}}
+						variant="outlined"
 						margin="normal"
 						InputProps={{
 				            startAdornment: <InputAdornment position="start">$</InputAdornment>,

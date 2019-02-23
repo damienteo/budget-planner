@@ -13,7 +13,7 @@ import {
 
 const styles = {
 	budget: {
-		backgroundColor: 'black',
+		backgroundColor: '#004d40',
 	    fontSize: 16,
 	    color: 'white',
 	    margin: 10,
@@ -51,7 +51,7 @@ class UserSummary extends Component {
 						months.
 					</Typography>
 					<Typography style = {styles.budget}> 
-						You can spend only: 
+						You can spend only
 							<strong> ${ monthlyBudget } </strong> 
 						per month.
 					</Typography>

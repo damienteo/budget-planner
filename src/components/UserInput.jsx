@@ -17,14 +17,19 @@ import {
 	UserExpenseInput 
 } from './texts/'
 
-
-
 // import { 
 // 	roundTo2Decimals, 
 // 	savingsPerMonth, 
 // 	totalMonths, 
 // 	budgetPerMonth,
 // } from './functions';
+
+const styles = {
+  expansionSummary: {
+    // fontWeight: 600,
+    fontSize: 16
+  },
+};
 
 const ExpansionPanel = withStyles({
   root: {
@@ -44,8 +49,8 @@ const ExpansionPanel = withStyles({
 
 const ExpansionPanelSummary = withStyles({
   root: {
-    backgroundColor: 'rgba(0,0,0,.03)',
-    borderBottom: '1px solid rgba(0,0,0,.125)',
+    backgroundColor: 'rgba(	0, 77, 64,.14)',
+    border: '1px solid rgba(0, 77, 64,.125)',
     marginBottom: -1,
     minHeight: 56,
     '&$expanded': {
@@ -129,7 +134,7 @@ class UserInput extends Component {
 		         	defaultExpanded
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Plan Summary</Typography>
+		            	<Typography style = {styles.expansionSummary} >Plan Summary</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserPlanSummary
@@ -146,7 +151,7 @@ class UserInput extends Component {
 		         	onChange={this.handleChange('panel1')}
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Edit Plan</Typography>
+		            	<Typography style = {styles.expansionSummary} >Edit Plan</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserPlanInput
@@ -163,7 +168,7 @@ class UserInput extends Component {
 		         	onChange={this.handleChange('panel2')}
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Add Expense</Typography>
+		            	<Typography style = {styles.expansionSummary} >Add Expense</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserExpenseInput
