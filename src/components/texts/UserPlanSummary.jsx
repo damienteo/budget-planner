@@ -20,7 +20,6 @@ const styles = {
 	    padding: 5,
 	    borderRadius: 5,
 	},
-
 }
 
 class UserSummary extends Component {
@@ -51,7 +50,7 @@ class UserSummary extends Component {
 						months.
 					</Typography>
 					<Typography style = {styles.budget}> 
-						You can spend only
+						You should spend less than
 							<strong> ${ monthlyBudget } </strong> 
 						per month.
 					</Typography>

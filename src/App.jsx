@@ -15,8 +15,6 @@ import {
 }
 from '@material-ui/core';
 
-import teal from '@material-ui/core/colors/teal';
-
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary'
 import UserInput from './components/UserInput';
@@ -97,28 +95,6 @@ class App extends React.Component {
         ],
         datasets:[
           {
-            label: 'Planned Budget',
-            data:[
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-            ],
-              backgroundColor: "rgba(69, 186, 69, 0.2)",
-              borderColor: "rgba(69, 186, 69, 1)",
-              borderWidth: 0,
-              hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
-              hoverBorderColor: "rgba(69, 186, 69, 1)",
-          },
-          {
             stack: 'stack1',
             label: 'Expenses',
             data:[
@@ -143,7 +119,7 @@ class App extends React.Component {
           },
           {
             stack: 'stack1',
-            label: 'Adjusted Budget',
+            label: 'Planned Budget',
             data:[
               1500,
               1500,
@@ -158,11 +134,11 @@ class App extends React.Component {
               1500,
               1500,
             ],
-              backgroundColor: "rgba(255, 255, 137, 0.4)",
-              borderColor: "rgba(255, 255, 137, 1)",
+              backgroundColor: "rgba(69, 186, 69, 0.2)",
+              borderColor: "rgba(69, 186, 69, 1)",
               borderWidth: 0,
-              hoverBackgroundColor: "rgba(255, 255, 137, 1)",
-              hoverBorderColor: "rgba(255, 255, 137, 1)",
+              hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
+              hoverBorderColor: "rgba(69, 186, 69, 1)",
           },
         ],
       },
@@ -213,7 +189,7 @@ class App extends React.Component {
     }
 
     let newChart = { ...this.state.chartData}
-    newChart.datasets[0].data = newValues;
+    newChart.datasets[1].data = newValues;
 
     return newChart;
 
@@ -247,19 +223,65 @@ class App extends React.Component {
     })
   }
 
+  calculateNewBudget(newExpenseData) {
+
+    const { monthlyBudget } = this.state;
+
+    let yearlyBudget = monthlyBudget * 12;
+    let currentTotalExpense = newExpenseData.reduce((a,b) => a + b, 0);
+    let leftoverBudget = yearlyBudget - currentTotalExpense;
+
+    let unexpendedMonths = 0
+    let countUnexpendedMonths = () => {
+      for(let entry in newExpenseData) {
+        if (newExpenseData[entry] === 0) 
+          unexpendedMonths++;
+      }
+    }
+    countUnexpendedMonths()
+    let newAdjustedBudget = leftoverBudget/unexpendedMonths;
+
+    return Math.round(newAdjustedBudget);
+  }
+
   setExpense() {
 
     const { newExpense, newMonth, chartData } = this.state;
 
     let newExpenseChart = { ...chartData}
 
-    let newExpenseData = newExpenseChart.datasets[1].data.map( 
+    let currentMonthBudget = 
+      newExpenseChart.datasets[1].data[newMonth]+newExpenseChart.datasets[0].data[newMonth];
+
+    let newExpenseData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
         return (index === newMonth) ?  x + parseFloat(newExpense) : x;
       }
     );
 
-    newExpenseChart.datasets[1].data = newExpenseData;
+    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+    let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
+
+    let newBudgetData = newExpenseChart.datasets[0].data.map( 
+      (x, index) => {
+
+        let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
+
+        if (index === newMonth) {
+          return currentMonthLeftoverBudget;
+        } else if (newExpenseData[index] === 0) {
+          return newAdjustedBudget;
+        } else if (leftoverBudget <= 0) {
+          return "";
+        } else {
+          return leftoverBudget;
+        }
+
+      }
+    );
+
+    newExpenseChart.datasets[0].data = newExpenseData;
+    newExpenseChart.datasets[1].data = newBudgetData;
 
     this.setState({
       chartData: newExpenseChart,
