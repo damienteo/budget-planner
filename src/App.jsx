@@ -141,7 +141,7 @@ class App extends React.Component {
 
   budgetPerMonth(income, goal, years) {
     let monthlySavingsTarget = goal/(years*12);
-    let roundedMonthlySavingsTarget = Math.round((monthlySavingsTarget + 0.00001) * 100) / 100;
+    let roundedMonthlySavingsTarget = Math.round(monthlySavingsTarget);
     return income - roundedMonthlySavingsTarget;  
   }
 

@@ -4,7 +4,9 @@ import {
 	TextField,
 	MenuItem,
 	withStyles,
-	Button
+	Button,
+	Grid,
+	InputAdornment
 }
 from '@material-ui/core';
 
@@ -95,51 +97,58 @@ class UserExpenseInput extends Component {
 
 		return(
 			<React.Fragment>
-				<TextField
-					key="newExpense"
-					type="number"
-					name="newExpense"
-					value={ newExpense}
-					onChange={this.handleExpenseChange}
-					label="Input new Expense:"
-					InputLabelProps={{
-						shrink: true,
-					}}
-					margin="normal"
-					variant="outlined"
-				/>
-				<TextField
-				 	key="newMonth"
-					type="number"
-					name="newMonth"
-					select
-					label="Month:"
-					value={ newMonth }
-					onChange={this.handleMonthChange}
-					style = {styles.menu}
-					SelectProps={{
-						MenuProps: {
-							// className: classes.menu,
-						},
-					}}
-					// helperText="Month:"
-					margin="normal"
-					variant="outlined"
-				>
-					{months.map(option => (
-						<MenuItem key={option.value} value={option.value}>
-							{option.label}
-						</MenuItem>
-					))}
-				</TextField>
-				<Button 
-					variant="outlined" 
-					size="medium" 
-					color="primary"
-					onClick={ this.setExpense }
-				>
-		        	Confirm Expense
-		        </Button>
+				<Grid container>
+					<TextField
+						key="newExpense"
+						type="number"
+						name="newExpense"
+						value={ newExpense}
+						onChange={this.handleExpenseChange}
+						label="Input new Expense:"
+						InputLabelProps={{
+							shrink: true,
+						}}
+						margin="normal"
+						variant="outlined"
+						InputProps={{
+				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+				        }}
+					/>
+					<TextField
+					 	key="newMonth"
+						type="number"
+						name="newMonth"
+						select
+						label="Month:"
+						value={ newMonth }
+						onChange={this.handleMonthChange}
+						style = {styles.menu}
+						SelectProps={{
+							MenuProps: {
+								// className: classes.menu,
+							},
+						}}
+						// helperText="Month:"
+						margin="normal"
+						variant="outlined"
+					>
+						{months.map(option => (
+							<MenuItem 
+								key={option.value} 
+								value={option.value}>
+								{option.label}
+							</MenuItem>
+						))}
+					</TextField>
+					<Button 
+						variant="outlined" 
+						size="medium" 
+						color="primary"
+						onClick={ this.setExpense }
+					>
+			        	Confirm Expense
+			        </Button>
+			    </Grid>
 	        </React.Fragment>
 		)
     }

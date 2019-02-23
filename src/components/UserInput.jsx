@@ -78,15 +78,10 @@ class UserInput extends Component {
 		this.setExpense = this.setExpense.bind(this);
 
 		this.state = {
-			expanded: '',
+		    expanded: null,
 		};
-	}
 
-	handleChange = panel => (event, expanded) => {
-		this.setState({
-		 	expanded: expanded ? panel : false,
-		});
-	};
+	}
 
 	handlePlanChange(event) {
 		const {name, value} = event.target
@@ -104,6 +99,12 @@ class UserInput extends Component {
 	setExpense() {
 		this.props.setExpense();
 	}
+
+	handleChange = panel => (event, expanded) => {
+	    this.setState({
+	    	expanded: expanded ? panel : false,
+	    });
+	 };
 
     render() {
 
@@ -123,11 +124,10 @@ class UserInput extends Component {
         	<React.Fragment>
 	        	<ExpansionPanel
 		         	square
-		         	expanded={expanded === 'panel1'}
-		         	onChange={this.handleChange('panel1')}
+		         	defaultExpanded
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Plan Summary:</Typography>
+		            	<Typography>Plan Summary</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserPlanSummary
@@ -140,11 +140,11 @@ class UserInput extends Component {
         		</ExpansionPanel>
         		<ExpansionPanel
 		         	square
-		         	expanded={expanded === 'panel2'}
-		         	onChange={this.handleChange('panel2')}
+		         	expanded={expanded === 'panel1'} 
+		         	onChange={this.handleChange('panel1')}
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Edit Plan:</Typography>
+		            	<Typography>Edit Plan</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserPlanInput
@@ -157,11 +157,11 @@ class UserInput extends Component {
         		</ExpansionPanel>
         		<ExpansionPanel
 		         	square
-		         	expanded={expanded === 'panel3'}
-		         	onChange={this.handleChange('panel3')}
+		         	expanded={expanded === 'panel2'} 
+		         	onChange={this.handleChange('panel2')}
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography>Add Expense:</Typography>
+		            	<Typography>Add Expense</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserExpenseInput
