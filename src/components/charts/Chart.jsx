@@ -16,7 +16,7 @@ class Chart extends Component {
 	render() {
 
 		defaults.global.defaultFontFamily = 'Roboto';
-		defaults.global.animation.duration = 1000;
+		defaults.global.animation.duration = 2000;
 		defaults.global.layout.padding = 20;
 
 		const {chartData} = this.props;
@@ -26,7 +26,7 @@ class Chart extends Component {
 				<Bar
 					data={chartData}
 					width={100}
-					height={50}
+					height={65}
 					options={{
 						title:{
 							display:false,

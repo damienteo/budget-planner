@@ -26,6 +26,12 @@ import Chart from './components/charts/Chart';
 //   )
 // }
 
+const styles = {
+  chartPaper: {
+    height: '100%',
+  },
+};
+
 class App extends React.Component {
 
   constructor() {
@@ -91,9 +97,9 @@ class App extends React.Component {
               1500,
               1500,
             ],
-              backgroundColor: "rgba(69, 186, 69, 0.2)",
+              backgroundColor: "rgba(69, 186, 69, 0.1)",
               borderColor: "rgba(69, 186, 69, 1)",
-              borderWidth: 2,
+              borderWidth: 0,
               hoverBackgroundColor: "rgba(269, 186, 69, 0.4)",
               hoverBorderColor: "rgba(69, 186, 69, 1)",
           },
@@ -256,7 +262,7 @@ class App extends React.Component {
               </Paper> 
             </Grid>
             <Grid item sm = {8}>
-              <Paper>
+              <Paper style = {styles.menu}>
                 <Chart chartData={ chartData }/>
               </Paper>
             </Grid>
