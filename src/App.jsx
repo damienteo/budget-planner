@@ -204,18 +204,22 @@ class App extends React.Component {
 
   setExpense() {
 
-    const { newExpense, newMonth } = this.state;
+    const { newExpense, newMonth, chartData } = this.state;
 
-    let newExpenseChart = { ...this.state.chartData}
-    newExpenseChart.datasets[1].data[newMonth] = parseFloat(newExpense);
+    let newExpenseChart = { ...chartData}
+
+    let newExpenseData = newExpenseChart.datasets[1].data.map( 
+      (x, index) => {
+        return (index === newMonth) ?  x + parseFloat(newExpense) : x;
+      }
+    );
+
+    newExpenseChart.datasets[1].data = newExpenseData;
 
     this.setState({
       chartData: newExpenseChart,
       newExpense: 0,
-      newMonth: 0,
     })
-
-    console.log("updating expense");
 
   }
 
