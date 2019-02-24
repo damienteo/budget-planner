@@ -17,6 +17,7 @@ from '@material-ui/core';
 
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary'
+import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
 
@@ -306,6 +307,7 @@ class App extends React.Component {
       <React.Fragment>
         <ErrorBoundary>
           <MuiThemeProvider theme={theme}>
+            <NavBar/>
             <Grid container>
               <Grid item md={4} xs={12}>
                 <Paper>
