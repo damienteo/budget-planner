@@ -52,7 +52,10 @@ class UserSummary extends Component {
 					<Typography style = {styles.budget}> 
 						You should spend less than
 							<strong> ${ monthlyBudget } </strong> 
-						per month.
+						per month*
+					</Typography>
+					<Typography variant="caption"> 
+						*Spending less allows you spend more in following months.
 					</Typography>
 				</Grid>
 			</React.Fragment>
