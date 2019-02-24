@@ -7,6 +7,13 @@ import {
 }
 from '@material-ui/core';
 
+const styles = {
+  input: {
+    width: 150,
+    margin: 10,
+  },
+};
+
 class UserPlan extends Component {
 
 	constructor(props) {
@@ -40,6 +47,7 @@ class UserPlan extends Component {
 						InputProps={{
 				            endAdornment: <InputAdornment position="end">Years</InputAdornment>,
 				        }}
+				        style = {styles.input}
 					/>
 					<TextField
 						key="goal"
@@ -56,6 +64,7 @@ class UserPlan extends Component {
 						InputProps={{
 				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
 				        }}
+				        style = {styles.input}
 					/>
 					<TextField
 						key="monthlyIncome"
@@ -72,6 +81,7 @@ class UserPlan extends Component {
 						InputProps={{
 				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
 				        }}
+				        style = {styles.input}
 					/>
 				</Grid>
 			</React.Fragment>

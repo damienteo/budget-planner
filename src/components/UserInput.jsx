@@ -52,9 +52,9 @@ const ExpansionPanelSummary = withStyles({
     backgroundColor: 'rgba(0, 77, 64,.14)',
     border: '1px solid rgba(0, 77, 64,.125)',
     marginBottom: -1,
-    minHeight: 56,
+    minHeight: 50,
     '&$expanded': {
-      minHeight: 20,
+      minHeight: 10,
       // backgroundColor: 'rgba(0, 77, 64, 0.4)',
       // border: '1px solid rgba(0, 77, 64,.3)'
     },

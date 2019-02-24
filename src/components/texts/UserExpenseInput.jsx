@@ -14,6 +14,10 @@ const styles = {
   menu: {
     width: 200,
   },
+  input: {
+    width: 150,
+    margin: 10,
+  },
 };
 
 const months = [
@@ -113,6 +117,7 @@ class UserExpenseInput extends Component {
 						InputProps={{
 				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
 				        }}
+				        style = {styles.input}
 					/>
 					<TextField
 					 	key="newMonth"
@@ -128,8 +133,8 @@ class UserExpenseInput extends Component {
 								// className: classes.menu,
 							},
 						}}
+						style = {styles.input}
 						// helperText="Month:"
-						margin="normal"
 						variant="outlined"
 					>
 						{months.map(option => (
@@ -146,6 +151,7 @@ class UserExpenseInput extends Component {
 						color="secondary"
 						fullWidth
 						onClick={ this.setExpense }
+						style = {styles.input}
 					>
 			        	Confirm Expense
 			        </Button>
