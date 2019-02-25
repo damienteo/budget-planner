@@ -179,11 +179,15 @@ class App extends React.Component {
       .then(function(response){
         response.json()
           .then(function(data) {
-            console.log(data);
-            here.setState({
-              username: user_data.user_name,
-              loggedIn: true
-            })
+            if (data.registered) {
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true
+              })
+            } else {
+              console.log("data",data.message);
+              console.log("data",data.registered);
+            }
           })
       })
       .catch(function(err) {
