@@ -82,10 +82,9 @@ class Registration extends React.Component {
 	 };
 
 	handleSubmit() {
-		//todo: validate
 		const {username, password} = this.state.userInput
 		console.log(username, password);
-		// this.props.handleUserRegistration(username, password);
+		this.props.handleUserRegistration(username, password);
 		this.setState({
 			open: !this.state.open,
 			userInput: {

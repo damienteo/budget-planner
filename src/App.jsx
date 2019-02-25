@@ -153,17 +153,15 @@ class App extends React.Component {
     // this.getChartData();
   }
 
-  handleUserRegistration(event) {
+  handleUserRegistration(username, password) {
 
-    console.log(event);
+    console.log("app", username, password);
 
     const here = this;
 
-    event.preventDefault();
-    // console.log('adding country...');
     let user_data = {
-      user_name: this.refs.user_name.value,
-      user_password: this.refs.user_password.value
+      user_name: username,
+      user_password: password
     };
     let request = new Request('http://localhost:4000/api/new-user', {
       method: 'POST',

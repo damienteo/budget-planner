@@ -25,8 +25,8 @@ class NavBar extends React.Component {
 		this.handleUserRegistration = this.handleUserRegistration.bind(this);
 	}
 
-	handleUserRegistration(event) {
-		this.props.handleUserRegistration(event);
+	handleUserRegistration(username, password) {
+		this.props.handleUserRegistration(username, password);
 	}
 
 	render() {
