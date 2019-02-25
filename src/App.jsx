@@ -56,9 +56,11 @@ class App extends React.Component {
     this.handleExpensesChange = this.handleExpensesChange.bind(this);
     this.handleMonthChange = this.handleMonthChange.bind(this);
     this.setExpense = this.setExpense.bind(this);
+    this.handleUserRegistration = this.handleUserRegistration.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
+      username:'',
       years: 0,
       monthlyIncome: 0,
       goal: 0,
@@ -150,6 +152,47 @@ class App extends React.Component {
     this.getUserPlan();
     // this.getChartData();
   }
+
+  handleUserRegistration(event) {
+
+    console.log(event);
+
+    const here = this;
+
+    event.preventDefault();
+    // console.log('adding country...');
+    let user_data = {
+      user_name: this.refs.user_name.value,
+      user_password: this.refs.user_password.value
+    };
+    let request = new Request('http://localhost:4000/api/new-user', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function(response){
+        response.json()
+          .then(function(data) {
+            console.log(data);
+            here.setState({
+              username: user_data.user_name
+            })
+          })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  }
+
+    // handleUserLogin() {
+
+  // }
 
   getUserPlan() {
     //ajaxcalls here
@@ -307,7 +350,10 @@ class App extends React.Component {
       <React.Fragment>
         <ErrorBoundary>
           <MuiThemeProvider theme={theme}>
-            <NavBar/>
+            <NavBar
+              handleUserRegistration={ this.handleUserRegistration }
+
+            />
             <Grid container>
               <Grid item md={4} xs={12}>
                 <Paper>

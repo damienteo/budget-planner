@@ -5,6 +5,7 @@ import {
 	Typography,
 	Button, 
 } from '@material-ui/core';
+import { Registration } from './validations'
 
 const styles = {
 	heading: {
@@ -18,6 +19,16 @@ const styles = {
 }
 
 class NavBar extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.handleUserRegistration = this.handleUserRegistration.bind(this);
+	}
+
+	handleUserRegistration(event) {
+		this.props.handleUserRegistration(event);
+	}
+
 	render() {
 		return(
 			<React.Fragment>
@@ -37,12 +48,9 @@ class NavBar extends React.Component {
 		          >
 		          	Login
 		          </Button>
-		          <Button 
-		          	color="inherit"
-		          	variant="outlined"
-		          >
-		          	Register
-		          </Button>
+		          <Registration 
+		          	handleUserRegistration={ this.handleUserRegistration }
+		          />
 		        </Toolbar>
 		      </AppBar>
 		    </React.Fragment>
