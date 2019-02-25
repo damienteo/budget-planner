@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid } from '@material-ui/core/';
+import { Grid, Snackbar, IconButton, Button } from '@material-ui/core/';
+import CloseIcon from '@material-ui/icons/Close';
 
 // import {
 //   BrowserRouter, 
@@ -16,6 +17,7 @@ import {
 from '@material-ui/core';
 
 import './App.css';
+import { Alert } from './components/validations'
 import ErrorBoundary from './components/ErrorBoundary'
 import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
@@ -58,11 +60,14 @@ class App extends React.Component {
     this.setExpense = this.setExpense.bind(this);
     this.handleUserRegistration = this.handleUserRegistration.bind(this);
     this.handleUserLogout = this.handleUserLogout.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
       username:'',
       loggedIn: false,
+      alert: false,
+      alertMessage: '',
       years: 0,
       monthlyIncome: 0,
       goal: 0,
@@ -182,11 +187,15 @@ class App extends React.Component {
             if (data.registered) {
               here.setState({
                 username: user_data.user_name,
-                loggedIn: true
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
               })
             } else {
-              console.log("data",data.message);
-              console.log("data",data.registered);
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
             }
           })
       })
@@ -195,10 +204,20 @@ class App extends React.Component {
       })
   }
 
+  closeAlert(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({  alert: false });
+  };
+
   handleUserLogout() {
     this.setState({
       username:'',
       loggedIn: false,
+      alert: true,
+      alertMessage: 'You have logged out'
     })
   }
 
@@ -357,7 +376,9 @@ class App extends React.Component {
       newMonth,
       chartData,
       username,
-      loggedIn 
+      loggedIn,
+      alert,
+      alertMessage
     } = this.state;
 
     return (
@@ -369,6 +390,11 @@ class App extends React.Component {
               handleUserLogout={ this.handleUserLogout }
               username={ username }
               loggedIn={ loggedIn}
+            />
+            <Alert 
+              alert={ alert }
+              alertMessage={ alertMessage }
+              closeAlert={ this.closeAlert }
             />
             <Grid container>
               <Grid item md={4} xs={12}>
