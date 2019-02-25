@@ -1,7 +1,7 @@
-import Registration from './Registration'
+import UserForm from './UserForm'
 import Alert from './Alert'
 
 export {
-	Registration,
+	UserForm,
 	Alert
 }

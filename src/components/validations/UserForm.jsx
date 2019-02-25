@@ -20,7 +20,7 @@ import {
 
 const styles = {
 	button: {
-		margin: 10,
+		margin: 5,
 	},
 	textfield: {
 		padding: 0,
@@ -32,7 +32,7 @@ const styles = {
 	}
 }
 
-class Registration extends React.Component {
+class UserForm extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -84,7 +84,7 @@ class Registration extends React.Component {
 	handleSubmit() {
 		const {username, password} = this.state.userInput
 		console.log(username, password);
-		this.props.handleUserRegistration(username, password);
+		this.props.handleUser(username, password);
 		this.setState({
 			open: !this.state.open,
 			userInput: {
@@ -100,7 +100,7 @@ class Registration extends React.Component {
 	render() {
 
 		const { open, userInput: { username, password, repeatPassword } } = this.state;
-		const { fullScreen } = this.props;
+		const { fullScreen, message, button, register } = this.props;
 
 		return(
 			<React.Fragment>
@@ -109,8 +109,9 @@ class Registration extends React.Component {
 					onClick={this.handleToggle}
 					color="inherit"
 					variant="outlined"
+					style={ styles.button }
 				>
-					Register
+					{ button }
 				</Button>
 
 				<Dialog
@@ -162,25 +163,28 @@ class Registration extends React.Component {
 								]}
 							/>
 							<br />
-							<TextValidator
-								label="Repeat password"
-								value={repeatPassword}
-								type="password"
-								onChange={this.handleChange('repeatPassword')}
-								style={styles.textfield}
-								validators={[
-									'required',
-									'isMinLength', 
-									'matchRegexp:^[a-zA-Z0-9]+$', 
-									'isPasswordMatch'
-								]}
-								errorMessages={[
-									'this field is required', 
-									'Must be at least 6 charecters', 
-									'Please use either alphabets or numbers', 
-									'Password mismatch'
-								]}
-							/>
+							{
+							register &&
+								<TextValidator
+									label="Repeat password"
+									value={repeatPassword}
+									type="password"
+									onChange={this.handleChange('repeatPassword')}
+									style={styles.textfield}
+									validators={[
+										'required',
+										'isMinLength', 
+										'matchRegexp:^[a-zA-Z0-9]+$', 
+										'isPasswordMatch'
+									]}
+									errorMessages={[
+										'this field is required', 
+										'Must be at least 6 charecters', 
+										'Please use either alphabets or numbers', 
+										'Password mismatch'
+									]}
+								/>
+							}
 							<DialogActions>
 								<Button 
 									color="primary"
@@ -189,7 +193,7 @@ class Registration extends React.Component {
 									// onClick={this.handleSubmit}
 									style={styles.button}
 								>
-									Confirm Registration
+									{ message }
 								</Button>
 							</DialogActions>
 						</DialogContent>
@@ -201,8 +205,8 @@ class Registration extends React.Component {
 	}
 }
 
-Registration.propTypes = {
+UserForm.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
 };
 
-export default  withMobileDialog()(Registration);
+export default  withMobileDialog()(UserForm);

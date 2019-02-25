@@ -61,6 +61,7 @@ class App extends React.Component {
     this.handleUserRegistration = this.handleUserRegistration.bind(this);
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
@@ -162,8 +163,6 @@ class App extends React.Component {
 
   handleUserRegistration(username, password) {
 
-    console.log("app", username, password);
-
     const here = this;
 
     let user_data = {
@@ -185,6 +184,48 @@ class App extends React.Component {
         response.json()
           .then(function(data) {
             if (data.registered) {
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  }
+
+  handleUserLogin(username, password) {
+
+    const here = this;
+
+    let user_data = {
+      user_name: username,
+      user_password: password
+    };
+    let request = new Request('http://localhost:4000/api/login', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function(response){
+        response.json()
+          .then(function(data) {
+            if (data.loggedIn) {
               here.setState({
                 username: user_data.user_name,
                 loggedIn: true,
@@ -388,6 +429,7 @@ class App extends React.Component {
             <NavBar
               handleUserRegistration={ this.handleUserRegistration }
               handleUserLogout={ this.handleUserLogout }
+              handleUserLogin={ this.handleUserLogin }
               username={ username }
               loggedIn={ loggedIn}
             />
