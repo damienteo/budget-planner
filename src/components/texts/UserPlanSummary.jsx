@@ -30,33 +30,42 @@ class UserSummary extends Component {
 		return(
 			<React.Fragment>
 				<Grid container>
-					<Typography> 
-						Your goal is to save: 
-							<strong> ${ goal } </strong> 
-						in
-							<strong> { years } </strong>
-						year(s).
-					</Typography>
-					<Typography> 
-						Your monthly income is 
-							<strong> ${  monthlyIncome }</strong> 
-						.
-					</Typography>
-					<Typography> 
-						You need to save: 
-							<strong> ${ savingsPerMonth({goal}, {years})} </strong> 
-						per month for
-							<strong> { totalMonths({years})} </strong> 
-						months.
-					</Typography>
-					<Typography style = {styles.budget}> 
-						You should spend less than
-							<strong> ${ monthlyBudget } </strong> 
-						per month*
-					</Typography>
-					<Typography variant="caption"> 
-						*Spending less allows you spend more in following months.
-					</Typography>
+					<Grid item xs={12}>
+						<Typography style={{display: 'block'}}> 
+							Goal: 
+								<strong> ${ goal } </strong> 
+							in
+								<strong> { years } </strong>
+							year(s)
+						</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography> 
+							Monthly Income: 
+								<strong> ${  monthlyIncome }</strong> 
+						</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography> 
+							You need to save: 
+								<strong> ${ savingsPerMonth({goal}, {years})} </strong> 
+							/month for
+								<strong> { totalMonths({years})} </strong> 
+							months.
+						</Typography>
+					</Grid>
+					<Grid item>
+						<Typography style = {styles.budget}> 
+							Budget: less than
+								<strong> ${ monthlyBudget } </strong> 
+							/month*
+						</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography variant="caption"> 
+							*Spending less lets you spend more later.
+						</Typography>
+					</Grid>
 				</Grid>
 			</React.Fragment>
 		)

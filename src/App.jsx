@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid } from '@material-ui/core/';
+import { Grid, Snackbar, IconButton, Button } from '@material-ui/core/';
+import CloseIcon from '@material-ui/icons/Close';
 
 // import {
 //   BrowserRouter, 
@@ -16,6 +17,7 @@ import {
 from '@material-ui/core';
 
 import './App.css';
+import { Alert } from './components/validations'
 import ErrorBoundary from './components/ErrorBoundary'
 import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
@@ -56,9 +58,17 @@ class App extends React.Component {
     this.handleExpensesChange = this.handleExpensesChange.bind(this);
     this.handleMonthChange = this.handleMonthChange.bind(this);
     this.setExpense = this.setExpense.bind(this);
+    this.handleUserRegistration = this.handleUserRegistration.bind(this);
+    this.handleUserLogout = this.handleUserLogout.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
+      username:'',
+      loggedIn: false,
+      alert: false,
+      alertMessage: '',
       years: 0,
       monthlyIncome: 0,
       goal: 0,
@@ -150,6 +160,111 @@ class App extends React.Component {
     this.getUserPlan();
     // this.getChartData();
   }
+
+  handleUserRegistration(username, password) {
+
+    const here = this;
+
+    let user_data = {
+      user_name: username,
+      user_password: password
+    };
+    let request = new Request('http://localhost:4000/api/new-user', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function(response){
+        response.json()
+          .then(function(data) {
+            if (data.registered) {
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  }
+
+  handleUserLogin(username, password) {
+
+    const here = this;
+
+    let user_data = {
+      user_name: username,
+      user_password: password
+    };
+    let request = new Request('http://localhost:4000/api/login', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function(response){
+        response.json()
+          .then(function(data) {
+            if (data.loggedIn) {
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  }
+
+  closeAlert(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({  alert: false });
+  };
+
+  handleUserLogout() {
+    this.setState({
+      username:'',
+      loggedIn: false,
+      alert: true,
+      alertMessage: 'You have logged out'
+    })
+  }
+
+    // handleUserLogin() {
+
+  // }
 
   getUserPlan() {
     //ajaxcalls here
@@ -300,14 +415,29 @@ class App extends React.Component {
       monthlyBudget,
       newExpense,
       newMonth,
-      chartData 
+      chartData,
+      username,
+      loggedIn,
+      alert,
+      alertMessage
     } = this.state;
 
     return (
       <React.Fragment>
         <ErrorBoundary>
           <MuiThemeProvider theme={theme}>
-            <NavBar/>
+            <NavBar
+              handleUserRegistration={ this.handleUserRegistration }
+              handleUserLogout={ this.handleUserLogout }
+              handleUserLogin={ this.handleUserLogin }
+              username={ username }
+              loggedIn={ loggedIn}
+            />
+            <Alert 
+              alert={ alert }
+              alertMessage={ alertMessage }
+              closeAlert={ this.closeAlert }
+            />
             <Grid container>
               <Grid item md={4} xs={12}>
                 <Paper>
