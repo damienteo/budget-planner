@@ -91,6 +91,7 @@ class Registration extends React.Component {
 	    		...this.state.userInput,
 	    		username: '',
 	    		password: '', 
+	    		repeatPassword: '',
 	    	}
 
 		})

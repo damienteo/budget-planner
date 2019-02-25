@@ -57,6 +57,7 @@ class App extends React.Component {
     this.handleMonthChange = this.handleMonthChange.bind(this);
     this.setExpense = this.setExpense.bind(this);
     this.handleUserRegistration = this.handleUserRegistration.bind(this);
+    this.handleUserLogout = this.handleUserLogout.bind(this);
     // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
@@ -188,6 +189,13 @@ class App extends React.Component {
       .catch(function(err) {
         console.log(err);
       })
+  }
+
+  handleUserLogout() {
+    this.setState({
+      username:'',
+      loggedIn: false,
+    })
   }
 
     // handleUserLogin() {
@@ -354,6 +362,7 @@ class App extends React.Component {
           <MuiThemeProvider theme={theme}>
             <NavBar
               handleUserRegistration={ this.handleUserRegistration }
+              handleUserLogout={ this.handleUserLogout }
               username={ username }
               loggedIn={ loggedIn}
             />
