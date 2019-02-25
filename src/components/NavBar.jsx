@@ -13,6 +13,10 @@ const styles = {
 		fontFamily: "'Rancho', 'Roboto'",
 		fontSize: 40,
 	},
+	greeting: {
+		fontFamily: "'Rancho', 'Roboto'",
+		fontSize: 30,
+	},
 	button: {
 		margin: 10,
 	},
@@ -30,6 +34,10 @@ class NavBar extends React.Component {
 	}
 
 	render() {
+
+		const {username, loggedIn} = this.props;
+		console.log("navbar render", loggedIn);
+
 		return(
 			<React.Fragment>
 		      <AppBar position="static">
@@ -41,6 +49,17 @@ class NavBar extends React.Component {
 		          >
 		            BudgetPlanner
 		          </Typography>
+		          {
+					loggedIn &&
+						<React.Fragment>
+							<Typography
+								color="inherit"
+								style = {styles.greeting}
+							> 
+								Hello { username }!
+							</Typography>
+						</React.Fragment>
+					}
 		          <Button 
 		          	color="inherit"
 		          	variant="outlined"

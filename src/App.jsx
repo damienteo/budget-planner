@@ -61,6 +61,7 @@ class App extends React.Component {
 
     this.state = {
       username:'',
+      loggedIn: false,
       years: 0,
       monthlyIncome: 0,
       goal: 0,
@@ -179,7 +180,8 @@ class App extends React.Component {
           .then(function(data) {
             console.log(data);
             here.setState({
-              username: user_data.user_name
+              username: user_data.user_name,
+              loggedIn: true
             })
           })
       })
@@ -341,7 +343,9 @@ class App extends React.Component {
       monthlyBudget,
       newExpense,
       newMonth,
-      chartData 
+      chartData,
+      username,
+      loggedIn 
     } = this.state;
 
     return (
@@ -350,7 +354,8 @@ class App extends React.Component {
           <MuiThemeProvider theme={theme}>
             <NavBar
               handleUserRegistration={ this.handleUserRegistration }
-
+              username={ username }
+              loggedIn={ loggedIn}
             />
             <Grid container>
               <Grid item md={4} xs={12}>
