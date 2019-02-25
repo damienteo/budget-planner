@@ -45,6 +45,7 @@ class Registration extends React.Component {
 			userInput: {
 				username: '',
 				password: '',
+				repeatPassword: '',
 			},
 		}
 	}
@@ -52,6 +53,12 @@ class Registration extends React.Component {
 	componentDidMount() {
         ValidatorForm.addValidationRule('isMinLength', (value) => {
             if (value.length < 6) {
+                return false;
+            }
+            return true;
+        });
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            if (value !== this.state.userInput.password) {
                 return false;
             }
             return true;
@@ -92,7 +99,7 @@ class Registration extends React.Component {
 	
 	render() {
 
-		const { open, userInput: { username, password } } = this.state;
+		const { open, userInput: { username, password, repeatPassword } } = this.state;
 		const { fullScreen } = this.props;
 
 		return(
@@ -125,8 +132,16 @@ class Registration extends React.Component {
 								onChange={this.handleChange('username')}
 								style={styles.textfield}
 								maxLength="5"
-								validators={['required','isMinLength', 'matchRegexp:^[a-zA-Z0-9]+$']}
-								errorMessages={['this field is required', 'Must be at least 6 charecters', 'Please use either alphabets or numbers']}
+								validators={[
+									'required',
+									'isMinLength', 
+									'matchRegexp:^[a-zA-Z0-9]+$'
+								]}
+								errorMessages={[
+									'this field is required', 
+									'Must be at least 6 charecters', 
+									'Please use either alphabets or numbers'
+								]}
 							/>
 							<br />
 							<TextValidator
@@ -135,8 +150,36 @@ class Registration extends React.Component {
 								type="password"
 								onChange={this.handleChange('password')}
 								style={styles.textfield}
-								validators={['required','isMinLength', 'matchRegexp:^[a-zA-Z0-9]+$']}
-								errorMessages={['this field is required', 'Must be at least 6 charecters', 'Please use either alphabets or numbers']}
+								validators={[
+									'required',
+									'isMinLength', 
+									'matchRegexp:^[a-zA-Z0-9]+$'
+								]}
+								errorMessages={[
+									'this field is required', 
+									'Must be at least 6 charecters', 
+									'Please use either alphabets or numbers'
+								]}
+							/>
+							<br />
+							<TextValidator
+								label="Repeat password"
+								value={repeatPassword}
+								type="password"
+								onChange={this.handleChange('repeatPassword')}
+								style={styles.textfield}
+								validators={[
+									'required',
+									'isMinLength', 
+									'matchRegexp:^[a-zA-Z0-9]+$', 
+									'isPasswordMatch'
+								]}
+								errorMessages={[
+									'this field is required', 
+									'Must be at least 6 charecters', 
+									'Please use either alphabets or numbers', 
+									'Password mismatch'
+								]}
 							/>
 							<DialogActions>
 								<Button 
