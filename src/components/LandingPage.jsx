@@ -20,18 +20,18 @@ const values = [
 ];
 
 const hues =[
-	"rgba(255, 242, 176)",
-	"rgba(255, 248, 176)",
-	"rgba(255, 255, 176)",
-	"rgba(248, 255, 176)",
-	"rgba(242, 255, 176)",
-	"rgba(235, 255, 176)",
-	"rgba(228, 255, 176)",
-	"rgba(221, 255, 176)",
-	"rgba(215, 255, 176)",
-	"rgba(208, 255, 176)",
-	"rgba(201, 255, 176)",
-	"rgba(195, 255, 176)",
+	"rgba(96, 125, 139)",
+	"rgba(88, 139, 134)",
+	"rgba(72, 139, 127)",
+	"rgba(64, 139, 120)",
+	"rgba(56, 135, 113)",
+	"rgba(48, 130, 106)",
+	"rgba(40, 120, 100)",
+	"rgba(32, 110, 98)",
+	"rgba(24, 100, 87)",
+	"rgba(16, 90, 76)",
+	"rgba(8, 80, 75)",
+	"rgba(0, 70, 64)",
 ];
 
 class LandingPage extends React.Component {
@@ -61,10 +61,7 @@ class LandingPage extends React.Component {
             label: '',
             data:values,
               backgroundColor: hues,
-              borderColor: "rgba(255,99,132,1)",
-              borderWidth: 0,
-              hoverBackgroundColor: "rgba(255,99,132,0.5)",
-              hoverBorderColor: "rgba(255,99,132,1)",
+              hoverBackgroundColor: "rgba(96, 125, 139)",
           },
         ],
       },
