@@ -59,7 +59,7 @@ class App extends React.Component {
 
     this.state = {
       username:'',
-      loggedIn: true,
+      loggedIn: false,
       alert: false,
       alertMessage: '',
       years: 0,
