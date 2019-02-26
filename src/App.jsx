@@ -22,14 +22,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
-
-// const Unknown = () => {
-//   return(
-//     <div> 
-//       <p> Unknown Page </p>
-//     </div>
-//   )
-// }
+import LandingPage from './components/LandingPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -66,7 +59,7 @@ class App extends React.Component {
 
     this.state = {
       username:'',
-      loggedIn: false,
+      loggedIn: true,
       alert: false,
       alertMessage: '',
       years: 0,
@@ -150,6 +143,29 @@ class App extends React.Component {
               borderWidth: 0,
               hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
               hoverBorderColor: "rgba(69, 186, 69, 1)",
+          },
+          {
+            stack: 'stack1',
+            label: 'Remaining Budget for the Month',
+            data:[
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+              '',
+            ],
+              backgroundColor: "rgba( 255, 255, 16, 0.2)",
+              borderColor: "rgba(255, 255, 16, 1)",
+              borderWidth: 0,
+              hoverBackgroundColor: "rgba(255, 255, 16, 0.4)",
+              hoverBorderColor: "rgba(255, 255, 16, 1)",
           },
         ],
       },
@@ -366,8 +382,30 @@ class App extends React.Component {
 
     let newExpenseChart = { ...chartData}
 
+    console.log("expenses", newExpenseChart.datasets[0].data[newMonth])
+    console.log("palnned", newExpenseChart.datasets[1].data[newMonth])
+    console.log("remaining", newExpenseChart.datasets[2].data[newMonth])
+
+    let currentRemainingBudget = function() {
+      if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
+        return 0;
+      } else {
+        return newExpenseChart.datasets[2].data[newMonth];
+      }
+    }
+
+    let currentPlannedBudget = function() {
+      if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
+        return 0;
+      } else {
+        return newExpenseChart.datasets[1].data[newMonth];
+      }
+    }
+
     let currentMonthBudget = 
-      newExpenseChart.datasets[1].data[newMonth]+newExpenseChart.datasets[0].data[newMonth];
+      currentPlannedBudget()+
+      currentRemainingBudget() +
+      newExpenseChart.datasets[0].data[newMonth];
 
     let newExpenseData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
@@ -376,15 +414,17 @@ class App extends React.Component {
     );
 
     let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+    console.log("current", currentMonthBudget)
+    console.log("currentleftover", currentMonthLeftoverBudget)
     let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
 
-    let newBudgetData = newExpenseChart.datasets[0].data.map( 
+    let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
 
         let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
 
         if (index === newMonth) {
-          return currentMonthLeftoverBudget;
+          return "";
         } else if (newExpenseData[index] === 0) {
           return newAdjustedBudget;
         } else if (leftoverBudget <= 0) {
@@ -396,8 +436,19 @@ class App extends React.Component {
       }
     );
 
+    let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
+      (x, index) => {
+        if (index === newMonth) {
+          return currentMonthLeftoverBudget;
+        } else {
+          return "";
+        } 
+      }
+    );
+
     newExpenseChart.datasets[0].data = newExpenseData;
-    newExpenseChart.datasets[1].data = newBudgetData;
+    newExpenseChart.datasets[1].data = newPlannedBudgetData;
+    newExpenseChart.datasets[2].data = newRemainingBudgetData;
 
     this.setState({
       chartData: newExpenseChart,
@@ -438,29 +489,36 @@ class App extends React.Component {
               alertMessage={ alertMessage }
               closeAlert={ this.closeAlert }
             />
-            <Grid container>
-              <Grid item md={4} xs={12}>
-                <Paper>
-                  <UserInput 
-                    years={ years }
-                    monthlyIncome={ monthlyIncome }
-                    goal={ goal }
-                    monthlyBudget={ monthlyBudget }
-                    newExpense={ newExpense }
-                    newMonth = { newMonth }
-                    onPlanChange={ this.handlePlanChange }
-                    onExpenseChange={ this.handleExpensesChange }
-                    onMonthChange={ this.handleMonthChange }
-                    setExpense={ this.setExpense }
-                  />
-                </Paper> 
+            {
+            !loggedIn &&
+              <LandingPage/>
+            }
+            {
+            loggedIn &&
+              <Grid container>
+                <Grid item md={4} xs={12}>
+                  <Paper>
+                    <UserInput 
+                      years={ years }
+                      monthlyIncome={ monthlyIncome }
+                      goal={ goal }
+                      monthlyBudget={ monthlyBudget }
+                      newExpense={ newExpense }
+                      newMonth = { newMonth }
+                      onPlanChange={ this.handlePlanChange }
+                      onExpenseChange={ this.handleExpensesChange }
+                      onMonthChange={ this.handleMonthChange }
+                      setExpense={ this.setExpense }
+                    />
+                  </Paper> 
+                </Grid>
+                <Grid item md={8} xs={12}>
+                  <Paper style = {styles.menu}>
+                    <Chart chartData={ chartData }/>
+                  </Paper>
+                </Grid>
               </Grid>
-              <Grid item md={8} xs={12}>
-                <Paper style = {styles.menu}>
-                  <Chart chartData={ chartData }/>
-                </Paper>
-              </Grid>
-            </Grid>
+            }
           </MuiThemeProvider>
         </ErrorBoundary>
       </React.Fragment>

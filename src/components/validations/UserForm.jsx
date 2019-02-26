@@ -24,12 +24,12 @@ const styles = {
 	},
 	textfield: {
 		padding: 0,
-		width: '100%',
 		margin: 10,
 	},
 	dialoguecontent: {
 		paddingTop: 0,
-	}
+		justifyContent: 'center'
+	},
 }
 
 class UserForm extends React.Component {
