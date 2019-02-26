@@ -1,6 +1,7 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 
+
 import {
   Paper,
   createMuiTheme,
@@ -18,6 +19,7 @@ import Chart from './components/charts/Chart';
 import LandingPage from './components/LandingPage';
 
 const cookies = new Cookies();
+const moment = require('moment');
 
 const theme = createMuiTheme({
   palette: {
@@ -171,6 +173,8 @@ class App extends React.Component {
   componentDidMount() {
     this.getUserPlan();
     // this.getChartData();
+    console.log("current month number", moment().month());
+    console.log("current month name", moment().format('MMMM'));
   }
 
   handleUserRegistration(username, password) {

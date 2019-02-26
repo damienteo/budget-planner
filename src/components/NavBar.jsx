@@ -15,7 +15,7 @@ const styles = {
 	},
 	greeting: {
 		fontFamily: "'Rancho', 'Roboto'",
-		fontSize: 30,
+		fontSize: 25,
 	},
 	button: {
 		margin: 10,

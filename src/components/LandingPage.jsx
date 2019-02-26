@@ -17,8 +17,10 @@ class LandingPage extends React.Component {
 			<React.Fragment>
 				<Grid 
 					container
+					spacing={40}
 					justify="center"
 					alignItems="center"
+					style={{ marginTop: `50px` }}
 				>
 	                <Grid item md={5} xs={12}>
 						<Typography>
