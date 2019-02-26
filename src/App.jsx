@@ -22,14 +22,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
-
-// const Unknown = () => {
-//   return(
-//     <div> 
-//       <p> Unknown Page </p>
-//     </div>
-//   )
-// }
+import LandingPage from './components/LandingPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -438,29 +431,36 @@ class App extends React.Component {
               alertMessage={ alertMessage }
               closeAlert={ this.closeAlert }
             />
-            <Grid container>
-              <Grid item md={4} xs={12}>
-                <Paper>
-                  <UserInput 
-                    years={ years }
-                    monthlyIncome={ monthlyIncome }
-                    goal={ goal }
-                    monthlyBudget={ monthlyBudget }
-                    newExpense={ newExpense }
-                    newMonth = { newMonth }
-                    onPlanChange={ this.handlePlanChange }
-                    onExpenseChange={ this.handleExpensesChange }
-                    onMonthChange={ this.handleMonthChange }
-                    setExpense={ this.setExpense }
-                  />
-                </Paper> 
+            {
+            !loggedIn &&
+              <LandingPage/>
+            }
+            {
+            loggedIn &&
+              <Grid container>
+                <Grid item md={4} xs={12}>
+                  <Paper>
+                    <UserInput 
+                      years={ years }
+                      monthlyIncome={ monthlyIncome }
+                      goal={ goal }
+                      monthlyBudget={ monthlyBudget }
+                      newExpense={ newExpense }
+                      newMonth = { newMonth }
+                      onPlanChange={ this.handlePlanChange }
+                      onExpenseChange={ this.handleExpensesChange }
+                      onMonthChange={ this.handleMonthChange }
+                      setExpense={ this.setExpense }
+                    />
+                  </Paper> 
+                </Grid>
+                <Grid item md={8} xs={12}>
+                  <Paper style = {styles.menu}>
+                    <Chart chartData={ chartData }/>
+                  </Paper>
+                </Grid>
               </Grid>
-              <Grid item md={8} xs={12}>
-                <Paper style = {styles.menu}>
-                  <Chart chartData={ chartData }/>
-                </Paper>
-              </Grid>
-            </Grid>
+            }
           </MuiThemeProvider>
         </ErrorBoundary>
       </React.Fragment>
