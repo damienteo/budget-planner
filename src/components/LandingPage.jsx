@@ -16,7 +16,42 @@ const values = [
 	800,
 	900,
 	1000,
-	1100
+	1100,
+	1000,
+	900, 
+	800, 
+	700, 
+	600, 
+	500, 
+	400, 
+	300,
+	200,
+	100,
+	0,
+	100,
+	200, 
+	300, 
+	400, 
+	500, 
+	600, 
+	700,
+	800,
+	900,
+	1000,
+	1100,
+	1000,
+	900, 
+	800, 
+	700, 
+	600, 
+	500, 
+	400, 
+	300,
+	200,
+	100,
+	0,
+	100,
+	200
 ];
 
 const hues =[
@@ -32,6 +67,18 @@ const hues =[
 	"rgba(16, 90, 76)",
 	"rgba(8, 80, 75)",
 	"rgba(0, 70, 64)",
+	"rgba(96, 125, 139, 0.75)",
+	"rgba(88, 139, 134, 0.75)",
+	"rgba(72, 139, 127, 0.75)",
+	"rgba(64, 139, 120, 0.75)",
+	"rgba(56, 135, 113, 0.75)",
+	"rgba(48, 130, 106, 0.75)",
+	"rgba(40, 120, 100, 0.75)",
+	"rgba(32, 110, 98, 0.75)",
+	"rgba(24, 100, 87, 0.75)",
+	"rgba(16, 90, 76, 0.75)",
+	"rgba(8, 80, 75, 0.75)",
+	"rgba(0, 70, 64, 0.75)",
 ];
 
 class LandingPage extends React.Component {
@@ -43,18 +90,54 @@ class LandingPage extends React.Component {
     this.state = {
       chartData:{
         labels:[
-          'Jan', 
-          'Feb', 
-          'Mar', 
-          'Apr', 
-          'May', 
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec', 
+          '1', 
+          '2', 
+          '3', 
+          '4', 
+          '5', 
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12', 
+          '1', 
+          '2', 
+          '3', 
+          '4', 
+          '5', 
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
+          '1', 
+          '2', 
+          '3', 
+          '4', 
+          '5', 
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12', 
+          '1', 
+          '2', 
+          '3', 
+          '4', 
+          '5', 
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
         ],
         datasets:[
           {
@@ -65,13 +148,63 @@ class LandingPage extends React.Component {
           },
         ],
       },
+      down: [
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false,
+			false,
+			false,
+		]
     };
   }
 
   	componentDidMount() {
   		this.timerID = setInterval(
 			() => this.change(),
-			2000
+			500
 		);
   	}
 
@@ -81,15 +214,34 @@ class LandingPage extends React.Component {
 
 	change() {
 
+		let previousValues = this.state.chartData.datasets[0].data;
+
+		let changeDirection = [ ...this.state.down];
+
 		let reshuffleValues=[];
-		for (let i = 0; i < values.length; i++) {
-			let randomValue = Math.floor((Math.random() * 10) + 1);
-			reshuffleValues.push(values[randomValue]);
+		for (let i = 0; i < previousValues.length; i++) {
+
+			if (previousValues[i] === 1100) {
+				changeDirection[i] = true
+			}
+
+			if (previousValues[i] === 0) {
+				changeDirection[i] = false
+			}
+
+			let newValue;
+
+			if (changeDirection[i] === true) {
+				newValue = previousValues[i] - 100;
+			} else {
+				newValue = previousValues[i] + 100;
+			}	
+			reshuffleValues.push(newValue);
 		}
 
 		let reshuffleHues=[];
-		for (let i = 0; i < hues.length; i++) {
-			let randomHue = Math.floor((Math.random() * 10) + 1);
+		for (let i = 0; i < 48; i++) {
+			let randomHue = Math.floor((Math.random() * 20));
 			reshuffleHues.push(hues[randomHue]);
 		}
 		
@@ -99,6 +251,7 @@ class LandingPage extends React.Component {
 
 		this.setState({
 			chartData: newChartData,
+			down: changeDirection,
 		});
 
 	}
