@@ -46,7 +46,6 @@ class NavBar extends React.Component {
 	render() {
 
 		const {username, loggedIn} = this.props;
-		console.log("navbar render", loggedIn);
 
 		return(
 			<React.Fragment>

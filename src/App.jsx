@@ -5,13 +5,9 @@ import {
   Paper,
   createMuiTheme,
   MuiThemeProvider,
-  Grid, 
-  Snackbar, 
-  IconButton, 
-  Button
+  Grid,
 }
 from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 
 import './App.css';
 import { Alert } from './components/validations'

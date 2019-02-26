@@ -69,7 +69,6 @@ class LandingPage extends React.Component {
   }
 
   	componentDidMount() {
-  		console.log("landingPage mounted");
   		this.timerID = setInterval(
 			() => this.change(),
 			2000
@@ -106,7 +105,7 @@ class LandingPage extends React.Component {
 
 	render() {
 
-		const { date, chartData } = this.state;
+		const { chartData } = this.state;
 
 		return(
 			<React.Fragment>

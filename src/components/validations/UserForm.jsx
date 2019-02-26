@@ -7,14 +7,6 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogTitle,
-	Icon,
-	TextField,
-	Select,
-	InputLabel,
-	FormControl,
-	MenuItem,
-	withStyles,
 	withMobileDialog
 } from '@material-ui/core';
 
@@ -66,7 +58,6 @@ class UserForm extends React.Component {
     }
 
 	handleToggle() {
-		console.log("toggling");
 		this.setState({
 			open: !this.state.open
 		})

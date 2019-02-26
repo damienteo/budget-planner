@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
 	TextField,
 	MenuItem,
-	withStyles,
 	Button,
 	Grid,
 	InputAdornment
@@ -127,7 +126,6 @@ class UserExpenseInput extends Component {
 						label="Month:"
 						value={ newMonth }
 						onChange={this.handleMonthChange}
-						style = {styles.menu}
 						SelectProps={{
 							MenuProps: {
 								// className: classes.menu,

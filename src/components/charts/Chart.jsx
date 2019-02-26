@@ -4,16 +4,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 class Chart extends Component {
 
-	// constructor(props) {
-	// 	super(props);
-	// }
-
-	// static defaultProps = {
-	// 	displayTitle: true,
-	// 	displayLegend: true,
-	// 	legendPosition: ''
-	// }
-
 	render() {
 
 		defaults.global.defaultFontFamily = 'Roboto';
