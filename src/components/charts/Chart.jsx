@@ -10,7 +10,7 @@ class Chart extends Component {
 		defaults.global.animation.duration = 2000;
 		defaults.global.layout.padding = 20;
 
-		const {chartData} = this.props;
+		const { chartData, displayDataLabel, displayLegend, displayTooltips } = this.props;
 
 		return(
 			<div className="chart">
@@ -25,15 +25,15 @@ class Chart extends Component {
 							fontSize: 25
 						},
 						legend: {
-							display: true,
+							display: displayLegend,
 							position: 'top',
 							labels: {
-			                     fontSize: 20
+			                     fontSize: 18
 			                }
 						},
 						plugins: {
 						   datalabels: {
-						     	display: true,
+						     	display: displayDataLabel,
 						     	color: 'black',
 						      	font: {
 						          	size: 11,
@@ -41,6 +41,9 @@ class Chart extends Component {
 						        },
 						   }
 						},
+						tooltips: {
+					        enabled: displayTooltips
+					    },
 						scales: {
 						    yAxes: [
 						    	{ 

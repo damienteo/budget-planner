@@ -258,7 +258,12 @@ class Animation extends React.Component {
 		const { chartData } = this.state;
 
 		return(
-		    <Chart chartData={ chartData }/>
+		    <Chart 
+		    	chartData={ chartData }
+		    	displayDataLabel={ false }
+		    	displayLegend={ false }
+		    	displayTooltips={ false }
+		    />
 		)
 	}
 }

@@ -516,7 +516,12 @@ class App extends React.Component {
                 </Grid>
                 <Grid item md={8} xs={12}>
                   <Paper style = {styles.menu}>
-                    <Chart chartData={ chartData }/>
+                    <Chart 
+                      chartData={ chartData }
+                      displayDataLabel={ true }
+                      displayLegend={ true }
+                      displayTooltips={ true }
+                    />
                   </Paper>
                 </Grid>
               </Grid>
