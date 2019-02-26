@@ -20,11 +20,13 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-chartjs-2": "^2.7.4",
+    "react-cookie": "^3.0.8",
     "react-dom": "^16.8.2",
     "react-material-ui-form-validator": "^2.0.6",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
     "shortid": "^2.2.14",
+    "universal-cookie": "^3.0.7",
     "webpack-cli": "^3.2.3"
   },
   "scripts": {

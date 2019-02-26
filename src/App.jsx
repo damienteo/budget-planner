@@ -1,20 +1,17 @@
 import React from 'react';
-import { Grid, Snackbar, IconButton, Button } from '@material-ui/core/';
-import CloseIcon from '@material-ui/icons/Close';
-
-// import {
-//   BrowserRouter, 
-//   Route, 
-//   Switch, 
-//   NavLink 
-// } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 import {
   Paper,
   createMuiTheme,
-  MuiThemeProvider
+  MuiThemeProvider,
+  Grid, 
+  Snackbar, 
+  IconButton, 
+  Button
 }
 from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 import './App.css';
 import { Alert } from './components/validations'
@@ -23,6 +20,8 @@ import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
 import LandingPage from './components/LandingPage';
+
+const cookies = new Cookies();
 
 const theme = createMuiTheme({
   palette: {
@@ -59,6 +58,7 @@ class App extends React.Component {
 
     this.state = {
       username:'',
+      userId:0,
       loggedIn: false,
       alert: false,
       alertMessage: '',
@@ -242,6 +242,9 @@ class App extends React.Component {
         response.json()
           .then(function(data) {
             if (data.loggedIn) {
+              console.log(data);
+              cookies.set('userId', data.id, { path: '/' });
+              cookies.set('userSession', data.userSession, { path: '/' });
               here.setState({
                 username: user_data.user_name,
                 loggedIn: true,
@@ -272,6 +275,7 @@ class App extends React.Component {
   handleUserLogout() {
     this.setState({
       username:'',
+      userId:0,
       loggedIn: false,
       alert: true,
       alertMessage: 'You have logged out'

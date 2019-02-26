@@ -83,7 +83,6 @@ class UserForm extends React.Component {
 
 	handleSubmit() {
 		const {username, password} = this.state.userInput
-		console.log(username, password);
 		this.props.handleUser(username, password);
 		this.setState({
 			open: !this.state.open,

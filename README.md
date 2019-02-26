@@ -2,7 +2,7 @@ Budget Planner is about visualising your financial future. Many times, we know t
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-npm i express pg express-react-views method-override cookie-parser js-sha256 chart.js react-chartjs-2 shortid @material-ui/core @material-ui/icons webpack react-router-dom prop-types @material-ui/icons chartjs-plugin-datalabels react-material-ui-form-validator
+npm i express pg express-react-views method-override cookie-parser js-sha256 chart.js react-chartjs-2 shortid @material-ui/core @material-ui/icons webpack react-router-dom prop-types @material-ui/icons chartjs-plugin-datalabels react-material-ui-form-validator react-cookie universal-cookie
 npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
 
 
