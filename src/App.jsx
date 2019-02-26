@@ -269,6 +269,8 @@ class App extends React.Component {
   };
 
   handleUserLogout() {
+    cookies.remove('userId');
+    cookies.remove('userSession');
     this.setState({
       username:'',
       userId:0,
