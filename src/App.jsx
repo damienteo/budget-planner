@@ -177,7 +177,7 @@ class App extends React.Component {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: JSON.stringify(user_data)
+      body: JSON.stringify(user_data),
     });
 
     //xmlhttprequest()
