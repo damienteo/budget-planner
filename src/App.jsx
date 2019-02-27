@@ -393,7 +393,7 @@ class App extends React.Component {
 
   setExpense() {
 
-    const { newExpense, newMonth, currentMonth, chartData } = this.state;
+    const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
 
     //adjusting expenses
 
@@ -429,10 +429,11 @@ class App extends React.Component {
 
     //adjusting current remaining budget till month
 
-    let currentMonthBudget = 
-    this.currentPlannedBudget(newExpenseChart, newMonth)+
-    this.currentRemainingBudget(newExpenseChart, newMonth) +
-    newExpenseChart.datasets[0].data[newMonth];
+    // let currentMonthBudget = 
+    // this.currentPlannedBudget(newExpenseChart, newMonth)+
+    // this.currentRemainingBudget(newExpenseChart, newMonth) +
+    // newExpenseChart.datasets[0].data[newMonth];
+    let currentMonthBudget = monthlyBudget;
 
     let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
 
@@ -453,8 +454,7 @@ class App extends React.Component {
 
     );
 
-    //issue with the updating of datasets[2], adding expense for previous month updated remaining budget for current month
-
+    //issue: remaining budget should always be updated according to 1500
     //setting newExpenseChartData
 
     newExpenseChart.datasets[0].data = newExpenseData;
