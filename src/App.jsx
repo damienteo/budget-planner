@@ -61,7 +61,7 @@ class App extends React.Component {
     this.state = {
       username:'',
       userId:0,
-      loggedIn: true,
+      loggedIn: false,
       currentMonth:0,
       alert: false,
       alertMessage: '',
@@ -506,11 +506,16 @@ class App extends React.Component {
 
     let newExcessBudget = this.calculateExcessBudget(newExpenseChart);
 
+    let formattedMonth = moment.months(newMonth);
+    let newAlertMessage = `Expense of $${newExpense} added for the month of ${formattedMonth}`;
+
     this.setState({
       chartData: newExpenseChart,
       newExpense: 0,
       currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth],
       excessBudget: newExcessBudget,
+      alert: true,
+      alertMessage: newAlertMessage,
     })
 
   }

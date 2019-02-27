@@ -21,7 +21,7 @@ class Alert extends React.Component {
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
         open={ alert }
         autoHideDuration={3000}
