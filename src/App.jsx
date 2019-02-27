@@ -81,6 +81,20 @@ class App extends React.Component {
         0,
         0,
       ],
+      leftoverBudget: [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
       chartData:{
         labels:[
           'Jan', 
@@ -445,11 +459,15 @@ class App extends React.Component {
       }
     );
 
+    //the key is currentMonthLeftoverBudget, currentMonthLeftoverBudget[i]?? have to set State for leftovermonth budget.
+
     let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
-        if (index === newMonth ) {
-          if( newMonth === currentMonth ) 
-            return currentMonthLeftoverBudget;
+        if (
+          currentMonthLeftoverBudget > 0 && 
+          index <= currentMonth
+        ) {
+          return currentMonthLeftoverBudget;
         } else {
           return "";
         } 
