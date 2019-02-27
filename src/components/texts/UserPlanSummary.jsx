@@ -25,12 +25,23 @@ const styles = {
 class UserSummary extends Component {
 	render() {	
 			
-		const {  years, monthlyIncome, goal, monthlyBudget } = this.props;	
+		const {  
+			years, 
+			monthlyIncome, 
+			goal, 
+			monthlyBudget,
+			currentRemainingBudget 
+		} = this.props;	
 
 		return(
 			<React.Fragment>
 				<Grid container>
 					<Grid item xs={12}>
+						<Typography style={{display: 'block'}}> 
+							You have: 
+								<strong> ${ currentRemainingBudget } </strong> 
+							left to spend this month.
+						</Typography>
 						<Typography style={{display: 'block'}}> 
 							Goal: 
 								<strong> ${ goal } </strong> 

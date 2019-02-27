@@ -69,6 +69,7 @@ class App extends React.Component {
       monthlyIncome: 0,
       goal: 0,
       monthlyBudget: 0,
+      currentRemainingBudget: 0,
       newExpense: 0,
       newMonth: 0,
       chartData:{
@@ -362,6 +363,7 @@ class App extends React.Component {
       [name]: floatValue,
       monthlyBudget: newMonthlyBudget,
       chartData: newChartValues,
+      currentRemainingBudget: newChartValues.datasets[2].data[this.state.currentMonth]
     })
 
   }
@@ -488,6 +490,7 @@ class App extends React.Component {
     this.setState({
       chartData: newExpenseChart,
       newExpense: 0,
+      currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth]
     })
 
   }
@@ -505,9 +508,12 @@ class App extends React.Component {
       username,
       loggedIn,
       currentMonth,
+      currentRemainingBudget,
       alert,
       alertMessage,
     } = this.state;
+
+    console.log("current remaining budget", currentRemainingBudget);
 
     return (
       <React.Fragment>
@@ -544,6 +550,7 @@ class App extends React.Component {
                       monthlyBudget={ monthlyBudget }
                       newExpense={ newExpense }
                       newMonth = { newMonth }
+                      currentRemainingBudget = { currentRemainingBudget }
                       onPlanChange={ this.handlePlanChange }
                       onExpenseChange={ this.handleExpensesChange }
                       onMonthChange={ this.handleMonthChange }
