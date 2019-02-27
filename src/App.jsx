@@ -38,6 +38,11 @@ const styles = {
   },
 };
 
+const localhost = 'http://localhost:4000'
+const heroku = 'https://my-budget-planner-api.herokuapp.com'
+
+let site = localhost;
+
 class App extends React.Component {
 
   constructor() {
@@ -52,7 +57,6 @@ class App extends React.Component {
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
-    // this.handleChartChange = this.handleChartChange.bind(this);
 
     this.state = {
       username:'',
@@ -108,7 +112,7 @@ class App extends React.Component {
           },
           {
             stack: 'stack1',
-            label: 'Planned Budget',
+            label: 'Future Budget',
             data:[
               1500,
               1500,
@@ -131,7 +135,7 @@ class App extends React.Component {
           },
           {
             stack: 'stack1',
-            label: 'Remaining Budget for the Month',
+            label: 'Current Budget',
             data:[
               '',
               '',
@@ -164,6 +168,8 @@ class App extends React.Component {
 
   }
 
+
+
   handleUserRegistration(username, password) {
 
     const here = this;
@@ -172,7 +178,7 @@ class App extends React.Component {
       user_name: username,
       user_password: password
     };
-    let request = new Request('https://my-budget-planner-api.herokuapp.com/api/new-user', {
+    let request = new Request(site + '/api/new-user', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -214,7 +220,7 @@ class App extends React.Component {
       user_name: username,
       user_password: password
     };
-    let request = new Request('https://my-budget-planner-api.herokuapp.com/api/login', {
+    let request = new Request(site+'/api/login', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -255,7 +261,6 @@ class App extends React.Component {
     if (reason === 'clickaway') {
       return;
     }
-
     this.setState({  alert: false });
   };
 
@@ -270,10 +275,6 @@ class App extends React.Component {
       alertMessage: 'You have logged out'
     })
   }
-
-    // handleUserLogin() {
-
-  // }
 
   getUserPlan() {
     //ajaxcalls here
@@ -314,13 +315,36 @@ class App extends React.Component {
 
   handleBudgetChartChange(newMonthlyBudget) {
 
-    let newValues = [];
-    for(let i = 1; i<=12; i++) {
-      newValues.push(newMonthlyBudget);
+    const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
+
+    let currentExpenses = chartData.datasets[0].data;
+    let currentRemainingBudget = chartData.datasets[2].data;
+
+    let newFutureBudgetValues = [];
+    for(let i = 0; i<=11; i++) {
+      if ( i<=currentMonth ) {
+        newFutureBudgetValues.push("");
+      } else if ( currentExpenses[i] > 0 ){
+        let adjustedFutureBudget = newMonthlyBudget - currentExpenses[i];
+        newFutureBudgetValues.push(adjustedFutureBudget);
+      } else {
+        newFutureBudgetValues.push(newMonthlyBudget);
+      }
+    }
+
+    let newCurrentBudgetValues = [];
+    for(let i = 0; i<=11; i++) {
+      if ( i<=currentMonth ) {
+        let adjustedCurrentBudget = newMonthlyBudget - currentExpenses[i];
+        newCurrentBudgetValues.push(adjustedCurrentBudget);
+      } else {
+        newCurrentBudgetValues.push("");
+      }
     }
 
     let newChart = { ...this.state.chartData}
-    newChart.datasets[1].data = newValues;
+    newChart.datasets[1].data = newFutureBudgetValues;
+    newChart.datasets[2].data = newCurrentBudgetValues;
 
     return newChart;
 
@@ -417,7 +441,7 @@ class App extends React.Component {
         if ( index > currentMonth ) {
 
           if (newExpenseData[index] === 0) {
-            return newAdjustedBudget;
+            return monthlyBudget;
           } else {
             return leftoverBudget;
           }
@@ -485,8 +509,6 @@ class App extends React.Component {
       alertMessage,
     } = this.state;
 
-    console.log("state of current month", currentMonth);
-
     return (
       <React.Fragment>
         <ErrorBoundary>
@@ -549,69 +571,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-  //following function is for demonstration purposes
-
-  //   let currentPlannedBudget = function() {
-  //     if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
-  //       return 0;
-  //     } else {
-  //       return newExpenseChart.datasets[1].data[newMonth];
-  //     }
-  //   }
-
-  //   let currentMonthBudget = 
-  //     currentPlannedBudget()+
-  //     currentRemainingBudget() +
-  //     newExpenseChart.datasets[0].data[newMonth];
-
-  //   let newExpenseData = newExpenseChart.datasets[0].data.map( 
-  //     (x, index) => {
-  //       return (index === newMonth) ?  x + parseFloat(newExpense) : x;
-  //     }
-  //   );
-
-  //   let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
-  //   console.log("current", currentMonthBudget)
-  //   console.log("currentleftover", currentMonthLeftoverBudget)
-  //   let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
-
-  //   let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
-  //     (x, index) => {
-
-  //       let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
-
-  //       if (index === newMonth) {
-  //         return "";
-  //       } else if (newExpenseData[index] === 0) {
-  //         return newAdjustedBudget;
-  //       } else if (leftoverBudget <= 0) {
-  //         return "";
-  //       } else {
-  //         return leftoverBudget;
-  //       }
-
-  //     }
-  //   );
-
-  //   let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
-  //     (x, index) => {
-  //       if (index === newMonth) {
-  //         return currentMonthLeftoverBudget;
-  //       } else {
-  //         return "";
-  //       } 
-  //     }
-  //   );
-
-  //   newExpenseChart.datasets[0].data = newExpenseData;
-  //   newExpenseChart.datasets[1].data = newPlannedBudgetData;
-  //   newExpenseChart.datasets[2].data = newRemainingBudgetData;
-
-  //   this.setState({
-  //     chartData: newExpenseChart,
-  //     newExpense: 0,
-  //   })
-
-  // }
