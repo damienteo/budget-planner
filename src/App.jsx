@@ -412,16 +412,14 @@ class App extends React.Component {
     let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
 
-        let leftoverBudget = newAdjustedBudget - newExpenseData[index];
+        let leftoverBudget = monthlyBudget - newExpenseData[index];
 
         if ( index > currentMonth ) {
 
-          if( index === newMonth ) {
-            return leftoverBudget;
-          } else if (newExpenseData[index] === 0) {
+          if (newExpenseData[index] === 0) {
             return newAdjustedBudget;
           } else {
-            return newExpenseChart.datasets[1].data[index];
+            return leftoverBudget;
           }
 
         } else {
