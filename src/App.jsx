@@ -67,34 +67,6 @@ class App extends React.Component {
       monthlyBudget: 0,
       newExpense: 0,
       newMonth: 0,
-      expenses: [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ],
-      leftoverBudget: [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ]
       chartData:{
         labels:[
           'Jan', 
@@ -407,15 +379,15 @@ class App extends React.Component {
 
     const { newExpense, newMonth, currentMonth, chartData } = this.state;
 
+    //adjusting expenses
+
     let newExpenseChart = { ...chartData}
 
-    let currentRemainingBudget = function() {
-      if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
-        return 0;
-      } else {
-        return newExpenseChart.datasets[2].data[newMonth];
+    let newExpenseData = newExpenseChart.datasets[0].data.map( 
+      (x, index) => {
+        return (index === newMonth) ?  x + parseFloat(newExpense) : x;
       }
-    }
+    );
 
     let currentPlannedBudget = function() {
       if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
@@ -425,20 +397,8 @@ class App extends React.Component {
       }
     }
 
-    let currentMonthBudget = 
-      currentPlannedBudget()+
-      currentRemainingBudget() +
-      newExpenseChart.datasets[0].data[newMonth];
+    // adjusting future planned budget
 
-    let newExpenseData = newExpenseChart.datasets[0].data.map( 
-      (x, index) => {
-        return (index === newMonth) ?  x + parseFloat(newExpense) : x;
-      }
-    );
-
-    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
-    console.log("current", currentMonthBudget)
-    console.log("currentleftover", currentMonthLeftoverBudget)
     let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
 
     let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
@@ -459,7 +419,28 @@ class App extends React.Component {
       }
     );
 
+    //adjusting current remaining budget till month
+
+    let currentRemainingBudget = function() {
+      if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
+        return 0;
+      } else {
+        return newExpenseChart.datasets[2].data[newMonth];
+      }
+    }
+
+    let currentMonthBudget = 
+    currentPlannedBudget()+
+    currentRemainingBudget() +
+    newExpenseChart.datasets[0].data[newMonth];
+
+    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+    console.log("current", currentMonthBudget)
+    console.log("currentleftover", currentMonthLeftoverBudget)
+
     //the key is currentMonthLeftoverBudget, currentMonthLeftoverBudget[i]?? have to set State for leftovermonth budget.
+    //expenses is tracked by newExpenseChart.datasets[0].data 
+    // leftoverbudget is tracked by newExpenseChart.datasets[2].data
 
     let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
