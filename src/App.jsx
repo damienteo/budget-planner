@@ -501,7 +501,10 @@ class App extends React.Component {
             }
             {
             loggedIn &&
-              <Grid container>
+              <Grid 
+                container
+                style={{ marginTop: `64px` }}
+              >
                 <Grid item md={4} xs={12}>
                   <Paper>
                     <UserInput 

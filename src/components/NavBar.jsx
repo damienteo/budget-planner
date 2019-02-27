@@ -49,7 +49,7 @@ class NavBar extends React.Component {
 
 		return(
 			<React.Fragment>
-		      <AppBar position="static">
+		      <AppBar position="fixed">
 		        <Toolbar>
 		          <Typography 
 			          variant="h6" 
