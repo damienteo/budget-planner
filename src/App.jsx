@@ -443,12 +443,15 @@ class App extends React.Component {
     let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
 
-        if ( index <= currentMonth ){
+        if ( index <= currentMonth ) {
 
           if (index === newMonth) {
             return currentMonthLeftoverBudget;
-          } else 
-            return newExpenseChart.datasets[2].data[index]
+          } else if (newExpenseChart.datasets[2].data[index] === '') {
+            return monthlyBudget;
+          } else {
+            return newExpenseChart.datasets[2].data[index];
+          }
 
         } else {
           return "";
