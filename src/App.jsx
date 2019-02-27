@@ -412,16 +412,18 @@ class App extends React.Component {
     let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
 
-        let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
+        let leftoverBudget = monthlyBudget - newExpenseData[index];
 
-        if (index === newMonth) {
-          return "";
-        } else if (newExpenseData[index] === 0) {
-          return newAdjustedBudget;
-        } else if (leftoverBudget <= 0) {
-          return "";
+        if ( index > currentMonth ) {
+
+          if( index === newMonth ) {
+            return leftoverBudget;
+          } else if (newExpenseData[index] === 0) {
+            return newAdjustedBudget;
+          }
+
         } else {
-          return leftoverBudget;
+          return "";
         }
 
       }
@@ -433,6 +435,7 @@ class App extends React.Component {
     // this.currentPlannedBudget(newExpenseChart, newMonth)+
     // this.currentRemainingBudget(newExpenseChart, newMonth) +
     // newExpenseChart.datasets[0].data[newMonth];
+
     let currentMonthBudget = monthlyBudget;
 
     let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
@@ -454,7 +457,7 @@ class App extends React.Component {
 
     );
 
-    //issue: remaining budget should always be updated according to 1500
+    //issue: planned budget should be present for months after current month
     //setting newExpenseChartData
 
     newExpenseChart.datasets[0].data = newExpenseData;
