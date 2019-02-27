@@ -129,7 +129,6 @@ class UserInput extends Component {
         	currentRemainingBudget,
         	excessBudget
         } = this.props;
-        // console.log(monthlyIncome)
 
         return (
         	<React.Fragment>
@@ -138,7 +137,7 @@ class UserInput extends Component {
 		         	defaultExpanded
 		        >
 		        	<ExpansionPanelSummary expandIcon={<ExpandMoreRoundedIcon />} >
-		            	<Typography style = {styles.expansionSummary} >Plan Summary</Typography>
+		            	<Typography style = {styles.expansionSummary} >Budget Progress</Typography>
 		          	</ExpansionPanelSummary>
 		         	<ExpansionPanelDetails>
 			        	<UserPlanSummary
