@@ -126,7 +126,8 @@ class UserInput extends Component {
         	monthlyBudget,
         	newExpense,
         	newMonth,
-        	currentRemainingBudget
+        	currentRemainingBudget,
+        	excessBudget
         } = this.props;
         // console.log(monthlyIncome)
 
@@ -146,6 +147,7 @@ class UserInput extends Component {
 			        		goal={ goal }
 			        		monthlyBudget={ monthlyBudget }
 			        		currentRemainingBudget = { currentRemainingBudget }
+			        		excessBudget = { excessBudget }
 			        	/>
 			        </ExpansionPanelDetails>
         		</ExpansionPanel>

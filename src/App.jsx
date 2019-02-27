@@ -70,6 +70,7 @@ class App extends React.Component {
       goal: 0,
       monthlyBudget: 0,
       currentRemainingBudget: 0,
+      excessBudget: 0,
       newExpense: 0,
       newMonth: 0,
       chartData:{
@@ -314,6 +315,19 @@ class App extends React.Component {
 
   }
 
+  calculateExcessBudget(newChartValues) {
+    const { currentMonth } = this.state;
+
+    let newExcess = 0;
+    let currentRemainingBudget = newChartValues.datasets[2].data;
+
+    for (let i = 0; i < currentMonth; i++) {
+      newExcess = newExcess + currentRemainingBudget[i];
+    }
+
+    return newExcess;
+  }
+
   handleBudgetChartChange(newMonthlyBudget) {
 
     const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
@@ -358,12 +372,15 @@ class App extends React.Component {
     let newMonthlyBudget = this.budgetCalculator(name, floatValue);
 
     let newChartValues = this.handleBudgetChartChange(newMonthlyBudget);
+
+    let newExcessBudget = this.calculateExcessBudget(newChartValues);
     
     this.setState({
       [name]: floatValue,
       monthlyBudget: newMonthlyBudget,
       chartData: newChartValues,
-      currentRemainingBudget: newChartValues.datasets[2].data[this.state.currentMonth]
+      currentRemainingBudget: newChartValues.datasets[2].data[this.state.currentMonth],
+      excessBudget: newExcessBudget,
     })
 
   }
@@ -487,10 +504,13 @@ class App extends React.Component {
     newExpenseChart.datasets[1].data = newPlannedBudgetData;
     newExpenseChart.datasets[2].data = newRemainingBudgetData;
 
+    let newExcessBudget = this.calculateExcessBudget(newExpenseChart);
+
     this.setState({
       chartData: newExpenseChart,
       newExpense: 0,
-      currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth]
+      currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth],
+      excessBudget: newExcessBudget,
     })
 
   }
@@ -509,11 +529,10 @@ class App extends React.Component {
       loggedIn,
       currentMonth,
       currentRemainingBudget,
+      excessBudget,
       alert,
       alertMessage,
     } = this.state;
-
-    console.log("current remaining budget", currentRemainingBudget);
 
     return (
       <React.Fragment>
@@ -551,6 +570,7 @@ class App extends React.Component {
                       newExpense={ newExpense }
                       newMonth = { newMonth }
                       currentRemainingBudget = { currentRemainingBudget }
+                      excessBudget = { excessBudget }
                       onPlanChange={ this.handlePlanChange }
                       onExpenseChange={ this.handleExpensesChange }
                       onMonthChange={ this.handleMonthChange }

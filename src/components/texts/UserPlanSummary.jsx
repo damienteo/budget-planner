@@ -30,7 +30,8 @@ class UserSummary extends Component {
 			monthlyIncome, 
 			goal, 
 			monthlyBudget,
-			currentRemainingBudget 
+			currentRemainingBudget,
+			excessBudget
 		} = this.props;	
 
 		return(
@@ -41,6 +42,10 @@ class UserSummary extends Component {
 							You have: 
 								<strong> ${ currentRemainingBudget } </strong> 
 							left to spend this month.
+						</Typography>
+						<Typography style={{display: 'block'}}> 
+							You are ahead of budget by: 
+								<strong> ${ excessBudget } </strong> 
 						</Typography>
 						<Typography style={{display: 'block'}}> 
 							Goal: 
