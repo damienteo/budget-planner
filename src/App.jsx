@@ -57,7 +57,8 @@ class App extends React.Component {
     this.state = {
       username:'',
       userId:0,
-      loggedIn: false,
+      loggedIn: true,
+      currentMonth:0,
       alert: false,
       alertMessage: '',
       years: 0,
@@ -173,8 +174,8 @@ class App extends React.Component {
   componentDidMount() {
     this.getUserPlan();
     // this.getChartData();
-    console.log("current month number", moment().month());
-    console.log("current month name", moment().format('MMMM'));
+    this.getCurrentMonth();
+
   }
 
   handleUserRegistration(username, password) {
@@ -298,6 +299,12 @@ class App extends React.Component {
     })
   }
 
+  getCurrentMonth() {
+    this.setState({
+      currentMonth: moment().month(),
+    })
+  }
+
   budgetPerMonth(income, goal, years) {
     let monthlySavingsTarget = goal/(years*12);
     let roundedMonthlySavingsTarget = Math.round(monthlySavingsTarget);
@@ -384,13 +391,9 @@ class App extends React.Component {
 
   setExpense() {
 
-    const { newExpense, newMonth, chartData } = this.state;
+    const { newExpense, newMonth, currentMonth, chartData } = this.state;
 
     let newExpenseChart = { ...chartData}
-
-    console.log("expenses", newExpenseChart.datasets[0].data[newMonth])
-    console.log("palnned", newExpenseChart.datasets[1].data[newMonth])
-    console.log("remaining", newExpenseChart.datasets[2].data[newMonth])
 
     let currentRemainingBudget = function() {
       if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
@@ -444,8 +447,9 @@ class App extends React.Component {
 
     let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
-        if (index === newMonth) {
-          return currentMonthLeftoverBudget;
+        if (index === newMonth ) {
+          if( newMonth === currentMonth ) 
+            return currentMonthLeftoverBudget;
         } else {
           return "";
         } 
@@ -475,9 +479,12 @@ class App extends React.Component {
       chartData,
       username,
       loggedIn,
+      currentMonth,
       alert,
-      alertMessage
+      alertMessage,
     } = this.state;
+
+    console.log("state of current month", currentMonth);
 
     return (
       <React.Fragment>
@@ -541,3 +548,69 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+  //following function is for demonstration purposes
+
+  //   let currentPlannedBudget = function() {
+  //     if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
+  //       return 0;
+  //     } else {
+  //       return newExpenseChart.datasets[1].data[newMonth];
+  //     }
+  //   }
+
+  //   let currentMonthBudget = 
+  //     currentPlannedBudget()+
+  //     currentRemainingBudget() +
+  //     newExpenseChart.datasets[0].data[newMonth];
+
+  //   let newExpenseData = newExpenseChart.datasets[0].data.map( 
+  //     (x, index) => {
+  //       return (index === newMonth) ?  x + parseFloat(newExpense) : x;
+  //     }
+  //   );
+
+  //   let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+  //   console.log("current", currentMonthBudget)
+  //   console.log("currentleftover", currentMonthLeftoverBudget)
+  //   let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
+
+  //   let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
+  //     (x, index) => {
+
+  //       let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
+
+  //       if (index === newMonth) {
+  //         return "";
+  //       } else if (newExpenseData[index] === 0) {
+  //         return newAdjustedBudget;
+  //       } else if (leftoverBudget <= 0) {
+  //         return "";
+  //       } else {
+  //         return leftoverBudget;
+  //       }
+
+  //     }
+  //   );
+
+  //   let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
+  //     (x, index) => {
+  //       if (index === newMonth) {
+  //         return currentMonthLeftoverBudget;
+  //       } else {
+  //         return "";
+  //       } 
+  //     }
+  //   );
+
+  //   newExpenseChart.datasets[0].data = newExpenseData;
+  //   newExpenseChart.datasets[1].data = newPlannedBudgetData;
+  //   newExpenseChart.datasets[2].data = newRemainingBudgetData;
+
+  //   this.setState({
+  //     chartData: newExpenseChart,
+  //     newExpense: 0,
+  //   })
+
+  // }
