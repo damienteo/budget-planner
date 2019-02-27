@@ -172,7 +172,7 @@ class App extends React.Component {
       user_name: username,
       user_password: password
     };
-    let request = new Request('http://localhost:4000/api/new-user', {
+    let request = new Request('https://my-budget-planner-api.herokuapp.com/api/new-user', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -214,7 +214,7 @@ class App extends React.Component {
       user_name: username,
       user_password: password
     };
-    let request = new Request('http://localhost:4000/api/login', {
+    let request = new Request('https://my-budget-planner-api.herokuapp.com/api/login', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
