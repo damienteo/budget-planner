@@ -420,6 +420,8 @@ class App extends React.Component {
             return leftoverBudget;
           } else if (newExpenseData[index] === 0) {
             return newAdjustedBudget;
+          } else {
+            return newExpenseChart.datasets[1].data[index];
           }
 
         } else {
@@ -430,11 +432,6 @@ class App extends React.Component {
     );
 
     //adjusting current remaining budget till month
-
-    // let currentMonthBudget = 
-    // this.currentPlannedBudget(newExpenseChart, newMonth)+
-    // this.currentRemainingBudget(newExpenseChart, newMonth) +
-    // newExpenseChart.datasets[0].data[newMonth];
 
     let currentMonthBudget = monthlyBudget;
 
@@ -460,7 +457,6 @@ class App extends React.Component {
 
     );
 
-    //issue: planned budget should be present for months after current month
     //setting newExpenseChartData
 
     newExpenseChart.datasets[0].data = newExpenseData;
