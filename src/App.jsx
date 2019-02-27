@@ -67,20 +67,6 @@ class App extends React.Component {
       monthlyBudget: 0,
       newExpense: 0,
       newMonth: 0,
-      expenses: [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ],
       chartData:{
         labels:[
           'Jan', 
@@ -389,32 +375,29 @@ class App extends React.Component {
     return Math.round(newAdjustedBudget);
   }
 
+  currentPlannedBudget (newExpenseChart, newMonth) {
+    if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
+      return 0;
+    } else {
+      return newExpenseChart.datasets[1].data[newMonth];
+    }
+  }
+
+  currentRemainingBudget (newExpenseChart, newMonth) {
+    if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
+      return 0;
+    } else {
+      return newExpenseChart.datasets[2].data[newMonth];
+    }
+  }
+
   setExpense() {
 
-    const { newExpense, newMonth, currentMonth, chartData } = this.state;
+    const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
+
+    //adjusting expenses
 
     let newExpenseChart = { ...chartData}
-
-    let currentRemainingBudget = function() {
-      if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
-        return 0;
-      } else {
-        return newExpenseChart.datasets[2].data[newMonth];
-      }
-    }
-
-    let currentPlannedBudget = function() {
-      if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
-        return 0;
-      } else {
-        return newExpenseChart.datasets[1].data[newMonth];
-      }
-    }
-
-    let currentMonthBudget = 
-      currentPlannedBudget()+
-      currentRemainingBudget() +
-      newExpenseChart.datasets[0].data[newMonth];
 
     let newExpenseData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
@@ -422,39 +405,57 @@ class App extends React.Component {
       }
     );
 
-    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
-    console.log("current", currentMonthBudget)
-    console.log("currentleftover", currentMonthLeftoverBudget)
+    // adjusting future planned budget
+
     let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
 
     let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
 
-        let leftoverBudget = newExpenseChart.datasets[1].data[index] - newExpenseData[index];
+        let leftoverBudget = monthlyBudget - newExpenseData[index];
 
-        if (index === newMonth) {
-          return "";
-        } else if (newExpenseData[index] === 0) {
-          return newAdjustedBudget;
-        } else if (leftoverBudget <= 0) {
-          return "";
+        if ( index > currentMonth ) {
+
+          if (newExpenseData[index] === 0) {
+            return newAdjustedBudget;
+          } else {
+            return leftoverBudget;
+          }
+
         } else {
-          return leftoverBudget;
+          return "";
         }
 
       }
     );
 
+    //adjusting current remaining budget till month
+
+    let currentMonthBudget = monthlyBudget;
+
+    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+
     let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
       (x, index) => {
-        if (index === newMonth ) {
-          if( newMonth === currentMonth ) 
+
+        if ( index <= currentMonth ) {
+
+          if (index === newMonth) {
             return currentMonthLeftoverBudget;
+          } else if (newExpenseChart.datasets[2].data[index] === '') {
+            return monthlyBudget;
+          } else {
+            return newExpenseChart.datasets[2].data[index];
+          }
+
         } else {
           return "";
         } 
       }
+
     );
+
+    //setting newExpenseChartData
 
     newExpenseChart.datasets[0].data = newExpenseData;
     newExpenseChart.datasets[1].data = newPlannedBudgetData;
