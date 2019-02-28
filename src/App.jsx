@@ -557,7 +557,9 @@ class App extends React.Component {
             />
             {
             !loggedIn &&
-              <LandingPage/>
+              <LandingPage
+                handleUserRegistration={ this.handleUserRegistration }
+              />
             }
             {
             loggedIn &&
