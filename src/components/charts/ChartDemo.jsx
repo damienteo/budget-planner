@@ -93,11 +93,11 @@ class ChartDemo extends React.Component {
 
 	render() {
 
-		console.log('render');
+		// console.log('render');
 
 		const { chartData } = this.state;
-		console.log(" expense", chartData.datasets[0].data)
-		console.log(" budget", chartData.datasets[2].data)
+		// console.log(" expense", chartData.datasets[0].data)
+		// console.log(" budget", chartData.datasets[2].data)
 
 		return(
 		    <Chart 

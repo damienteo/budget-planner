@@ -51,6 +51,8 @@ class UserForm extends React.Component {
         });
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             if (value !== this.state.userInput.password) {
+            	console.log('value', value);
+            	console.log('repeat', this.state.userInput.password);
                 return false;
             }
             return true;
@@ -91,6 +93,8 @@ class UserForm extends React.Component {
 
 		const { open, userInput: { username, password, repeatPassword } } = this.state;
 		const { fullScreen, message, button, register } = this.props;
+
+		console.log(this.state.userInput);
 
 		return(
 			<React.Fragment>
