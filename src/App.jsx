@@ -38,10 +38,10 @@ const styles = {
   },
 };
 
-const localhost = 'http://localhost:4000'
-const heroku = 'https://my-budget-planner-api.herokuapp.com'
+const localHost = 'http://localhost:4000'
+const herokuSite = 'https://my-budget-planner-api.herokuapp.com'
 
-let site = localhost;
+let site = herokuSite;
 
 class App extends React.Component {
 
