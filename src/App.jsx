@@ -699,6 +699,7 @@ class App extends React.Component {
                 <Grid item md={4} xs={12}>
                   <Paper>
                     <UserInput
+                      newUser={newUser}
                       years={years}
                       monthlyIncome={monthlyIncome}
                       goal={goal}
@@ -711,6 +712,7 @@ class App extends React.Component {
                       onExpenseChange={this.handleExpensesChange}
                       onMonthChange={this.handleMonthChange}
                       setExpense={this.setExpense}
+                      handleSetPlan={this.handleSetPlan}
                     />
                   </Paper>
                 </Grid>

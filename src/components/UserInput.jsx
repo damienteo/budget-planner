@@ -14,7 +14,8 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMore';
 import {
 	UserPlanSummary,
 	UserPlanInput,
-	UserExpenseInput
+	UserExpenseInput,
+	UserSetPlan
 } from './texts/'
 
 const styles = {
@@ -78,6 +79,7 @@ class UserInput extends Component {
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
 		this.setExpense = this.setExpense.bind(this);
+		this.handleSetPlan = this.handleSetPlan.bind(this);
 
 		this.state = {
 			expanded: null,
@@ -108,6 +110,10 @@ class UserInput extends Component {
 		});
 	};
 
+	handleSetPlan() {
+		this.props.handleSetPlan();
+	}
+
 	render() {
 
 		const { expanded } = this.state;
@@ -120,7 +126,8 @@ class UserInput extends Component {
 			newExpense,
 			newMonth,
 			currentRemainingBudget,
-			excessBudget
+			excessBudget,
+			newUser
 		} = this.props;
 
 		return (
@@ -152,11 +159,13 @@ class UserInput extends Component {
 						<Typography style={styles.expansionSummary} >Edit Plan</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
-						<UserPlanInput
+						<UserSetPlan
 							years={years}
 							monthlyIncome={monthlyIncome}
 							goal={goal}
+							newUser={newUser}
 							handlePlanChange={this.handlePlanChange}
+							handleSetPlan={this.handleSetPlan}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>

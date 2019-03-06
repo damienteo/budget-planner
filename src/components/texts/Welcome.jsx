@@ -72,12 +72,14 @@ class Welcome extends Component {
                             Thank you for registering.<br />
                             Before we start, we would like to know your goals. <br />
                         </DialogContentText>
-                        <UserPlanInput
-                            years={years}
-                            monthlyIncome={monthlyIncome}
-                            goal={goal}
-                            handlePlanChange={this.handlePlanChange}
-                        />
+                        <Grid container >
+                            <UserPlanInput
+                                years={years}
+                                monthlyIncome={monthlyIncome}
+                                goal={goal}
+                                handlePlanChange={this.handlePlanChange}
+                            />
+                        </Grid>
                         <Grid
                             container
                             alignContent="center"
