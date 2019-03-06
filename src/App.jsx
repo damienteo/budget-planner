@@ -183,141 +183,12 @@ class App extends React.Component {
   }
 
   //================================================================================
-  // Requests to Back-End
-  //================================================================================
-
-  pingAPI() {
-
-    let request = new Request(site + '/ping', {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-    });
-
-    //xmlhttprequest()
-
-    fetch(request)
-      // .then(function (response) {
-      //   console.log(response)
-      // })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-
-
-  handleUserRegistration(username, password) {
-
-    const here = this;
-
-    let user_data = {
-      user_name: username,
-      user_password: password
-    };
-    let request = new Request(site + '/api/new-user', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify(user_data),
-    });
-
-    //xmlhttprequest()
-
-    fetch(request)
-      .then(function (response) {
-        response.json()
-          .then(function (data) {
-            if (data.registered) {
-              here.setState({
-                username: user_data.user_name,
-                loggedIn: true,
-                alert: true,
-                alertMessage: data.message
-              })
-            } else {
-              here.setState({
-                alert: true,
-                alertMessage: data.message
-              })
-            }
-          })
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-
-  handleUserLogin(username, password) {
-
-    const here = this;
-
-    let user_data = {
-      user_name: username,
-      user_password: password
-    };
-    let request = new Request(site + '/api/login', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify(user_data)
-    });
-
-    //xmlhttprequest()
-
-    fetch(request)
-      .then(function (response) {
-        response.json()
-          .then(function (data) {
-            if (data.loggedIn) {
-              console.log(data);
-              cookies.set('userId', data.id, { path: '/' });
-              cookies.set('userSession', data.userSession, { path: '/' });
-              here.setState({
-                username: user_data.user_name,
-                loggedIn: true,
-                alert: true,
-                alertMessage: data.message
-              })
-            } else {
-              here.setState({
-                alert: true,
-                alertMessage: data.message
-              })
-            }
-          })
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-
-  getUserPlan() {
-    //ajaxcalls here
-    this.setState({
-      years: 1,
-      monthlyIncome: 3000,
-      goal: 18000,
-      monthlyBudget: 1500,
-    })
-  }
-
-  getUserPlan() {
-    //ajaxcalls here
-    this.setState({
-      years: 1,
-      monthlyIncome: 3000,
-      goal: 18000,
-      monthlyBudget: 1500,
-    })
-  }
-
-  //================================================================================
   // Miscellaneous Functions
   //================================================================================
 
+  //This app uses Material UI popup alerts for many items.
+  //component is found in src/components/validations/alerts
+  //The following function is responsible to setting state to close the alert
   closeAlert(event, reason) {
     if (reason === 'clickaway') {
       return;
@@ -341,6 +212,8 @@ class App extends React.Component {
     return income - roundedMonthlySavingsTarget;
   }
 
+  //returns budget based on changes in input
+  //function returns value accordingly if user changes either the monthly income, goal, or years
   budgetCalculator(name, value) {
 
     const { monthlyIncome, goal, years } = this.state;
@@ -356,13 +229,15 @@ class App extends React.Component {
 
   }
 
+  //calculates whether the user is ahead or behind budget
+  //This is by taking in unspent or overspent budget from the beginning of the year till current month
   calculateExcessBudget(newChartValues) {
     const { currentMonth } = this.state;
 
     let newExcess = 0;
     let currentRemainingBudget = newChartValues.datasets[2].data;
 
-    for (let i = 0; i < currentMonth; i++) {
+    for (let i = 0; i <= currentMonth; i++) {
       newExcess = newExcess + currentRemainingBudget[i];
     }
 
@@ -575,6 +450,123 @@ class App extends React.Component {
       alertMessage: newAlertMessage,
     })
 
+  }
+
+  //================================================================================
+  // Requests to Back-End
+  //================================================================================
+
+  //Pings backend when frontend starts. This is as backend is using a free Heroku dyno. By waking the dyno ahead of time, this will decrease the delay which the user may face if dyno is only awaken after registration or login.
+  pingAPI() {
+
+    let request = new Request(site + '/ping', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+    });
+
+    fetch(request)
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  handleUserRegistration(username, password) {
+
+    const here = this;
+
+    let user_data = {
+      user_name: username,
+      user_password: password
+    };
+    let request = new Request(site + '/api/new-user', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data),
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            if (data.registered) {
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  handleUserLogin(username, password) {
+
+    const here = this;
+
+    let user_data = {
+      user_name: username,
+      user_password: password
+    };
+    let request = new Request(site + '/api/login', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_data)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            if (data.loggedIn) {
+              console.log(data);
+              cookies.set('userId', data.id, { path: '/' });
+              cookies.set('userSession', data.userSession, { path: '/' });
+              here.setState({
+                username: user_data.user_name,
+                loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  getUserPlan() {
+    //ajaxcalls here
+    this.setState({
+      years: 1,
+      monthlyIncome: 3000,
+      goal: 18000,
+      monthlyBudget: 1500,
+    })
   }
 
   //================================================================================
