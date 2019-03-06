@@ -15,12 +15,12 @@ npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev 
 
 # About
 Budget Planner is about visualising your financial future.<br />
-Problems:<br />
+<strong>Problems:</strong><br />
 Many times, we know that we need to save. 
 We know how to calculate how much we need to save. 
 However, these plans do not work when we are unable to visualise our future financial status. 
 It is also troublesome for us to keep recalculating an ideal budget when we need to change one or more variables.<br />
-Solution:<br />
+<strong>Solution:</strong><br />
 Budget Planner will show you how your over-spending, or under-spending, affects your budget for the rest of the year. 
 By doing so, you will be that much more careful about your spending. 
 Ideally, when the user is also able to see which areas in which he had been over-spending, he will also be able to control his spending accordingly.<br />
