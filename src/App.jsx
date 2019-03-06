@@ -65,6 +65,7 @@ class App extends React.Component {
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
+    this.handleCreatePlan = this.handleCreatePlan.bind(this);
 
     //================================================================================
     // State
@@ -179,9 +180,7 @@ class App extends React.Component {
   componentDidMount() {
     this.pingAPI();
     this.getUserPlan();
-    // this.getChartData();
     this.getCurrentMonth();
-
   }
 
   //================================================================================
@@ -461,14 +460,12 @@ class App extends React.Component {
 
   //Pings backend when frontend starts. This is as backend is using a free Heroku dyno. By waking the dyno ahead of time, this will decrease the delay which the user may face if dyno is only awaken after registration or login.
   pingAPI() {
-
     let request = new Request(site + '/ping', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
     });
-
     fetch(request)
       .catch(function (err) {
         console.log(err);
@@ -502,7 +499,8 @@ class App extends React.Component {
                 username: user_data.user_name,
                 loggedIn: true,
                 alert: true,
-                alertMessage: data.message
+                alertMessage: data.message,
+                newUser: true
               })
             } else {
               here.setState({
@@ -540,12 +538,71 @@ class App extends React.Component {
         response.json()
           .then(function (data) {
             if (data.loggedIn) {
-              console.log(data);
               cookies.set('userId', data.id, { path: '/' });
               cookies.set('userSession', data.userSession, { path: '/' });
               here.setState({
                 username: user_data.user_name,
                 loggedIn: true,
+                alert: true,
+                alertMessage: data.message
+              })
+            } else {
+              here.setState({
+                alert: true,
+                alertMessage: data.message
+              })
+            }
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
+
+  handleCreatePlan() {
+
+    const {
+      goal,
+      monthlyIncome,
+      years,
+    } = this.state;
+
+    let userId = cookies.get('userId');
+    let userSession = cookies.get('userSession');
+
+    const here = this;
+
+    let user_plan = {
+      goal: goal,
+      monthlyIncome: monthlyIncome,
+      years: years,
+      userId: userId,
+      userSession: userSession
+    };
+
+
+    let request = new Request(site + '/api/new-plan', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_plan)
+    });
+
+    // console.log(
+    //   request.body
+    // )
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            if (data.planned) {
+              console.log(data);
+              here.setState({
+                newUser: false,
                 alert: true,
                 alertMessage: data.message
               })
@@ -626,6 +683,7 @@ class App extends React.Component {
                 goal={goal}
                 monthlyBudget={monthlyBudget}
                 onPlanChange={this.handlePlanChange}
+                handleCreatePlan={this.handleCreatePlan}
               />
             }
             {
