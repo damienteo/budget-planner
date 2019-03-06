@@ -17,13 +17,6 @@ import {
 	UserExpenseInput
 } from './texts/'
 
-// import { 
-// 	roundTo2Decimals, 
-// 	savingsPerMonth, 
-// 	totalMonths, 
-// 	budgetPerMonth,
-// } from './functions';
-
 const styles = {
 	expansionSummary: {
 		// fontWeight: 600,

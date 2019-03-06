@@ -16,6 +16,7 @@ import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
 import LandingPage from './components/LandingPage';
+import { Welcome } from './components/texts/'
 
 //================================================================================
 // Constants
@@ -70,6 +71,7 @@ class App extends React.Component {
     //================================================================================
 
     this.state = {
+      newUser: true,
       username: '',
       userId: 0,
       loggedIn: false,
@@ -244,6 +246,7 @@ class App extends React.Component {
     return newExcess;
   }
 
+  //Distributes remaining planned budget among the remaining months
   calculateNewBudget(newExpenseData) {
 
     const { monthlyBudget } = this.state;
@@ -583,6 +586,7 @@ class App extends React.Component {
       newExpense,
       newMonth,
       chartData,
+      newUser,
       username,
       loggedIn,
       currentMonth,
@@ -615,7 +619,17 @@ class App extends React.Component {
               />
             }
             {
-              loggedIn &&
+              loggedIn && newUser &&
+              <Welcome
+                years={years}
+                monthlyIncome={monthlyIncome}
+                goal={goal}
+                monthlyBudget={monthlyBudget}
+                onPlanChange={this.handlePlanChange}
+              />
+            }
+            {
+              loggedIn && !newUser &&
               <Grid
                 container
                 style={{ marginTop: `64px` }}
