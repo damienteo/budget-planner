@@ -164,12 +164,32 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.pingAPI();
     this.getUserPlan();
     // this.getChartData();
     this.getCurrentMonth();
 
   }
 
+  pingAPI() {
+
+    let request = new Request(site + '/ping', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      // .then(function (response) {
+      //   console.log(response)
+      // })
+      .catch(function (err) {
+        console.log(err);
+      })
+  }
 
 
   handleUserRegistration(username, password) {
