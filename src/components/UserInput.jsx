@@ -87,6 +87,10 @@ class UserInput extends Component {
 
 	}
 
+	componentDidMount() {
+		this.getUserPlan();
+	}
+
 	handlePlanChange(event) {
 		const { name, value } = event.target
 		this.props.onPlanChange(name, value);
@@ -112,6 +116,10 @@ class UserInput extends Component {
 
 	handleSetPlan() {
 		this.props.handleSetPlan();
+	}
+
+	getUserPlan() {
+		this.props.getUserPlan();
 	}
 
 	render() {

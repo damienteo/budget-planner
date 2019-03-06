@@ -66,6 +66,7 @@ class App extends React.Component {
     this.closeAlert = this.closeAlert.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
     this.handleSetPlan = this.handleSetPlan.bind(this);
+    this.getUserPlan = this.getUserPlan.bind(this);
 
     //================================================================================
     // State
@@ -179,7 +180,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.pingAPI();
-    this.getUserPlan();
     this.getCurrentMonth();
   }
 
@@ -583,7 +583,6 @@ class App extends React.Component {
       userSession: userSession
     };
 
-
     let request = new Request(site + '/api/set-plan', {
       method: 'POST',
       headers: new Headers({
@@ -592,30 +591,17 @@ class App extends React.Component {
       body: JSON.stringify(user_plan)
     });
 
-    // console.log(
-    //   request.body
-    // )
-
     //xmlhttprequest()
 
     fetch(request)
       .then(function (response) {
         response.json()
           .then(function (data) {
-            if (data.planned) {
-              console.log(data);
-              here.setState({
-                newUser: false,
-                alert: true,
-                alertMessage: data.message
-              })
-            } else {
-              here.setState({
-                newUser: false,
-                alert: true,
-                alertMessage: data.message
-              })
-            }
+            here.setState({
+              newUser: false,
+              alert: true,
+              alertMessage: data.message
+            })
           })
       })
       .catch(function (err) {
@@ -624,13 +610,58 @@ class App extends React.Component {
   }
 
   getUserPlan() {
-    //ajaxcalls here
-    this.setState({
-      years: 1,
-      monthlyIncome: 3000,
-      goal: 18000,
-      monthlyBudget: 1500,
-    })
+
+    let userId = cookies.get('userId');
+    let userSession = cookies.get('userSession');
+
+    const here = this;
+
+    let user_details = {
+      userId: userId,
+      userSession: userSession
+    };
+
+    let request = new Request(site + '/api/get-plan', {
+      method: 'PUT',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_details)
+    });
+
+    //xmlhttprequest()
+
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            if (data.exist) {
+              const {
+                goal,
+                years,
+                monthlyincome
+              } = data.plan;
+              let setMonthlyBudget = here.budgetPerMonth(monthlyincome, goal, years);
+              console.log(setMonthlyBudget)
+              here.setState({
+                years: years,
+                monthlyIncome: monthlyincome,
+                goal: goal,
+                monthlyBudget: setMonthlyBudget,
+              })
+            } else {
+              here.setState({
+                years: 1,
+                monthlyIncome: 3000,
+                goal: 18000,
+                monthlyBudget: 1500,
+              })
+            }
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
   }
 
   //================================================================================
@@ -713,6 +744,7 @@ class App extends React.Component {
                       onMonthChange={this.handleMonthChange}
                       setExpense={this.setExpense}
                       handleSetPlan={this.handleSetPlan}
+                      getUserPlan={this.getUserPlan}
                     />
                   </Paper>
                 </Grid>

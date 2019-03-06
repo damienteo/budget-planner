@@ -43,18 +43,26 @@ class UserForm extends React.Component {
 	}
 
 	componentDidMount() {
-		ValidatorForm.addValidationRule('isMinLength', (value) => {
-			if (value.length < 6) {
-				return false;
-			}
-			return true;
-		});
-		ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-			if (value !== this.state.userInput.password) {
-				return false;
-			}
-			return true;
-		});
+		this._isMounted = true;
+		if (this._isMounted) {
+			ValidatorForm.addValidationRule('isMinLength', (value) => {
+				if (value.length < 6) {
+					return false;
+				}
+				return true;
+			});
+			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+				if (value !== this.state.userInput.password) {
+					return false;
+				}
+				return true;
+			});
+		}
+
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false;
 	}
 
 	handleToggle() {

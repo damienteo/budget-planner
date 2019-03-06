@@ -135,31 +135,29 @@ class UserSummary extends Component {
 					>
 						<DialogTitle id="alert-dialog-title">Your current Plan</DialogTitle>
 						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								<Typography style={{ display: 'block' }}>
-									Goal:
+							<Typography style={{ display: 'block' }}>
+								Goal:
 										<strong> ${goal} </strong>
-									in
+								in
 										<strong> {years} </strong>
-									year(s)
+								year(s)
 								</Typography>
-								<Typography>
-									Monthly Income:
+							<Typography>
+								Monthly Income:
 										<strong> ${monthlyIncome}</strong>
-								</Typography>
-								<Typography>
-									You need to save:
+							</Typography>
+							<Typography>
+								You need to save:
 										<strong> ${savingsPerMonth({ goal }, { years })} </strong>
-									/month for
+								/month for
 										<strong> {totalMonths({ years })} </strong>
-									months.
+								months.
 								</Typography>
-								<Typography style={styles.budget}>
-									Budget:
+							<Typography style={styles.budget}>
+								Budget:
 										<strong> ${monthlyBudget} </strong>
-									/month
+								/month
 								</Typography>
-							</DialogContentText>
 						</DialogContent>
 						<DialogActions>
 							<Button onClick={this.handleClose} color="primary">
