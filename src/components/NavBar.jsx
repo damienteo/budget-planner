@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
+import {
 	AppBar,
 	Toolbar,
 	Typography,
-	Button, 
+	Button,
 } from '@material-ui/core';
 import { UserForm } from './validations'
 
@@ -45,57 +45,57 @@ class NavBar extends React.Component {
 
 	render() {
 
-		const {username, loggedIn} = this.props;
+		const { username, loggedIn } = this.props;
 
-		return(
+		return (
 			<React.Fragment>
-		      <AppBar position="fixed">
-		        <Toolbar>
-		          <Typography 
-			          variant="h6" 
-			          color="inherit"
-			          style={styles.heading}
-		          >
-		            BudgetPlanner
+				<AppBar position="fixed">
+					<Toolbar>
+						<Typography
+							variant="h6"
+							color="inherit"
+							style={styles.heading}
+						>
+							BudgetPlanner
 		          </Typography>
-		          	{
-					loggedIn &&
-						<React.Fragment>
-							<Typography
-								color="inherit"
-								style = {styles.greeting}
-							> 
-								Hello { username }!
+						{
+							loggedIn &&
+							<React.Fragment>
+								<Typography
+									color="inherit"
+									style={styles.greeting}
+								>
+									Hello {username}!
 							</Typography>
-							<Button 
-								color="inherit"
-								variant="outlined"
-								style = {styles.button}
-								onClick = {this.handleUserLogout}
-							>
-								Logout
+								<Button
+									color="inherit"
+									variant="outlined"
+									style={styles.button}
+									onClick={this.handleUserLogout}
+								>
+									Logout
 							</Button>
-						</React.Fragment>
-					}
-					{
-					!loggedIn &&
-						<React.Fragment>
-							<UserForm 
-								handleUser={ this.handleUserLogin }
-								message='Login'
-								button='Login'
-							/>
-							<UserForm 
-								handleUser={ this.handleUserRegistration }
-								message='Confirm Registration'
-								button='Register'
-								register = { true }
-							/>
-						</React.Fragment>
-					}
-		        </Toolbar>
-		      </AppBar>
-		    </React.Fragment>
+							</React.Fragment>
+						}
+						{
+							!loggedIn &&
+							<React.Fragment>
+								<UserForm
+									handleUser={this.handleUserLogin}
+									message='Login'
+									button='Login'
+								/>
+								<UserForm
+									handleUser={this.handleUserRegistration}
+									message='Confirm Registration'
+									button='Register'
+									register={true}
+								/>
+							</React.Fragment>
+						}
+					</Toolbar>
+				</AppBar>
+			</React.Fragment>
 		)
 	}
 }

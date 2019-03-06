@@ -10,21 +10,21 @@ import {
 	DialogContentText,
 	DialogTitle,
 }
-from '@material-ui/core';
+	from '@material-ui/core';
 
-import { 
-	savingsPerMonth, 
-	totalMonths, 
+import {
+	savingsPerMonth,
+	totalMonths,
 } from '../functions';
 
 const styles = {
 	budget: {
 		backgroundColor: '#004d40',
-	    fontSize: 16,
-	    color: 'white',
-	    margin: 30,
-	    padding: 10,
-	    borderRadius: 5,
+		fontSize: 16,
+		color: 'white',
+		margin: 30,
+		padding: 10,
+		borderRadius: 5,
 	},
 	positive: {
 		color: '#006700',
@@ -42,91 +42,91 @@ class UserSummary extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		    open: false,
+			open: false,
 		};
 	}
 
 	handleClickOpen = () => {
-	    this.setState({
-	       open: true,
-	    });
-	 };
+		this.setState({
+			open: true,
+		});
+	};
 
-	 handleClose = () => {
-	    this.setState({ open: false });
-	 };
+	handleClose = () => {
+		this.setState({ open: false });
+	};
 
-	render() {	
-			
-		const {  
-			years, 
-			monthlyIncome, 
-			goal, 
+	render() {
+
+		const {
+			years,
+			monthlyIncome,
+			goal,
 			monthlyBudget,
 			currentRemainingBudget,
 			excessBudget
-		} = this.props;	
+		} = this.props;
 
-		return(
+		return (
 			<React.Fragment>
-				<Grid 
+				<Grid
 					container
 				>
-					{ currentRemainingBudget >= 0 &&
-						<Typography 
-							style={{display: 'block'}}
-							gutterBottom
-						>	
-							<strong>
-								You have: 
-									<span style = {styles.positive}> ${ currentRemainingBudget } </span> 
-								left to spend this month. 
-							</strong>
-						</Typography>
-						||
-						<Typography 
-							style={{display: 'block'}}
+					{currentRemainingBudget >= 0 &&
+						<Typography
+							style={{ display: 'block' }}
 							gutterBottom
 						>
 							<strong>
-								You have overspent by: 
-									<span style = {styles.negative}> ${ Math.abs(currentRemainingBudget) } </span> 
+								You have:
+									<span style={styles.positive}> ${currentRemainingBudget} </span>
+								left to spend this month.
+							</strong>
+						</Typography>
+						||
+						<Typography
+							style={{ display: 'block' }}
+							gutterBottom
+						>
+							<strong>
+								You have overspent by:
+									<span style={styles.negative}> ${Math.abs(currentRemainingBudget)} </span>
 								this month.
 							</strong>
 						</Typography>
 					}
-					{  excessBudget >= 0 &&
-						<Typography 
-							style={{display: 'block'}}
+					{excessBudget >= 0 &&
+						<Typography
+							style={{ display: 'block' }}
 							gutterBottom
-						> 
-							You are ahead of budget by: 
-								<strong style = {styles.positive}> ${ excessBudget } </strong> 
+						>
+							You are ahead of budget by:
+								<strong style={styles.positive}> ${excessBudget} </strong>
 							so far for the year.
 						</Typography>
 						||
-						<Typography 
-							style={{display: 'block'}}
+						<Typography
+							style={{ display: 'block' }}
 							gutterBottom
-						> 
-							You are behind budget by: 
-								<strong style = {styles.negative}> ${ Math.abs(excessBudget) } </strong> 
+						>
+							You are behind budget by:
+								<strong style={styles.negative}> ${Math.abs(excessBudget)} </strong>
 							so far for the year.
 						</Typography>
 					}
-					<Grid 
+					<Grid
 						container
-		            >	
-						<Button 
-							variant="outlined" 
-							color="primary" 
+					>
+						<Button
+							variant="outlined"
+							color="primary"
 							onClick={this.handleClickOpen}
 							size="small"
-							style = {styles.button}
+							style={styles.button}
 						>
-				        	See plan
+							See plan
 				        </Button>
-			        </Grid>
+					</Grid>
 					<Dialog
 						open={this.state.open}
 						onClose={this.handleClose}
@@ -136,27 +136,27 @@ class UserSummary extends Component {
 						<DialogTitle id="alert-dialog-title">Your current Plan</DialogTitle>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<Typography style={{display: 'block'}}> 
-									Goal: 
-										<strong> ${ goal } </strong> 
-											in
-										<strong> { years } </strong>
+								<Typography style={{ display: 'block' }}>
+									Goal:
+										<strong> ${goal} </strong>
+									in
+										<strong> {years} </strong>
 									year(s)
 								</Typography>
-								<Typography> 
-									Monthly Income: 
-										<strong> ${  monthlyIncome }</strong> 
+								<Typography>
+									Monthly Income:
+										<strong> ${monthlyIncome}</strong>
 								</Typography>
-								<Typography> 
-									You need to save: 
-										<strong> ${ savingsPerMonth({goal}, {years})} </strong> 
-											/month for
-										<strong> { totalMonths({years})} </strong> 
+								<Typography>
+									You need to save:
+										<strong> ${savingsPerMonth({ goal }, { years })} </strong>
+									/month for
+										<strong> {totalMonths({ years })} </strong>
 									months.
 								</Typography>
-								<Typography style = {styles.budget}> 
+								<Typography style={styles.budget}>
 									Budget:
-										<strong> ${ monthlyBudget } </strong> 
+										<strong> ${monthlyBudget} </strong>
 									/month
 								</Typography>
 							</DialogContentText>

@@ -5,13 +5,13 @@ import {
 	Grid,
 	InputAdornment,
 }
-from '@material-ui/core';
+	from '@material-ui/core';
 
 const styles = {
-  input: {
-    width: 150,
-    margin: 10,
-  },
+	input: {
+		width: 150,
+		margin: 10,
+	},
 };
 
 class UserPlan extends Component {
@@ -25,18 +25,18 @@ class UserPlan extends Component {
 		this.props.handlePlanChange(event);
 	}
 
-	render() {	
-			
-		const {  years, monthlyIncome, goal} = this.props;	
+	render() {
 
-		return(
+		const { years, monthlyIncome, goal } = this.props;
+
+		return (
 			<React.Fragment>
 				<Grid container>
 					<TextField
 						key="years"
 						type="number"
 						name="years"
-						value={ years }
+						value={years}
 						onChange={this.handlePlanChange}
 						label="Planning timeframe:"
 						InputLabelProps={{
@@ -45,15 +45,15 @@ class UserPlan extends Component {
 						variant="outlined"
 						margin="normal"
 						InputProps={{
-				            endAdornment: <InputAdornment position="end">Years</InputAdornment>,
-				        }}
-				        style = {styles.input}
+							endAdornment: <InputAdornment position="end">Years</InputAdornment>,
+						}}
+						style={styles.input}
 					/>
 					<TextField
 						key="goal"
 						type="number"
 						name="goal"
-						value={ goal }
+						value={goal}
 						onChange={this.handlePlanChange}
 						label="With the following Goal:"
 						InputLabelProps={{
@@ -62,15 +62,15 @@ class UserPlan extends Component {
 						variant="outlined"
 						margin="normal"
 						InputProps={{
-				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-				        }}
-				        style = {styles.input}
+							startAdornment: <InputAdornment position="start">$</InputAdornment>,
+						}}
+						style={styles.input}
 					/>
 					<TextField
 						key="monthlyIncome"
 						type="number"
 						name="monthlyIncome"
-						value={ monthlyIncome }
+						value={monthlyIncome}
 						onChange={this.handlePlanChange}
 						label="And monthly income:"
 						InputLabelProps={{
@@ -79,9 +79,9 @@ class UserPlan extends Component {
 						variant="outlined"
 						margin="normal"
 						InputProps={{
-				            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-				        }}
-				        style = {styles.input}
+							startAdornment: <InputAdornment position="start">$</InputAdornment>,
+						}}
+						style={styles.input}
 					/>
 				</Grid>
 			</React.Fragment>

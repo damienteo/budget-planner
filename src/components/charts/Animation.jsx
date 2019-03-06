@@ -3,46 +3,46 @@ import Chart from './Chart';
 
 const values = [
 	0,
-	100, 
-	200, 
-	300, 
-	400, 
-	500, 
-	600, 
+	100,
+	200,
+	300,
+	400,
+	500,
+	600,
 	700,
 	800,
 	900,
 	1000,
 	1100,
 	1000,
-	900, 
-	800, 
-	700, 
-	600, 
-	500, 
-	400, 
+	900,
+	800,
+	700,
+	600,
+	500,
+	400,
 	300,
 	200,
 	100,
 	0,
 	100,
-	200, 
-	300, 
-	400, 
-	500, 
-	600, 
+	200,
+	300,
+	400,
+	500,
+	600,
 	700,
 	800,
 	900,
 	1000,
 	1100,
 	1000,
-	900, 
-	800, 
-	700, 
-	600, 
-	500, 
-	400, 
+	900,
+	800,
+	700,
+	600,
+	500,
+	400,
 	300,
 	200,
 	100,
@@ -51,7 +51,7 @@ const values = [
 	200
 ];
 
-const hues =[
+const hues = [
 	"rgba(96, 125, 139)",
 	"rgba(88, 139, 134)",
 	"rgba(72, 139, 127)",
@@ -82,130 +82,130 @@ class Animation extends React.Component {
 
 	constructor() {
 
-    super();
+		super();
 
-    this.state = {
-      chartData:{
-        labels:[
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '',
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '',
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '',
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '',
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '', 
-          '',
-        ],
-        datasets:[
-          {
-            label: '',
-            data:values,
-              backgroundColor: hues,
-              hoverBackgroundColor: "rgba(96, 125, 139)",
-          },
-        ],
-      },
-      down: [
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			true,
-			false,
-			false,
-			false,
-		]
-    };
-  }
+		this.state = {
+			chartData: {
+				labels: [
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+				],
+				datasets: [
+					{
+						label: '',
+						data: values,
+						backgroundColor: hues,
+						hoverBackgroundColor: "rgba(96, 125, 139)",
+					},
+				],
+			},
+			down: [
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				false,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				true,
+				false,
+				false,
+				false,
+			]
+		};
+	}
 
-  	componentDidMount() {
-  		this.timerID = setInterval(
+	componentDidMount() {
+		this.timerID = setInterval(
 			() => this.change(),
 			500
 		);
-  	}
+	}
 
-  	componentWillUnmount() {
+	componentWillUnmount() {
 		clearInterval(this.timerID);
 	}
 
@@ -213,9 +213,9 @@ class Animation extends React.Component {
 
 		let previousValues = this.state.chartData.datasets[0].data;
 
-		let changeDirection = [ ...this.state.down];
+		let changeDirection = [...this.state.down];
 
-		let reshuffleValues=[];
+		let reshuffleValues = [];
 		for (let i = 0; i < previousValues.length; i++) {
 
 			if (previousValues[i] === 1100) {
@@ -232,17 +232,17 @@ class Animation extends React.Component {
 				newValue = previousValues[i] - 100;
 			} else {
 				newValue = previousValues[i] + 100;
-			}	
+			}
 			reshuffleValues.push(newValue);
 		}
 
-		let reshuffleHues=[];
+		let reshuffleHues = [];
 		for (let i = 0; i < 48; i++) {
 			let randomHue = Math.floor((Math.random() * 20));
 			reshuffleHues.push(hues[randomHue]);
 		}
-		
-		let newChartData = { ...this.state.chartData};
+
+		let newChartData = { ...this.state.chartData };
 		newChartData.datasets[0].data = reshuffleValues;
 		newChartData.datasets[0].backgroundColor = reshuffleHues;
 
@@ -257,13 +257,13 @@ class Animation extends React.Component {
 
 		const { chartData } = this.state;
 
-		return(
-		    <Chart 
-		    	chartData={ chartData }
-		    	displayDataLabel={ false }
-		    	displayLegend={ false }
-		    	displayTooltips={ false }
-		    />
+		return (
+			<Chart
+				chartData={chartData}
+				displayDataLabel={false}
+				displayLegend={false}
+				displayTooltips={false}
+			/>
 		)
 	}
 }

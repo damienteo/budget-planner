@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { 
-	Button, 
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {
+	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
@@ -43,19 +43,19 @@ class UserForm extends React.Component {
 	}
 
 	componentDidMount() {
-        ValidatorForm.addValidationRule('isMinLength', (value) => {
-            if (value.length < 6) {
-                return false;
-            }
-            return true;
-        });
-        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-            if (value !== this.state.userInput.password) {
-                return false;
-            }
-            return true;
-        });
-    }
+		ValidatorForm.addValidationRule('isMinLength', (value) => {
+			if (value.length < 6) {
+				return false;
+			}
+			return true;
+		});
+		ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+			if (value !== this.state.userInput.password) {
+				return false;
+			}
+			return true;
+		});
+	}
 
 	handleToggle() {
 		this.setState({
@@ -63,45 +63,45 @@ class UserForm extends React.Component {
 		})
 	}
 
-	handleChange = name => ({target: { value }}) => {
-	    this.setState({ 
-	    	userInput: {
-	    		...this.state.userInput,
-	    		[name]: value 
-	    	}
-	    });
-	 };
+	handleChange = name => ({ target: { value } }) => {
+		this.setState({
+			userInput: {
+				...this.state.userInput,
+				[name]: value
+			}
+		});
+	};
 
 	handleSubmit() {
-		const {username, password} = this.state.userInput
+		const { username, password } = this.state.userInput
 		this.props.handleUser(username, password);
 		this.setState({
 			open: !this.state.open,
 			userInput: {
-	    		...this.state.userInput,
-	    		username: '',
-	    		password: '', 
-	    		repeatPassword: '',
-	    	}
+				...this.state.userInput,
+				username: '',
+				password: '',
+				repeatPassword: '',
+			}
 
 		})
 	}
-	
+
 	render() {
 
 		const { open, userInput: { username, password, repeatPassword } } = this.state;
 		const { fullScreen, message, button, register } = this.props;
 
-		return(
+		return (
 			<React.Fragment>
 
 				<Button
 					onClick={this.handleToggle}
 					color="inherit"
 					variant="outlined"
-					style={ styles.button }
+					style={styles.button}
 				>
-					{ button }
+					{button}
 				</Button>
 
 				<Dialog
@@ -125,12 +125,12 @@ class UserForm extends React.Component {
 								maxLength="5"
 								validators={[
 									'required',
-									'isMinLength', 
+									'isMinLength',
 									'matchRegexp:^[a-zA-Z0-9]+$'
 								]}
 								errorMessages={[
-									'this field is required', 
-									'Must be at least 6 charecters', 
+									'this field is required',
+									'Must be at least 6 charecters',
 									'Please use either alphabets or numbers'
 								]}
 							/>
@@ -143,18 +143,18 @@ class UserForm extends React.Component {
 								style={styles.textfield}
 								validators={[
 									'required',
-									'isMinLength', 
+									'isMinLength',
 									'matchRegexp:^[a-zA-Z0-9]+$'
 								]}
 								errorMessages={[
-									'this field is required', 
-									'Must be at least 6 charecters', 
+									'this field is required',
+									'Must be at least 6 charecters',
 									'Please use either alphabets or numbers'
 								]}
 							/>
 							<br />
 							{
-							register &&
+								register &&
 								<TextValidator
 									label="Repeat password"
 									value={repeatPassword}
@@ -163,40 +163,40 @@ class UserForm extends React.Component {
 									style={styles.textfield}
 									validators={[
 										'required',
-										'isMinLength', 
-										'matchRegexp:^[a-zA-Z0-9]+$', 
+										'isMinLength',
+										'matchRegexp:^[a-zA-Z0-9]+$',
 										'isPasswordMatch'
 									]}
 									errorMessages={[
-										'this field is required', 
-										'Must be at least 6 charecters', 
-										'Please use either alphabets or numbers', 
+										'this field is required',
+										'Must be at least 6 charecters',
+										'Please use either alphabets or numbers',
 										'Password mismatch'
 									]}
 								/>
 							}
 							<DialogActions>
-								<Button 
+								<Button
 									color="primary"
 									variant="contained"
 									type="submit"
 									// onClick={this.handleSubmit}
 									style={styles.button}
 								>
-									{ message }
+									{message}
 								</Button>
 							</DialogActions>
 						</DialogContent>
 					</ValidatorForm>
 				</Dialog>
 
-		    </React.Fragment>
+			</React.Fragment>
 		)
 	}
 }
 
 UserForm.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
+	fullScreen: PropTypes.bool.isRequired,
 };
 
-export default  withMobileDialog()(UserForm);
+export default withMobileDialog()(UserForm);

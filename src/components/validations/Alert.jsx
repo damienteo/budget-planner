@@ -17,28 +17,28 @@ class Alert extends React.Component {
 
     const { alert, alertMessage } = this.props;
 
-    return(
+    return (
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        open={ alert }
+        open={alert}
         autoHideDuration={3000}
         onClose={this.closeAlert}
         ContentProps={{
           'aria-describedby': 'message-id',
         }}
-        message={<span id="message-id">{ alertMessage }</span>}
+        message={<span id="message-id">{alertMessage}</span>}
         action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          onClick={this.closeAlert}
-        >
-          <CloseIcon />
-        </IconButton>,
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={this.closeAlert}
+          >
+            <CloseIcon />
+          </IconButton>,
         ]}
       />
     )

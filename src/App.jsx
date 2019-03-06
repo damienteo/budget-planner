@@ -8,7 +8,7 @@ import {
   MuiThemeProvider,
   Grid,
 }
-from '@material-ui/core';
+  from '@material-ui/core';
 
 import './App.css';
 import { Alert } from './components/validations'
@@ -59,10 +59,10 @@ class App extends React.Component {
     this.handleUserLogin = this.handleUserLogin.bind(this);
 
     this.state = {
-      username:'',
-      userId:0,
+      username: '',
+      userId: 0,
       loggedIn: false,
-      currentMonth:0,
+      currentMonth: 0,
       alert: false,
       alertMessage: '',
       years: 0,
@@ -73,26 +73,26 @@ class App extends React.Component {
       excessBudget: 0,
       newExpense: 0,
       newMonth: 0,
-      chartData:{
-        labels:[
-          'Jan', 
-          'Feb', 
-          'Mar', 
-          'Apr', 
-          'May', 
+      chartData: {
+        labels: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
           'Jun',
-          'Jul', 
-          'Aug', 
-          'Sep', 
-          'Oct', 
-          'Nov', 
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
           'Dec',
         ],
-        datasets:[
+        datasets: [
           {
             stack: 'stack1',
             label: 'Expenses',
-            data:[
+            data: [
               0,
               0,
               0,
@@ -106,16 +106,16 @@ class App extends React.Component {
               0,
               0,
             ],
-              backgroundColor: "rgba(255,99,132,0.3)",
-              borderColor: "rgba(255,99,132,1)",
-              borderWidth: 0,
-              hoverBackgroundColor: "rgba(255,99,132,0.5)",
-              hoverBorderColor: "rgba(255,99,132,1)",
+            backgroundColor: "rgba(255,99,132,0.3)",
+            borderColor: "rgba(255,99,132,1)",
+            borderWidth: 0,
+            hoverBackgroundColor: "rgba(255,99,132,0.5)",
+            hoverBorderColor: "rgba(255,99,132,1)",
           },
           {
             stack: 'stack1',
             label: 'Future Budget',
-            data:[
+            data: [
               1500,
               1500,
               1500,
@@ -129,16 +129,16 @@ class App extends React.Component {
               1500,
               1500,
             ],
-              backgroundColor: "rgba(69, 186, 69, 0.2)",
-              borderColor: "rgba(69, 186, 69, 1)",
-              borderWidth: 0,
-              hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
-              hoverBorderColor: "rgba(69, 186, 69, 1)",
+            backgroundColor: "rgba(69, 186, 69, 0.2)",
+            borderColor: "rgba(69, 186, 69, 1)",
+            borderWidth: 0,
+            hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
+            hoverBorderColor: "rgba(69, 186, 69, 1)",
           },
           {
             stack: 'stack1',
             label: 'Current Budget',
-            data:[
+            data: [
               '',
               '',
               '',
@@ -152,11 +152,11 @@ class App extends React.Component {
               '',
               '',
             ],
-              backgroundColor: "rgba( 255, 255, 16, 0.2)",
-              borderColor: "rgba(255, 255, 16, 1)",
-              borderWidth: 0,
-              hoverBackgroundColor: "rgba(255, 255, 16, 0.4)",
-              hoverBorderColor: "rgba(255, 255, 16, 1)",
+            backgroundColor: "rgba( 255, 255, 16, 0.2)",
+            borderColor: "rgba(255, 255, 16, 1)",
+            borderWidth: 0,
+            hoverBackgroundColor: "rgba(255, 255, 16, 0.4)",
+            hoverBorderColor: "rgba(255, 255, 16, 1)",
           },
         ],
       },
@@ -191,9 +191,9 @@ class App extends React.Component {
     //xmlhttprequest()
 
     fetch(request)
-      .then(function(response){
+      .then(function (response) {
         response.json()
-          .then(function(data) {
+          .then(function (data) {
             if (data.registered) {
               here.setState({
                 username: user_data.user_name,
@@ -209,7 +209,7 @@ class App extends React.Component {
             }
           })
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       })
   }
@@ -222,7 +222,7 @@ class App extends React.Component {
       user_name: username,
       user_password: password
     };
-    let request = new Request(site+'/api/login', {
+    let request = new Request(site + '/api/login', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -233,9 +233,9 @@ class App extends React.Component {
     //xmlhttprequest()
 
     fetch(request)
-      .then(function(response){
+      .then(function (response) {
         response.json()
-          .then(function(data) {
+          .then(function (data) {
             if (data.loggedIn) {
               console.log(data);
               cookies.set('userId', data.id, { path: '/' });
@@ -254,7 +254,7 @@ class App extends React.Component {
             }
           })
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       })
   }
@@ -263,15 +263,15 @@ class App extends React.Component {
     if (reason === 'clickaway') {
       return;
     }
-    this.setState({  alert: false });
+    this.setState({ alert: false });
   };
 
   handleUserLogout() {
     cookies.remove('userId');
     cookies.remove('userSession');
     this.setState({
-      username:'',
-      userId:0,
+      username: '',
+      userId: 0,
       loggedIn: false,
       alert: true,
       alertMessage: 'You have logged out'
@@ -295,9 +295,9 @@ class App extends React.Component {
   }
 
   budgetPerMonth(income, goal, years) {
-    let monthlySavingsTarget = goal/(years*12);
+    let monthlySavingsTarget = goal / (years * 12);
     let roundedMonthlySavingsTarget = Math.round(monthlySavingsTarget);
-    return income - roundedMonthlySavingsTarget;  
+    return income - roundedMonthlySavingsTarget;
   }
 
   budgetCalculator(name, value) {
@@ -336,10 +336,10 @@ class App extends React.Component {
     let currentRemainingBudget = chartData.datasets[2].data;
 
     let newFutureBudgetValues = [];
-    for(let i = 0; i<=11; i++) {
-      if ( i<=currentMonth ) {
+    for (let i = 0; i <= 11; i++) {
+      if (i <= currentMonth) {
         newFutureBudgetValues.push("");
-      } else if ( currentExpenses[i] > 0 ){
+      } else if (currentExpenses[i] > 0) {
         let adjustedFutureBudget = newMonthlyBudget - currentExpenses[i];
         newFutureBudgetValues.push(adjustedFutureBudget);
       } else {
@@ -348,8 +348,8 @@ class App extends React.Component {
     }
 
     let newCurrentBudgetValues = [];
-    for(let i = 0; i<=11; i++) {
-      if ( i<=currentMonth ) {
+    for (let i = 0; i <= 11; i++) {
+      if (i <= currentMonth) {
         let adjustedCurrentBudget = newMonthlyBudget - currentExpenses[i];
         newCurrentBudgetValues.push(adjustedCurrentBudget);
       } else {
@@ -357,7 +357,7 @@ class App extends React.Component {
       }
     }
 
-    let newChart = { ...this.state.chartData}
+    let newChart = { ...this.state.chartData }
     newChart.datasets[1].data = newFutureBudgetValues;
     newChart.datasets[2].data = newCurrentBudgetValues;
 
@@ -374,7 +374,7 @@ class App extends React.Component {
     let newChartValues = this.handleBudgetChartChange(newMonthlyBudget);
 
     let newExcessBudget = this.calculateExcessBudget(newChartValues);
-    
+
     this.setState({
       [name]: floatValue,
       monthlyBudget: newMonthlyBudget,
@@ -402,23 +402,23 @@ class App extends React.Component {
     const { monthlyBudget } = this.state;
 
     let yearlyBudget = monthlyBudget * 12;
-    let currentTotalExpense = newExpenseData.reduce((a,b) => a + b, 0);
+    let currentTotalExpense = newExpenseData.reduce((a, b) => a + b, 0);
     let leftoverBudget = yearlyBudget - currentTotalExpense;
 
     let unexpendedMonths = 0
     let countUnexpendedMonths = () => {
-      for(let entry in newExpenseData) {
-        if (newExpenseData[entry] === 0) 
+      for (let entry in newExpenseData) {
+        if (newExpenseData[entry] === 0)
           unexpendedMonths++;
       }
     }
     countUnexpendedMonths()
-    let newAdjustedBudget = leftoverBudget/unexpendedMonths;
+    let newAdjustedBudget = leftoverBudget / unexpendedMonths;
 
     return Math.round(newAdjustedBudget);
   }
 
-  currentPlannedBudget (newExpenseChart, newMonth) {
+  currentPlannedBudget(newExpenseChart, newMonth) {
     if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
       return 0;
     } else {
@@ -426,7 +426,7 @@ class App extends React.Component {
     }
   }
 
-  currentRemainingBudget (newExpenseChart, newMonth) {
+  currentRemainingBudget(newExpenseChart, newMonth) {
     if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
       return 0;
     } else {
@@ -440,11 +440,11 @@ class App extends React.Component {
 
     //adjusting expenses
 
-    let newExpenseChart = { ...chartData}
+    let newExpenseChart = { ...chartData }
 
-    let newExpenseData = newExpenseChart.datasets[0].data.map( 
+    let newExpenseData = newExpenseChart.datasets[0].data.map(
       (x, index) => {
-        return (index === newMonth) ?  x + parseFloat(newExpense) : x;
+        return (index === newMonth) ? x + parseFloat(newExpense) : x;
       }
     );
 
@@ -452,12 +452,12 @@ class App extends React.Component {
 
     let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
 
-    let newPlannedBudgetData = newExpenseChart.datasets[0].data.map( 
+    let newPlannedBudgetData = newExpenseChart.datasets[0].data.map(
       (x, index) => {
 
         let leftoverBudget = monthlyBudget - newExpenseData[index];
 
-        if ( index > currentMonth ) {
+        if (index > currentMonth) {
 
           if (newExpenseData[index] === 0) {
             return monthlyBudget;
@@ -478,10 +478,10 @@ class App extends React.Component {
 
     let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
 
-    let newRemainingBudgetData = newExpenseChart.datasets[0].data.map( 
+    let newRemainingBudgetData = newExpenseChart.datasets[0].data.map(
       (x, index) => {
 
-        if ( index <= currentMonth ) {
+        if (index <= currentMonth) {
 
           if (index === newMonth) {
             return currentMonthLeftoverBudget;
@@ -493,7 +493,7 @@ class App extends React.Component {
 
         } else {
           return "";
-        } 
+        }
       }
 
     );
@@ -522,10 +522,10 @@ class App extends React.Component {
 
   render() {
 
-    const { 
+    const {
       years,
-      monthlyIncome, 
-      goal, 
+      monthlyIncome,
+      goal,
       monthlyBudget,
       newExpense,
       newMonth,
@@ -544,54 +544,54 @@ class App extends React.Component {
         <ErrorBoundary>
           <MuiThemeProvider theme={theme}>
             <NavBar
-              handleUserRegistration={ this.handleUserRegistration }
-              handleUserLogout={ this.handleUserLogout }
-              handleUserLogin={ this.handleUserLogin }
-              username={ username }
-              loggedIn={ loggedIn}
+              handleUserRegistration={this.handleUserRegistration}
+              handleUserLogout={this.handleUserLogout}
+              handleUserLogin={this.handleUserLogin}
+              username={username}
+              loggedIn={loggedIn}
             />
-            <Alert 
-              alert={ alert }
-              alertMessage={ alertMessage }
-              closeAlert={ this.closeAlert }
+            <Alert
+              alert={alert}
+              alertMessage={alertMessage}
+              closeAlert={this.closeAlert}
             />
             {
-            !loggedIn &&
+              !loggedIn &&
               <LandingPage
-                handleUserRegistration={ this.handleUserRegistration }
+                handleUserRegistration={this.handleUserRegistration}
               />
             }
             {
-            loggedIn &&
-              <Grid 
+              loggedIn &&
+              <Grid
                 container
                 style={{ marginTop: `64px` }}
               >
                 <Grid item md={4} xs={12}>
                   <Paper>
-                    <UserInput 
-                      years={ years }
-                      monthlyIncome={ monthlyIncome }
-                      goal={ goal }
-                      monthlyBudget={ monthlyBudget }
-                      newExpense={ newExpense }
-                      newMonth = { newMonth }
-                      currentRemainingBudget = { currentRemainingBudget }
-                      excessBudget = { excessBudget }
-                      onPlanChange={ this.handlePlanChange }
-                      onExpenseChange={ this.handleExpensesChange }
-                      onMonthChange={ this.handleMonthChange }
-                      setExpense={ this.setExpense }
+                    <UserInput
+                      years={years}
+                      monthlyIncome={monthlyIncome}
+                      goal={goal}
+                      monthlyBudget={monthlyBudget}
+                      newExpense={newExpense}
+                      newMonth={newMonth}
+                      currentRemainingBudget={currentRemainingBudget}
+                      excessBudget={excessBudget}
+                      onPlanChange={this.handlePlanChange}
+                      onExpenseChange={this.handleExpensesChange}
+                      onMonthChange={this.handleMonthChange}
+                      setExpense={this.setExpense}
                     />
-                  </Paper> 
+                  </Paper>
                 </Grid>
                 <Grid item md={8} xs={12}>
-                  <Paper style = {styles.menu}>
-                    <Chart 
-                      chartData={ chartData }
-                      displayDataLabel={ true }
-                      displayLegend={ true }
-                      displayTooltips={ true }
+                  <Paper style={styles.menu}>
+                    <Chart
+                      chartData={chartData}
+                      displayDataLabel={true}
+                      displayLegend={true}
+                      displayTooltips={true}
                     />
                   </Paper>
                 </Grid>
