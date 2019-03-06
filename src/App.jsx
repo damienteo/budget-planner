@@ -1,7 +1,6 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 
-
 import {
   Paper,
   createMuiTheme,
@@ -17,6 +16,10 @@ import NavBar from './components/NavBar'
 import UserInput from './components/UserInput';
 import Chart from './components/charts/Chart';
 import LandingPage from './components/LandingPage';
+
+//================================================================================
+// Constants
+//================================================================================
 
 const cookies = new Cookies();
 const moment = require('moment');
@@ -41,7 +44,11 @@ const styles = {
 const localHost = 'http://localhost:4000'
 const herokuSite = 'https://my-budget-planner-api.herokuapp.com'
 
-let site = herokuSite;
+let site = localHost;
+
+//================================================================================
+// Start of Class
+//================================================================================
 
 class App extends React.Component {
 
@@ -57,6 +64,10 @@ class App extends React.Component {
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
+
+    //================================================================================
+    // State
+    //================================================================================
 
     this.state = {
       username: '',
@@ -171,6 +182,10 @@ class App extends React.Component {
 
   }
 
+  //================================================================================
+  // Requests to Back-End
+  //================================================================================
+
   pingAPI() {
 
     let request = new Request(site + '/ping', {
@@ -279,22 +294,13 @@ class App extends React.Component {
       })
   }
 
-  closeAlert(event, reason) {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({ alert: false });
-  };
-
-  handleUserLogout() {
-    cookies.remove('userId');
-    cookies.remove('userSession');
+  getUserPlan() {
+    //ajaxcalls here
     this.setState({
-      username: '',
-      userId: 0,
-      loggedIn: false,
-      alert: true,
-      alertMessage: 'You have logged out'
+      years: 1,
+      monthlyIncome: 3000,
+      goal: 18000,
+      monthlyBudget: 1500,
     })
   }
 
@@ -308,11 +314,26 @@ class App extends React.Component {
     })
   }
 
+  //================================================================================
+  // Miscellaneous Functions
+  //================================================================================
+
+  closeAlert(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ alert: false });
+  };
+
   getCurrentMonth() {
     this.setState({
       currentMonth: moment().month(),
     })
   }
+
+  //================================================================================
+  // Calculation Functions
+  //================================================================================
 
   budgetPerMonth(income, goal, years) {
     let monthlySavingsTarget = goal / (years * 12);
@@ -346,6 +367,59 @@ class App extends React.Component {
     }
 
     return newExcess;
+  }
+
+  calculateNewBudget(newExpenseData) {
+
+    const { monthlyBudget } = this.state;
+
+    let yearlyBudget = monthlyBudget * 12;
+    let currentTotalExpense = newExpenseData.reduce((a, b) => a + b, 0);
+    let leftoverBudget = yearlyBudget - currentTotalExpense;
+
+    let unexpendedMonths = 0
+    let countUnexpendedMonths = () => {
+      for (let entry in newExpenseData) {
+        if (newExpenseData[entry] === 0)
+          unexpendedMonths++;
+      }
+    }
+    countUnexpendedMonths()
+    let newAdjustedBudget = leftoverBudget / unexpendedMonths;
+
+    return Math.round(newAdjustedBudget);
+  }
+
+  currentPlannedBudget(newExpenseChart, newMonth) {
+    if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
+      return 0;
+    } else {
+      return newExpenseChart.datasets[1].data[newMonth];
+    }
+  }
+
+  currentRemainingBudget(newExpenseChart, newMonth) {
+    if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
+      return 0;
+    } else {
+      return newExpenseChart.datasets[2].data[newMonth];
+    }
+  }
+
+  //================================================================================
+  // Handlers
+  //================================================================================
+
+  handleUserLogout() {
+    cookies.remove('userId');
+    cookies.remove('userSession');
+    this.setState({
+      username: '',
+      userId: 0,
+      loggedIn: false,
+      alert: true,
+      alertMessage: 'You have logged out'
+    })
   }
 
   handleBudgetChartChange(newMonthlyBudget) {
@@ -415,43 +489,6 @@ class App extends React.Component {
     this.setState({
       newMonth: event.target.value,
     })
-  }
-
-  calculateNewBudget(newExpenseData) {
-
-    const { monthlyBudget } = this.state;
-
-    let yearlyBudget = monthlyBudget * 12;
-    let currentTotalExpense = newExpenseData.reduce((a, b) => a + b, 0);
-    let leftoverBudget = yearlyBudget - currentTotalExpense;
-
-    let unexpendedMonths = 0
-    let countUnexpendedMonths = () => {
-      for (let entry in newExpenseData) {
-        if (newExpenseData[entry] === 0)
-          unexpendedMonths++;
-      }
-    }
-    countUnexpendedMonths()
-    let newAdjustedBudget = leftoverBudget / unexpendedMonths;
-
-    return Math.round(newAdjustedBudget);
-  }
-
-  currentPlannedBudget(newExpenseChart, newMonth) {
-    if (typeof newExpenseChart.datasets[1].data[newMonth] !== 'number') {
-      return 0;
-    } else {
-      return newExpenseChart.datasets[1].data[newMonth];
-    }
-  }
-
-  currentRemainingBudget(newExpenseChart, newMonth) {
-    if (typeof newExpenseChart.datasets[2].data[newMonth] !== 'number') {
-      return 0;
-    } else {
-      return newExpenseChart.datasets[2].data[newMonth];
-    }
   }
 
   setExpense() {
@@ -539,6 +576,10 @@ class App extends React.Component {
     })
 
   }
+
+  //================================================================================
+  // End of Functions
+  //================================================================================
 
   render() {
 
