@@ -65,7 +65,7 @@ class App extends React.Component {
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
-    this.handleCreatePlan = this.handleCreatePlan.bind(this);
+    this.handleSetPlan = this.handleSetPlan.bind(this);
 
     //================================================================================
     // State
@@ -294,6 +294,7 @@ class App extends React.Component {
       username: '',
       userId: 0,
       loggedIn: false,
+      newUser: true,
       alert: true,
       alertMessage: 'You have logged out'
     })
@@ -495,12 +496,13 @@ class App extends React.Component {
         response.json()
           .then(function (data) {
             if (data.registered) {
+              cookies.set('userId', data.id, { path: '/' });
+              cookies.set('userSession', data.userSession, { path: '/' });
               here.setState({
                 username: user_data.user_name,
                 loggedIn: true,
                 alert: true,
                 alertMessage: data.message,
-                newUser: true
               })
             } else {
               here.setState({
@@ -544,7 +546,8 @@ class App extends React.Component {
                 username: user_data.user_name,
                 loggedIn: true,
                 alert: true,
-                alertMessage: data.message
+                alertMessage: data.message,
+                newUser: false
               })
             } else {
               here.setState({
@@ -559,7 +562,7 @@ class App extends React.Component {
       })
   }
 
-  handleCreatePlan() {
+  handleSetPlan() {
 
     const {
       goal,
@@ -581,7 +584,7 @@ class App extends React.Component {
     };
 
 
-    let request = new Request(site + '/api/new-plan', {
+    let request = new Request(site + '/api/set-plan', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -608,6 +611,7 @@ class App extends React.Component {
               })
             } else {
               here.setState({
+                newUser: false,
                 alert: true,
                 alertMessage: data.message
               })
@@ -683,7 +687,7 @@ class App extends React.Component {
                 goal={goal}
                 monthlyBudget={monthlyBudget}
                 onPlanChange={this.handlePlanChange}
-                handleCreatePlan={this.handleCreatePlan}
+                handleSetPlan={this.handleSetPlan}
               />
             }
             {

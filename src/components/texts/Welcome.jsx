@@ -36,7 +36,7 @@ class Welcome extends Component {
     constructor(props) {
         super(props);
         this.handlePlanChange = this.handlePlanChange.bind(this);
-        this.handleCreatePlan = this.handleCreatePlan.bind(this);
+        this.handleSetPlan = this.handleSetPlan.bind(this);
         this.state = {
             open: true,
         };
@@ -47,8 +47,8 @@ class Welcome extends Component {
         this.props.onPlanChange(name, value);
     }
 
-    handleCreatePlan() {
-        this.props.handleCreatePlan();
+    handleSetPlan() {
+        this.props.handleSetPlan();
     }
 
     render() {
@@ -122,7 +122,7 @@ class Welcome extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button
-                            onClick={this.handleCreatePlan}
+                            onClick={this.handleSetPlan}
                             variant="outlined"
                             color="primary"
                         >
