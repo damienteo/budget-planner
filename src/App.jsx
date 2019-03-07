@@ -69,6 +69,7 @@ class App extends React.Component {
     this.getUserPlan = this.getUserPlan.bind(this);
     this.handlePlanInitialisation = this.handlePlanInitialisation.bind(this);
     this.handleSetExpense = this.handleSetExpense.bind(this);
+    this.handleReasonChange = this.handleReasonChange.bind(this);
 
     //================================================================================
     // State
@@ -89,6 +90,7 @@ class App extends React.Component {
       currentRemainingBudget: 0,
       excessBudget: 0,
       newExpense: 0,
+      expenseReason: '',
       newMonth: 0,
       chartData: {
         labels: [
@@ -386,6 +388,12 @@ class App extends React.Component {
   handleMonthChange(event) {
     this.setState({
       newMonth: event.target.value,
+    })
+  }
+
+  handleReasonChange(event) {
+    this.setState({
+      expenseReason: event.target.value,
     })
   }
 
@@ -731,6 +739,7 @@ class App extends React.Component {
       monthlyBudget,
       newExpense,
       newMonth,
+      expenseReason,
       chartData,
       newUser,
       username,
@@ -790,11 +799,13 @@ class App extends React.Component {
                       monthlyBudget={monthlyBudget}
                       newExpense={newExpense}
                       newMonth={newMonth}
+                      expenseReason={expenseReason}
                       currentRemainingBudget={currentRemainingBudget}
                       excessBudget={excessBudget}
                       onPlanChange={this.handlePlanChange}
                       onExpenseChange={this.handleExpensesChange}
                       onMonthChange={this.handleMonthChange}
+                      onReasonChange={this.handleReasonChange}
                       setExpense={this.setExpense}
                       handleSetPlan={this.handleSetPlan}
                       getUserPlan={this.getUserPlan}

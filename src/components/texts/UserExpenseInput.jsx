@@ -76,6 +76,7 @@ class UserExpenseInput extends Component {
 		super(props);
 		this.handleSetExpense = this.handleSetExpense.bind(this);
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
+		this.handleReasonChange = this.handleReasonChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
 	}
 
@@ -87,6 +88,10 @@ class UserExpenseInput extends Component {
 		this.props.handleMonthChange(event);
 	}
 
+	handleReasonChange(event) {
+		this.props.handleReasonChange(event);
+	}
+
 	handleSetExpense() {
 		this.props.handleSetExpense();
 	}
@@ -95,7 +100,8 @@ class UserExpenseInput extends Component {
 
 		const {
 			newExpense,
-			newMonth
+			newMonth,
+			expenseReason
 		} = this.props;
 
 		return (
@@ -143,6 +149,17 @@ class UserExpenseInput extends Component {
 							</MenuItem>
 						))}
 					</TextField>
+					<TextField
+						key="expenseReason"
+						type="text"
+						name="expenseReason"
+						label="Reason:"
+						value={expenseReason}
+						onChange={this.handleReasonChange}
+						style={styles.input}
+						variant="outlined"
+					/>
+
 					<Button
 						variant="outlined"
 						size="small"
