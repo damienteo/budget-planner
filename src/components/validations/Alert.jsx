@@ -24,7 +24,7 @@ class Alert extends React.Component {
           horizontal: 'left',
         }}
         open={alert}
-        autoHideDuration={3000}
+        autoHideDuration={1500}
         onClose={this.closeAlert}
         ContentProps={{
           'aria-describedby': 'message-id',

@@ -71,7 +71,8 @@ class UserSummary extends Component {
 				<Grid
 					container
 				>
-					{currentRemainingBudget >= 0 &&
+					{(
+						currentRemainingBudget >= 0 &&
 						<Typography
 							style={{ display: 'block' }}
 							gutterBottom
@@ -82,6 +83,7 @@ class UserSummary extends Component {
 								left to spend this month.
 							</strong>
 						</Typography>
+					)
 						||
 						<Typography
 							style={{ display: 'block' }}
@@ -94,7 +96,8 @@ class UserSummary extends Component {
 							</strong>
 						</Typography>
 					}
-					{excessBudget >= 0 &&
+					{(
+						excessBudget >= 0 &&
 						<Typography
 							style={{ display: 'block' }}
 							gutterBottom
@@ -103,6 +106,7 @@ class UserSummary extends Component {
 								<strong style={styles.positive}> ${excessBudget} </strong>
 							so far for the year.
 						</Typography>
+					)
 						||
 						<Typography
 							style={{ display: 'block' }}

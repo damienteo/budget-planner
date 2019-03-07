@@ -42,10 +42,10 @@ const styles = {
   },
 };
 
-const localHost = 'http://localhost:4000'
+// const localHost = 'http://localhost:4000'
 const herokuSite = 'https://my-budget-planner-api.herokuapp.com'
 
-let site = localHost;
+let site = herokuSite;
 
 //================================================================================
 // Start of Class
@@ -318,8 +318,7 @@ class App extends React.Component {
     const { currentMonth, chartData } = this.state;
 
     let currentExpenses = { ...chartData.datasets[0].data };
-    if (savedExpenses != undefined) {
-      console.log("undefined")
+    if (savedExpenses !== undefined) {
       currentExpenses = new Array(12).fill(0);
       for (let i = 0; i < savedExpenses.length; i++) {
         let currentValue = currentExpenses[savedExpenses[i].month]
@@ -398,9 +397,22 @@ class App extends React.Component {
     })
   }
 
-  setExpense() {
+  setExpense(latestEntry) {
 
-    const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
+    console.log(latestEntry);
+
+    const {
+      monthlyBudget,
+      newExpense,
+      newMonth,
+      currentMonth,
+      chartData,
+      savedExpenses
+    } = this.state;
+
+    //adding latest entry to savedExpenses in state
+
+    let updateSavedExpenses = savedExpenses.concat(latestEntry);
 
     //adjusting expenses
 
@@ -475,7 +487,9 @@ class App extends React.Component {
 
     this.setState({
       chartData: newExpenseChart,
+      savedExpenses: updateSavedExpenses,
       newExpense: 0,
+      expenseReason: '',
       currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth],
       excessBudget: newExcessBudget,
       alert: true,
@@ -719,7 +733,7 @@ class App extends React.Component {
       .then(function (response) {
         response.json()
           .then(function (data) {
-            here.setExpense();
+            here.setExpense(data.expenses[data.expenses.length - 1]);
           })
       })
       .catch(function (err) {

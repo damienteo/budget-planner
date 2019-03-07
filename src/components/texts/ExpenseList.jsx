@@ -66,7 +66,6 @@ class ExpenseList extends React.Component {
                 <Button
                     onClick={this.handleToggle}
                     variant="outlined"
-                    style={styles.button}
                     size="small"
                     color="primary"
                     fullWidth

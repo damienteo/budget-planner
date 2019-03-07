@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import Animation from './charts/Animation';
 import ChartDemo from './charts/ChartDemo';
-import { UserForm } from './validations'
+// import { UserForm } from './validations'
 
 const styles = {
 	text: {
