@@ -67,6 +67,7 @@ class App extends React.Component {
     this.handleUserLogin = this.handleUserLogin.bind(this);
     this.handleSetPlan = this.handleSetPlan.bind(this);
     this.getUserPlan = this.getUserPlan.bind(this);
+    this.handlePlanInitialisation = this.handlePlanInitialisation.bind(this);
 
     //================================================================================
     // State
@@ -302,10 +303,10 @@ class App extends React.Component {
 
   handleBudgetChartChange(newMonthlyBudget) {
 
-    const { monthlyBudget, newExpense, newMonth, currentMonth, chartData } = this.state;
+    const { currentMonth, chartData } = this.state;
 
     let currentExpenses = chartData.datasets[0].data;
-    let currentRemainingBudget = chartData.datasets[2].data;
+    // let currentRemainingBudget = chartData.datasets[2].data;
 
     let newFutureBudgetValues = [];
     for (let i = 0; i <= 11; i++) {
@@ -357,6 +358,24 @@ class App extends React.Component {
 
   }
 
+  handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget) {
+
+    let newChartValues = this.handleBudgetChartChange(setMonthlyBudget);
+
+    let newExcessBudget = this.calculateExcessBudget(newChartValues);
+
+    this.setState({
+      years: years,
+      monthlyIncome: monthlyincome,
+      goal: goal,
+      monthlyBudget: setMonthlyBudget,
+      chartData: newChartValues,
+      currentRemainingBudget: newChartValues.datasets[2].data[this.state.currentMonth],
+      excessBudget: newExcessBudget,
+    })
+
+  }
+
   handleExpensesChange(event) {
     this.setState({
       newExpense: event.target.value,
@@ -385,7 +404,7 @@ class App extends React.Component {
 
     // adjusting future planned budget
 
-    let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
+    // let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
 
     let newPlannedBudgetData = newExpenseChart.datasets[0].data.map(
       (x, index) => {
@@ -642,20 +661,9 @@ class App extends React.Component {
                 monthlyincome
               } = data.plan;
               let setMonthlyBudget = here.budgetPerMonth(monthlyincome, goal, years);
-              console.log(setMonthlyBudget)
-              here.setState({
-                years: years,
-                monthlyIncome: monthlyincome,
-                goal: goal,
-                monthlyBudget: setMonthlyBudget,
-              })
+              here.handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget);
             } else {
-              here.setState({
-                years: 1,
-                monthlyIncome: 3000,
-                goal: 18000,
-                monthlyBudget: 1500,
-              })
+              here.handlePlanInitialisation(1, 3000, 18000, 1500);
             }
           })
       })
@@ -681,7 +689,6 @@ class App extends React.Component {
       newUser,
       username,
       loggedIn,
-      currentMonth,
       currentRemainingBudget,
       excessBudget,
       alert,

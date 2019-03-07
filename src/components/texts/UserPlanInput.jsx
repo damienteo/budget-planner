@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import {
 	TextField,
-	Grid,
 	InputAdornment,
-	Button
 }
 	from '@material-ui/core';
 
@@ -33,7 +31,7 @@ class UserPlan extends Component {
 
 	render() {
 
-		const { years, monthlyIncome, goal, newUser } = this.props;
+		const { years, monthlyIncome, goal } = this.props;
 
 		return (
 			<React.Fragment>

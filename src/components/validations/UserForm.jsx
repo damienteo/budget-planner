@@ -6,7 +6,6 @@ import {
 	Dialog,
 	DialogActions,
 	DialogContent,
-	DialogContentText,
 	withMobileDialog
 } from '@material-ui/core';
 

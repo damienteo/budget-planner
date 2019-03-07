@@ -13,7 +13,6 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMore';
 
 import {
 	UserPlanSummary,
-	UserPlanInput,
 	UserExpenseInput,
 	UserSetPlan
 } from './texts/'
