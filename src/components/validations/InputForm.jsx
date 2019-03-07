@@ -88,7 +88,7 @@ class InputForm extends React.Component {
 
     render() {
 
-        const { open, userInput: { username, password, repeatPassword } } = this.state;
+        const { open, userInput: { username, password, repeatPassword } } = this.props;
         const { fullScreen, message, button, register } = this.props;
         return (
             <React.Fragment>

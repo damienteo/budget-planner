@@ -8,6 +8,7 @@ import {
 	DialogContent,
 	withMobileDialog
 } from '@material-ui/core';
+import InputForm from './InputForm';
 
 const styles = {
 	button: {
@@ -39,29 +40,6 @@ class UserForm extends React.Component {
 				repeatPassword: '',
 			},
 		}
-	}
-
-	componentDidMount() {
-		this._isMounted = true;
-		if (this._isMounted) {
-			ValidatorForm.addValidationRule('isMinLength', (value) => {
-				if (value.length < 6) {
-					return false;
-				}
-				return true;
-			});
-			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-				if (value !== this.state.userInput.password) {
-					return false;
-				}
-				return true;
-			});
-		}
-
-	}
-
-	componentWillUnmount() {
-		this._isMounted = false;
 	}
 
 	handleToggle() {
@@ -98,7 +76,6 @@ class UserForm extends React.Component {
 
 		const { open, userInput: { username, password, repeatPassword } } = this.state;
 		const { fullScreen, message, button, register } = this.props;
-		console.log("password", password);
 		return (
 			<React.Fragment>
 
@@ -111,92 +88,17 @@ class UserForm extends React.Component {
 					{button}
 				</Button>
 
-				<Dialog
+				<InputForm
 					open={open}
-					onClose={this.handleToggle}
+					userInput={userInput}
+					handleToggle={this.handleToggle}
 					fullScreen={fullScreen}
-				>
-					<ValidatorForm
-						ref="form"
-						onSubmit={this.handleSubmit}
-						onError={errors => console.log(errors)}
-					>
-						<DialogContent
-							style={styles.dialogcontent}
-						>
-							<TextValidator
-								label="username"
-								value={username}
-								onChange={this.handleChange('username')}
-								style={styles.textfield}
-								maxLength="5"
-								validators={[
-									'required',
-									'isMinLength',
-									'matchRegexp:^[a-zA-Z0-9]+$'
-								]}
-								errorMessages={[
-									'this field is required',
-									'Must be at least 6 charecters',
-									'Please use either alphabets or numbers'
-								]}
-							/>
-							<br />
-							<TextValidator
-								label="password"
-								value={password}
-								type="password"
-								onChange={this.handleChange('password')}
-								style={styles.textfield}
-								validators={[
-									'required',
-									'isMinLength',
-									'matchRegexp:^[a-zA-Z0-9]+$'
-								]}
-								errorMessages={[
-									'this field is required',
-									'Must be at least 6 charecters',
-									'Please use either alphabets or numbers'
-								]}
-							/>
-							<br />
-							{
-								register &&
-								<TextValidator
-									label="Repeat password"
-									value={repeatPassword}
-									type="password"
-									onChange={this.handleChange('repeatPassword')}
-									style={styles.textfield}
-									validators={[
-										'required',
-										'isMinLength',
-										'matchRegexp:^[a-zA-Z0-9]+$',
-										'isPasswordMatch'
-									]}
-									errorMessages={[
-										'this field is required',
-										'Must be at least 6 charecters',
-										'Please use either alphabets or numbers',
-										'Password mismatch'
-									]}
-								/>
-							}
-							<DialogActions>
-								<Button
-									color="primary"
-									variant="contained"
-									type="submit"
-									style={styles.button}
-								>
-									{message}
-								</Button>
-							</DialogActions>
-						</DialogContent>
-					</ValidatorForm>
-				</Dialog>
+					message={message}
+					button={button}
+					register={register}
+				/>
 
-			</React.Fragment>
+			</React.Fragment >
 		)
 	}
 }
