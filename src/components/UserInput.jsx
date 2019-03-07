@@ -141,6 +141,7 @@ class UserInput extends Component {
 			excessBudget,
 			newUser,
 			expenseReason,
+			savedExpenses
 		} = this.props;
 
 		return (
@@ -195,6 +196,7 @@ class UserInput extends Component {
 							newExpense={newExpense}
 							newMonth={newMonth}
 							expenseReason={expenseReason}
+							savedExpenses={savedExpenses}
 							handleExpenseChange={this.handleExpenseChange}
 							handleMonthChange={this.handleMonthChange}
 							handleSetExpense={this.handleSetExpense}

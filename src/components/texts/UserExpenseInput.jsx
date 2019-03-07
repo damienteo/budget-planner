@@ -9,6 +9,8 @@ import {
 }
 	from '@material-ui/core';
 
+import ExpenseList from './ExpenseList'
+
 const styles = {
 	menu: {
 		width: 200,
@@ -101,7 +103,8 @@ class UserExpenseInput extends Component {
 		const {
 			newExpense,
 			newMonth,
-			expenseReason
+			expenseReason,
+			savedExpenses
 		} = this.props;
 
 		return (
@@ -159,7 +162,6 @@ class UserExpenseInput extends Component {
 						style={styles.input}
 						variant="outlined"
 					/>
-
 					<Button
 						variant="outlined"
 						size="small"
@@ -170,6 +172,9 @@ class UserExpenseInput extends Component {
 					>
 						Confirm Expense
 			        </Button>
+					<ExpenseList
+						savedExpenses={savedExpenses}
+					/>
 				</Grid>
 			</React.Fragment>
 		)

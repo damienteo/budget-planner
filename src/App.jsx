@@ -668,7 +668,6 @@ class App extends React.Component {
           .then(function (data) {
             if (data.exist) {
               const { expenses } = data.data;
-              console.log(expenses)
               const {
                 goal,
                 years,
@@ -754,8 +753,6 @@ class App extends React.Component {
       savedExpenses,
     } = this.state;
 
-    console.log("saved expenses", savedExpenses);
-
     return (
       <React.Fragment>
         <ErrorBoundary>
@@ -808,6 +805,7 @@ class App extends React.Component {
                       expenseReason={expenseReason}
                       currentRemainingBudget={currentRemainingBudget}
                       excessBudget={excessBudget}
+                      savedExpenses={savedExpenses}
                       onPlanChange={this.handlePlanChange}
                       onExpenseChange={this.handleExpensesChange}
                       onMonthChange={this.handleMonthChange}
