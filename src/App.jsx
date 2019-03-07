@@ -683,47 +683,45 @@ class App extends React.Component {
 
   handleSetExpense() {
 
-    console.log("set expense")
+    const {
+      newExpense,
+      newMonth,
+      expenseReason,
+    } = this.state;
 
-    // const {
-    //   newExpense,
-    //   newMonth,
-    //   expenseReason,
-    // } = this.state;
+    let userId = cookies.get('userId');
+    let userSession = cookies.get('userSession');
 
-    // let userId = cookies.get('userId');
-    // let userSession = cookies.get('userSession');
+    const here = this;
 
-    // const here = this;
+    let user_expense = {
+      newExpense: newExpense,
+      newMonth: newMonth,
+      expenseReason: expenseReason,
+      userId: userId,
+      userSession: userSession
+    };
 
-    // let user_expense = {
-    //   newExpense: newExpense,
-    //   newMonth: newMonth,
-    //   expenseReason: expenseReason,
-    //   userId: userId,
-    //   userSession: userSession
-    // };
+    let request = new Request(site + '/api/set-expense', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user_expense)
+    });
 
-    // let request = new Request(site + '/api/set-expense', {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json'
-    //   }),
-    //   body: JSON.stringify(user_expense)
-    // });
+    //xmlhttprequest()
 
-    // //xmlhttprequest()
-
-    // fetch(request)
-    //   .then(function (response) {
-    //     response.json()
-    //       .then(function (data) {
-    //         here.setExpense();
-    //       })
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //   })
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            here.setExpense();
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
   }
 
   //================================================================================
