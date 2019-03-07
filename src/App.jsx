@@ -112,20 +112,7 @@ class App extends React.Component {
           {
             stack: 'stack1',
             label: 'Expenses',
-            data: [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ],
+            data: new Array(12).fill(0),
             backgroundColor: "rgba(255,99,132,0.3)",
             borderColor: "rgba(255,99,132,1)",
             borderWidth: 0,
@@ -135,20 +122,7 @@ class App extends React.Component {
           {
             stack: 'stack1',
             label: 'Future Budget',
-            data: [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-            ],
+            data: new Array(12).fill(0),
             backgroundColor: "rgba(69, 186, 69, 0.2)",
             borderColor: "rgba(69, 186, 69, 1)",
             borderWidth: 0,
@@ -158,20 +132,7 @@ class App extends React.Component {
           {
             stack: 'stack1',
             label: 'Current Budget',
-            data: [
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-            ],
+            data: new Array(12).fill(''),
             backgroundColor: "rgba( 255, 255, 16, 0.2)",
             borderColor: "rgba(255, 255, 16, 1)",
             borderWidth: 0,
@@ -305,12 +266,19 @@ class App extends React.Component {
     })
   }
 
-  handleBudgetChartChange(newMonthlyBudget) {
+  handleBudgetChartChange(newMonthlyBudget, savedExpenses) {
 
     const { currentMonth, chartData } = this.state;
 
-    let currentExpenses = chartData.datasets[0].data;
-    // let currentRemainingBudget = chartData.datasets[2].data;
+    let currentExpenses = { ...chartData.datasets[0].data };
+    if (savedExpenses) {
+      currentExpenses = new Array(12).fill(0);
+      for (let i = 0; i < savedExpenses.length; i++) {
+        let currentValue = currentExpenses[savedExpenses[i].month]
+        let newValue = currentValue + savedExpenses[i].expense;
+        currentExpenses[savedExpenses[i].month] = newValue;
+      }
+    }
 
     let newFutureBudgetValues = [];
     for (let i = 0; i <= 11; i++) {
@@ -334,7 +302,10 @@ class App extends React.Component {
       }
     }
 
-    let newChart = { ...this.state.chartData }
+    console.log(currentExpenses)
+
+    let newChart = { ...chartData }
+    newChart.datasets[0].data = currentExpenses;
     newChart.datasets[1].data = newFutureBudgetValues;
     newChart.datasets[2].data = newCurrentBudgetValues;
 
@@ -364,7 +335,7 @@ class App extends React.Component {
 
   handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget, pastExpenses) {
 
-    let newChartValues = this.handleBudgetChartChange(setMonthlyBudget);
+    let newChartValues = this.handleBudgetChartChange(setMonthlyBudget, pastExpenses);
 
     let newExcessBudget = this.calculateExcessBudget(newChartValues);
 
