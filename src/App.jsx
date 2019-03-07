@@ -92,6 +92,7 @@ class App extends React.Component {
       newExpense: 0,
       expenseReason: '',
       newMonth: 0,
+      savedExpenses: [],
       chartData: {
         labels: [
           'Jan',
@@ -135,18 +136,18 @@ class App extends React.Component {
             stack: 'stack1',
             label: 'Future Budget',
             data: [
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
-              1500,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
             ],
             backgroundColor: "rgba(69, 186, 69, 0.2)",
             borderColor: "rgba(69, 186, 69, 1)",
@@ -361,7 +362,7 @@ class App extends React.Component {
 
   }
 
-  handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget) {
+  handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget, pastExpenses) {
 
     let newChartValues = this.handleBudgetChartChange(setMonthlyBudget);
 
@@ -375,6 +376,7 @@ class App extends React.Component {
       chartData: newChartValues,
       currentRemainingBudget: newChartValues.datasets[2].data[this.state.currentMonth],
       excessBudget: newExcessBudget,
+      savedExpenses: pastExpenses,
     })
 
   }
@@ -637,6 +639,7 @@ class App extends React.Component {
       })
   }
 
+  //This function gets BOTH the user's current plan, and previous recorded expenses.
   getUserPlan() {
 
     let userId = cookies.get('userId');
@@ -664,15 +667,17 @@ class App extends React.Component {
         response.json()
           .then(function (data) {
             if (data.exist) {
+              const { expenses } = data.data;
+              console.log(expenses)
               const {
                 goal,
                 years,
                 monthlyincome
-              } = data.plan;
+              } = data.data.plan[0];
               let setMonthlyBudget = here.budgetPerMonth(monthlyincome, goal, years);
-              here.handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget);
+              here.handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget, expenses);
             } else {
-              here.handlePlanInitialisation(1, 3000, 18000, 1500);
+              here.handlePlanInitialisation(1, 3000, 18000, 1500, []);
             }
           })
       })
@@ -746,7 +751,10 @@ class App extends React.Component {
       excessBudget,
       alert,
       alertMessage,
+      savedExpenses,
     } = this.state;
+
+    console.log("saved expenses", savedExpenses);
 
     return (
       <React.Fragment>
