@@ -194,3 +194,4 @@ export default LandingPage;
 						// 	button='Register'
 						// 	register = { true }
 						// />
+						//issue here due to ValidatorForm. A newer rule added seems to override the rule for a previous similar component, causing the repeated password to be compared against the state of the latter component.
