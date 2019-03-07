@@ -98,7 +98,7 @@ class UserForm extends React.Component {
 
 		const { open, userInput: { username, password, repeatPassword } } = this.state;
 		const { fullScreen, message, button, register } = this.props;
-
+		console.log("password", password);
 		return (
 			<React.Fragment>
 
@@ -187,7 +187,6 @@ class UserForm extends React.Component {
 									color="primary"
 									variant="contained"
 									type="submit"
-									// onClick={this.handleSubmit}
 									style={styles.button}
 								>
 									{message}

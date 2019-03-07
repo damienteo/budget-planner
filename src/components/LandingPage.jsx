@@ -179,6 +179,12 @@ class LandingPage extends React.Component {
 						alignItems="center"
 						style={{ margin: `70px` }}
 					>
+						<UserForm
+							handleUser={this.handleUserRegistration}
+							message='Confirm Registration'
+							button='Register'
+							register={true}
+						/>
 					</Grid>
 				</Grid>
 			</React.Fragment>
@@ -188,9 +194,3 @@ class LandingPage extends React.Component {
 
 export default LandingPage;
 
-				  //       <UserForm 
-						// 	handleUser={ this.handleUserRegistration }
-						// 	message='Confirm Registration'
-						// 	button='Register'
-						// 	register = { true }
-						// />
