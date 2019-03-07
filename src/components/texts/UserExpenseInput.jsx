@@ -74,7 +74,7 @@ class UserExpenseInput extends Component {
 
 	constructor(props) {
 		super(props);
-		this.setExpense = this.setExpense.bind(this);
+		this.handleSetExpense = this.handleSetExpense.bind(this);
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
 	}
@@ -87,8 +87,8 @@ class UserExpenseInput extends Component {
 		this.props.handleMonthChange(event);
 	}
 
-	setExpense() {
-		this.props.setExpense();
+	handleSetExpense() {
+		this.props.handleSetExpense();
 	}
 
 	render() {
@@ -148,7 +148,7 @@ class UserExpenseInput extends Component {
 						size="small"
 						color="secondary"
 						fullWidth
-						onClick={this.setExpense}
+						onClick={this.handleSetExpense}
 						style={styles.input}
 					>
 						Confirm Expense

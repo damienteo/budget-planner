@@ -77,8 +77,8 @@ class UserInput extends Component {
 		this.handlePlanChange = this.handlePlanChange.bind(this);
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
-		this.setExpense = this.setExpense.bind(this);
 		this.handleSetPlan = this.handleSetPlan.bind(this);
+		this.handleSetExpense = this.handleSetExpense.bind(this);
 
 		this.state = {
 			expanded: null,
@@ -103,8 +103,8 @@ class UserInput extends Component {
 		this.props.onMonthChange(event);
 	}
 
-	setExpense() {
-		this.props.setExpense();
+	handleSetExpense() {
+		this.props.handleSetExpense()
 	}
 
 	handleChange = panel => (event, expanded) => {
@@ -190,7 +190,7 @@ class UserInput extends Component {
 							newMonth={newMonth}
 							handleExpenseChange={this.handleExpenseChange}
 							handleMonthChange={this.handleMonthChange}
-							setExpense={this.setExpense}
+							handleSetExpense={this.handleSetExpense}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>

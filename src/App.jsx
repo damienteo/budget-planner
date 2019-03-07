@@ -45,7 +45,7 @@ const styles = {
 const localHost = 'http://localhost:4000'
 const herokuSite = 'https://my-budget-planner-api.herokuapp.com'
 
-let site = herokuSite;
+let site = localHost;
 
 //================================================================================
 // Start of Class
@@ -68,6 +68,7 @@ class App extends React.Component {
     this.handleSetPlan = this.handleSetPlan.bind(this);
     this.getUserPlan = this.getUserPlan.bind(this);
     this.handlePlanInitialisation = this.handlePlanInitialisation.bind(this);
+    this.handleSetExpense = this.handleSetExpense.bind(this);
 
     //================================================================================
     // State
@@ -672,6 +673,51 @@ class App extends React.Component {
       })
   }
 
+  handleSetExpense() {
+
+    console.log("set expense")
+
+    // const {
+    //   newExpense,
+    //   newMonth,
+    //   expenseReason,
+    // } = this.state;
+
+    // let userId = cookies.get('userId');
+    // let userSession = cookies.get('userSession');
+
+    // const here = this;
+
+    // let user_expense = {
+    //   newExpense: newExpense,
+    //   newMonth: newMonth,
+    //   expenseReason: expenseReason,
+    //   userId: userId,
+    //   userSession: userSession
+    // };
+
+    // let request = new Request(site + '/api/set-expense', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json'
+    //   }),
+    //   body: JSON.stringify(user_expense)
+    // });
+
+    // //xmlhttprequest()
+
+    // fetch(request)
+    //   .then(function (response) {
+    //     response.json()
+    //       .then(function (data) {
+    //         here.setExpense();
+    //       })
+    //   })
+    //   .catch(function (err) {
+    //     console.log(err);
+    //   })
+  }
+
   //================================================================================
   // End of Functions
   //================================================================================
@@ -752,6 +798,7 @@ class App extends React.Component {
                       setExpense={this.setExpense}
                       handleSetPlan={this.handleSetPlan}
                       getUserPlan={this.getUserPlan}
+                      handleSetExpense={this.handleSetExpense}
                     />
                   </Paper>
                 </Grid>
