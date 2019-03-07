@@ -249,6 +249,35 @@ class App extends React.Component {
     }
   }
 
+  updateFutureBudget(currentMonth, newMonthlyBudget, currentExpenses) {
+    let newFutureBudgetValues = [];
+    for (let i = 0; i <= 11; i++) {
+      if (i <= currentMonth) {
+        newFutureBudgetValues.push("");
+      } else if (currentExpenses[i] > 0) {
+        let adjustedFutureBudget = newMonthlyBudget - currentExpenses[i];
+        newFutureBudgetValues.push(adjustedFutureBudget);
+      } else {
+        newFutureBudgetValues.push(newMonthlyBudget);
+      }
+    }
+    return newFutureBudgetValues;
+  }
+
+  updateCurrentBudget(currentMonth, newMonthlyBudget, currentExpenses) {
+    let newCurrentBudgetValues = [];
+    for (let i = 0; i <= 11; i++) {
+      if (i <= currentMonth) {
+        let adjustedCurrentBudget = newMonthlyBudget - currentExpenses[i];
+        newCurrentBudgetValues.push(adjustedCurrentBudget);
+      } else {
+        newCurrentBudgetValues.push("");
+      }
+    }
+    return newCurrentBudgetValues;
+  }
+
+
   //================================================================================
   // Handlers
   //================================================================================
@@ -266,12 +295,31 @@ class App extends React.Component {
     })
   }
 
-  handleBudgetChartChange(newMonthlyBudget, savedExpenses) {
+  handleBudgetChartChange(newMonthlyBudget) {
 
     const { currentMonth, chartData } = this.state;
 
     let currentExpenses = { ...chartData.datasets[0].data };
-    if (savedExpenses) {
+
+    let newFutureBudgetValues = this.updateFutureBudget(currentMonth, newMonthlyBudget, currentExpenses)
+
+    let newCurrentBudgetValues = this.updateCurrentBudget(currentMonth, newMonthlyBudget, currentExpenses)
+
+    let newChart = { ...chartData }
+    newChart.datasets[1].data = newFutureBudgetValues;
+    newChart.datasets[2].data = newCurrentBudgetValues;
+
+    return newChart;
+
+  }
+
+  handleChartInitialisation(newMonthlyBudget, savedExpenses) {
+
+    const { currentMonth, chartData } = this.state;
+
+    let currentExpenses = { ...chartData.datasets[0].data };
+    if (savedExpenses != undefined) {
+      console.log("undefined")
       currentExpenses = new Array(12).fill(0);
       for (let i = 0; i < savedExpenses.length; i++) {
         let currentValue = currentExpenses[savedExpenses[i].month]
@@ -280,29 +328,9 @@ class App extends React.Component {
       }
     }
 
-    let newFutureBudgetValues = [];
-    for (let i = 0; i <= 11; i++) {
-      if (i <= currentMonth) {
-        newFutureBudgetValues.push("");
-      } else if (currentExpenses[i] > 0) {
-        let adjustedFutureBudget = newMonthlyBudget - currentExpenses[i];
-        newFutureBudgetValues.push(adjustedFutureBudget);
-      } else {
-        newFutureBudgetValues.push(newMonthlyBudget);
-      }
-    }
+    let newFutureBudgetValues = this.updateFutureBudget(currentMonth, newMonthlyBudget, currentExpenses)
 
-    let newCurrentBudgetValues = [];
-    for (let i = 0; i <= 11; i++) {
-      if (i <= currentMonth) {
-        let adjustedCurrentBudget = newMonthlyBudget - currentExpenses[i];
-        newCurrentBudgetValues.push(adjustedCurrentBudget);
-      } else {
-        newCurrentBudgetValues.push("");
-      }
-    }
-
-    console.log(currentExpenses)
+    let newCurrentBudgetValues = this.updateCurrentBudget(currentMonth, newMonthlyBudget, currentExpenses)
 
     let newChart = { ...chartData }
     newChart.datasets[0].data = currentExpenses;
@@ -335,7 +363,7 @@ class App extends React.Component {
 
   handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget, pastExpenses) {
 
-    let newChartValues = this.handleBudgetChartChange(setMonthlyBudget, pastExpenses);
+    let newChartValues = this.handleChartInitialisation(setMonthlyBudget, pastExpenses);
 
     let newExcessBudget = this.calculateExcessBudget(newChartValues);
 
