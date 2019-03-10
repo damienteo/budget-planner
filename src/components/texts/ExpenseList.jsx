@@ -30,6 +30,7 @@ class ExpenseList extends React.Component {
     constructor(props) {
         super(props);
         this.handleToggle = this.handleToggle.bind(this);
+        this.handleDeleteExpense = this.handleDeleteExpense.bind(this);
 
         this.state = {
             open: false,
@@ -40,6 +41,10 @@ class ExpenseList extends React.Component {
         this.setState({
             open: !this.state.open
         })
+    }
+
+    handleDeleteExpense(event) {
+        console.log(event.currentTarget.value);
     }
 
     render() {
@@ -59,7 +64,10 @@ class ExpenseList extends React.Component {
                     <TableCell align="right">${expense.expense}</TableCell>
                     <TableCell align="right">{formattedMonth}</TableCell>
                     <TableCell align="right">
-                        <IconButton>
+                        <IconButton
+                            onClick={this.handleDeleteExpense}
+                            value={expense.id}
+                        >
                             <DeleteIcon
                                 color="action"
                             />
