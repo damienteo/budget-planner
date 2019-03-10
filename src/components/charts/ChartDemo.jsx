@@ -19,7 +19,7 @@ class ChartDemo extends React.Component {
             stack: 'stack1',
             label: 'Expenses',
             data: [
-              0,
+              100,
               '',
             ],
             backgroundColor: "rgba(255,99,132,0.3)",
@@ -41,63 +41,14 @@ class ChartDemo extends React.Component {
             hoverBackgroundColor: "rgba(69, 186, 69, 0.4)",
             hoverBorderColor: "rgba(69, 186, 69, 1)",
           },
-          {
-            stack: 'stack1',
-            label: 'Current Budget',
-            data: [
-              100,
-              '',
-            ],
-            backgroundColor: "rgba( 255, 255, 16, 0.2)",
-            borderColor: "rgba(255, 255, 16, 1)",
-            borderWidth: 0,
-            hoverBackgroundColor: "rgba(255, 255, 16, 0.4)",
-            hoverBorderColor: "rgba(255, 255, 16, 1)",
-          },
         ],
       },
     };
   }
 
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.change(),
-      2000
-    );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  change() {
-
-    const { start, chartData } = this.state;
-
-    let newChartData = { ...chartData };
-
-    if (start === true) {
-      newChartData.datasets[0].data[0] = 100;
-      newChartData.datasets[2].data[0] = 0;
-    } else {
-      newChartData.datasets[2].data[0] = 100;
-      newChartData.datasets[0].data[0] = 0;
-    }
-
-    this.setState({
-      chartData: newChartData,
-      start: !start,
-    });
-
-  }
-
   render() {
 
-    // console.log('render');
-
     const { chartData } = this.state;
-    // console.log(" expense", chartData.datasets[0].data)
-    // console.log(" budget", chartData.datasets[2].data)
 
     return (
       <Chart

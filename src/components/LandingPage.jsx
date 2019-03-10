@@ -12,6 +12,8 @@ const styles = {
 	text: {
 		fontSize: 20,
 		fontWeight: 400,
+		marginLeft: 20,
+		marginRight: 20,
 	},
 	budget: {
 		backgroundColor: '#004d40',
@@ -67,7 +69,7 @@ class LandingPage extends React.Component {
 										gutterBottom
 										style={styles.text}
 									>
-										Budget Planner is about <strong>visualising your financial future</strong>.
+										Budget Planner is about visualising your financial future.
 							        </Typography>
 									<Typography
 										gutterBottom
