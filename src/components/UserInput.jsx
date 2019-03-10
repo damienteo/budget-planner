@@ -80,6 +80,7 @@ class UserInput extends Component {
 		this.handleSetPlan = this.handleSetPlan.bind(this);
 		this.handleSetExpense = this.handleSetExpense.bind(this);
 		this.handleReasonChange = this.handleReasonChange.bind(this);
+		this.handleDeleteExpense = this.handleDeleteExpense.bind(this);
 
 		this.state = {
 			expanded: null,
@@ -124,6 +125,10 @@ class UserInput extends Component {
 
 	getUserPlan() {
 		this.props.getUserPlan();
+	}
+
+	handleDeleteExpense(id) {
+		this.props.handleDeleteExpense(id);
 	}
 
 	render() {
@@ -201,6 +206,7 @@ class UserInput extends Component {
 							handleMonthChange={this.handleMonthChange}
 							handleSetExpense={this.handleSetExpense}
 							handleReasonChange={this.handleReasonChange}
+							handleDeleteExpense={this.handleDeleteExpense}
 						/>
 					</ExpansionPanelDetails>
 				</ExpansionPanel>

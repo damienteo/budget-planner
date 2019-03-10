@@ -80,6 +80,7 @@ class UserExpenseInput extends Component {
 		this.handleExpenseChange = this.handleExpenseChange.bind(this);
 		this.handleReasonChange = this.handleReasonChange.bind(this);
 		this.handleMonthChange = this.handleMonthChange.bind(this);
+		this.handleDeleteExpense = this.handleDeleteExpense.bind(this);
 	}
 
 	handleExpenseChange(event) {
@@ -96,6 +97,10 @@ class UserExpenseInput extends Component {
 
 	handleSetExpense() {
 		this.props.handleSetExpense();
+	}
+
+	handleDeleteExpense(id) {
+		this.props.handleDeleteExpense(id);
 	}
 
 	render() {
@@ -174,6 +179,7 @@ class UserExpenseInput extends Component {
 			        </Button>
 					<ExpenseList
 						savedExpenses={savedExpenses}
+						handleDeleteExpense={this.handleDeleteExpense}
 					/>
 				</Grid>
 			</React.Fragment>

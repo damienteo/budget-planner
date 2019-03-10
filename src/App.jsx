@@ -70,6 +70,7 @@ class App extends React.Component {
     this.handlePlanInitialisation = this.handlePlanInitialisation.bind(this);
     this.handleSetExpense = this.handleSetExpense.bind(this);
     this.handleReasonChange = this.handleReasonChange.bind(this);
+    this.handleDeleteExpense = this.handleDeleteExpense.bind(this);
 
     //================================================================================
     // State
@@ -741,6 +742,47 @@ class App extends React.Component {
       })
   }
 
+  handleDeleteExpense(id) {
+
+    // const {
+    //   newExpense,
+    //   newMonth,
+    //   expenseReason,
+    // } = this.state;
+
+    let userId = cookies.get('userId');
+    let userSession = cookies.get('userSession');
+
+    const here = this;
+
+    let target_expense = {
+      id: parseInt(id),
+    };
+
+    console.log("app", target_expense)
+
+    // let request = new Request(site + '/api/set-expense', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json'
+    //   }),
+    //   body: JSON.stringify(user_expense)
+    // });
+
+    // //xmlhttprequest()
+
+    // fetch(request)
+    //   .then(function (response) {
+    //     response.json()
+    //       .then(function (data) {
+    //         here.setExpense(data.expenses[data.expenses.length - 1]);
+    //       })
+    //   })
+    //   .catch(function (err) {
+    //     console.log(err);
+    //   })
+  }
+
   //================================================================================
   // End of Functions
   //================================================================================
@@ -827,6 +869,7 @@ class App extends React.Component {
                       handleSetPlan={this.handleSetPlan}
                       getUserPlan={this.getUserPlan}
                       handleSetExpense={this.handleSetExpense}
+                      handleDeleteExpense={this.handleDeleteExpense}
                     />
                   </Paper>
                 </Grid>

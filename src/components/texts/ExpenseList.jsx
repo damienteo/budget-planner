@@ -44,15 +44,13 @@ class ExpenseList extends React.Component {
     }
 
     handleDeleteExpense(event) {
-        console.log(event.currentTarget.value);
+        this.props.handleDeleteExpense(event.currentTarget.value);
     }
 
     render() {
 
         const { open } = this.state;
         const { fullScreen, savedExpenses } = this.props;
-
-        // console.log(savedExpenses);
 
         let Entries = savedExpenses.map(expense => {
             let formattedMonth = moment.months(expense.month);
