@@ -744,12 +744,6 @@ class App extends React.Component {
 
   handleDeleteExpense(id) {
 
-    // const {
-    //   newExpense,
-    //   newMonth,
-    //   expenseReason,
-    // } = this.state;
-
     let userId = cookies.get('userId');
     let userSession = cookies.get('userSession');
 
@@ -757,30 +751,31 @@ class App extends React.Component {
 
     let target_expense = {
       id: parseInt(id),
+      userId: userId,
+      userSession: userSession
     };
 
-    console.log("app", target_expense)
+    let request = new Request(site + '/api/delete-expense', {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(target_expense)
+    });
 
-    // let request = new Request(site + '/api/set-expense', {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json'
-    //   }),
-    //   body: JSON.stringify(user_expense)
-    // });
+    //xmlhttprequest()
 
-    // //xmlhttprequest()
-
-    // fetch(request)
-    //   .then(function (response) {
-    //     response.json()
-    //       .then(function (data) {
-    //         here.setExpense(data.expenses[data.expenses.length - 1]);
-    //       })
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //   })
+    fetch(request)
+      .then(function (response) {
+        response.json()
+          .then(function (data) {
+            console.log(data);
+            // here.deleteExpense(id);
+          })
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
   }
 
   //================================================================================
