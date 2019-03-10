@@ -400,8 +400,6 @@ class App extends React.Component {
 
   setExpense(latestEntry) {
 
-    console.log(latestEntry);
-
     const {
       monthlyBudget,
       newExpense,
@@ -491,6 +489,108 @@ class App extends React.Component {
       savedExpenses: updateSavedExpenses,
       newExpense: 0,
       expenseReason: '',
+      currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth],
+      excessBudget: newExcessBudget,
+      alert: true,
+      alertMessage: newAlertMessage,
+    })
+
+  }
+
+  deleteExpense(id) {
+
+    console.log(id);
+
+    const {
+      monthlyBudget,
+      currentMonth,
+      newMonth,
+      chartData,
+      savedExpenses
+    } = this.state;
+
+    //deleting entry for savedExpenses in state
+
+    let updateSavedExpenses = [...savedExpenses];
+    let deletingIndex = updateSavedExpenses.map(e => e.id).indexOf(parseInt(id));
+    updateSavedExpenses.splice(deletingIndex, 1);
+
+    //adjusting expenses
+
+    let newExpenseChart = { ...chartData }
+
+    let newExpenseData = newExpenseChart.datasets[0].data.map(
+      (x, index) => {
+        return (index === savedExpenses[deletingIndex].month) ?
+          x - parseFloat(savedExpenses[deletingIndex].expense) :
+          x;
+      }
+    );
+
+    // adjusting future planned budget
+
+    // let newAdjustedBudget = this.calculateNewBudget(newExpenseData);
+
+    let newPlannedBudgetData = newExpenseChart.datasets[0].data.map(
+      (x, index) => {
+
+        let leftoverBudget = monthlyBudget - newExpenseData[index];
+
+        if (index > currentMonth) {
+
+          if (newExpenseData[index] === 0) {
+            return monthlyBudget;
+          } else {
+            return leftoverBudget;
+          }
+
+        } else {
+          return "";
+        }
+
+      }
+    );
+
+    //adjusting current remaining budget till month
+
+    let currentMonthBudget = monthlyBudget;
+
+    let currentMonthLeftoverBudget = currentMonthBudget - newExpenseData[newMonth];
+
+    let newRemainingBudgetData = newExpenseChart.datasets[0].data.map(
+      (x, index) => {
+
+        if (index <= currentMonth) {
+
+          if (index === newMonth) {
+            return currentMonthLeftoverBudget;
+          } else if (newExpenseChart.datasets[2].data[index] === '') {
+            return monthlyBudget;
+          } else {
+            return newExpenseChart.datasets[2].data[index];
+          }
+
+        } else {
+          return "";
+        }
+      }
+
+    );
+
+    //setting newExpenseChartData
+
+    newExpenseChart.datasets[0].data = newExpenseData;
+    newExpenseChart.datasets[1].data = newPlannedBudgetData;
+    newExpenseChart.datasets[2].data = newRemainingBudgetData;
+
+    let newExcessBudget = this.calculateExcessBudget(newExpenseChart);
+
+    let formattedMonth = moment.months(newMonth);
+    let newAlertMessage = `Expense of $${savedExpenses[deletingIndex].expense} removed for the month of ${formattedMonth}`;
+
+    this.setState({
+      chartData: newExpenseChart,
+      savedExpenses: updateSavedExpenses,
       currentRemainingBudget: newExpenseChart.datasets[2].data[currentMonth],
       excessBudget: newExcessBudget,
       alert: true,
@@ -688,7 +788,13 @@ class App extends React.Component {
                 monthlyincome
               } = data.data.plan[0];
               let setMonthlyBudget = here.budgetPerMonth(monthlyincome, goal, years);
-              here.handlePlanInitialisation(years, monthlyincome, goal, setMonthlyBudget, expenses);
+              here.handlePlanInitialisation(
+                years,
+                monthlyincome,
+                goal,
+                setMonthlyBudget,
+                expenses
+              );
             } else {
               here.handlePlanInitialisation(1, 3000, 18000, 1500, []);
             }
@@ -769,8 +875,8 @@ class App extends React.Component {
       .then(function (response) {
         response.json()
           .then(function (data) {
-            console.log(data);
-            // here.deleteExpense(id);
+            // console.log(data);
+            here.deleteExpense(id);
           })
       })
       .catch(function (err) {
