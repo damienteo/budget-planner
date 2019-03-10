@@ -12,7 +12,9 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    IconButton
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const moment = require('moment');
 
@@ -56,7 +58,14 @@ class ExpenseList extends React.Component {
                     </TableCell>
                     <TableCell align="right">${expense.expense}</TableCell>
                     <TableCell align="right">{formattedMonth}</TableCell>
-                </TableRow>
+                    <TableCell align="right">
+                        <IconButton>
+                            <DeleteIcon
+                                color="action"
+                            />
+                        </IconButton>
+                    </TableCell>
+                </TableRow >
             )
         })
 
@@ -87,6 +96,7 @@ class ExpenseList extends React.Component {
                                     <TableCell>Reason</TableCell>
                                     <TableCell align="right">Sum</TableCell>
                                     <TableCell align="right">Month</TableCell>
+                                    <TableCell align="right"> </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -101,7 +111,7 @@ class ExpenseList extends React.Component {
                     </DialogActions>
                 </Dialog>
 
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }
