@@ -26,14 +26,14 @@ const cookies = new Cookies();
 const moment = require('moment');
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#607d8b',
-    },
-    secondary: {
-      main: '#004d40',
-    },
+palette: {
+  primary: {
+    main: '#607d8b',
   },
+  secondary: {
+    main: '#004d40',
+  },
+},
 });
 
 const styles = {
