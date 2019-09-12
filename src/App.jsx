@@ -45,7 +45,7 @@ const styles = {
 const localHost = 'http://localhost:4000'
 const herokuSite = 'https://my-budget-planner-api.herokuapp.com'
 
-let site = localHost;
+let site = herokuSite;
 
 //================================================================================
 // Start of Class
